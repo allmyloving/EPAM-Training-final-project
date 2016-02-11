@@ -1,0 +1,119 @@
+package ua.nure.serdyuk.db.dao.mysql;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
+import ua.nure.serdyuk.PropertyContainer;
+import ua.nure.serdyuk.constants.Const;
+import ua.nure.serdyuk.db.DbUtils;
+import ua.nure.serdyuk.db.dao.CarriageDao;
+import ua.nure.serdyuk.entity.Carriage;
+import ua.nure.serdyuk.exception.DbException;
+
+public class CarriageDaoMySql implements CarriageDao {
+
+	private static final Logger LOG = Logger.getLogger(CarriageDaoMySql.class);
+
+	@Override
+	public boolean create(Carriage item) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Carriage get(long id) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean update(Carriage item) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean delete(Carriage item) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public List<Carriage> getAll() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public List<Carriage> getAllByTrainId(long trainId, long routeId) {
+		Connection conn = DbUtils.getConnection();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		List<Carriage> carriages = null;
+
+		try {
+			String query = PropertyContainer
+					.get(Const.GET_CARRIAGE_INFO_BY_TRAIN_ID);
+			query = query.replace("?", String.valueOf(trainId));
+			ps = conn.prepareStatement(query);
+			// ps = conn.prepareStatement("select carriage.id, tag, name,
+			// seat_num from carriage join carriage_type on
+			// type_id=carriage_type.id where train_id=?");
+			LOG.debug(ps);
+			// ps.setLong(1, trainId);
+
+			rs = ps.executeQuery();
+
+			carriages = new ArrayList<>();
+
+			while (rs.next()) {
+				carriages.add(extract(conn, rs, routeId));
+			}
+		} catch (SQLException e) {
+			LOG.error(e.getMessage());
+			throw new DbException(e.getMessage());
+		} finally {
+			DbUtils.close(conn, ps, rs);
+		}
+
+		return carriages;
+	}
+
+	private Carriage extract(Connection conn, ResultSet rs, long routeId)
+			throws SQLException {
+		Carriage c = new Carriage();
+		PreparedStatement ps = null;
+		ResultSet rsSeats = null;
+
+		try {
+			c.setId(rs.getLong("id"));
+			c.setType(rs.getString("name"));
+			c.setSeatNum(rs.getInt("seat_num"));
+			c.setTag(rs.getString("tag"));
+
+			ps = conn.prepareStatement(PropertyContainer
+					.get(Const.GET_TAKEN_SEATS_BY_CAR_ID_AND_ROUTE_ID));
+			int k = 1;
+			ps.setLong(k++, c.getId());
+			ps.setLong(k++, routeId);
+			
+			LOG.debug(ps);
+
+			rsSeats = ps.executeQuery();
+
+			List<Integer> seats = new ArrayList<>();
+			while (rsSeats.next()) {
+				seats.add(rsSeats.getInt(1));
+			}
+			c.setSeatsTaken(seats);
+		} catch (SQLException e) {
+			LOG.error(e.getMessage());
+			throw new SQLException(e.getMessage());
+		} finally {
+			DbUtils.close(null, ps, rsSeats);
+		}
+		return c;
+	}
+
+}

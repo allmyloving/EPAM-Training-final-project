@@ -18,11 +18,11 @@
 										key="label.carriage_tag" /><span class="pull-right"><fmt:message
 											key="label.available_seats" /></span></a>
 								<c:forEach items="${carriageList.carriages}" var="c">
-									<c:if test="${c.type==t}">
+									<c:if test="${c.type.name==t}">
 										<c:set scope="page" value="${fn:length(c.seatsTaken)}"
 											var="seatsTaken" />
 										<a href="#" class="list-group-item">${c.tag}<span
-											class="badge">${c.seatNum - seatsTaken}</span></a>
+											class="badge">${c.type.seatNum - seatsTaken}</span></a>
 									</c:if>
 								</c:forEach>
 							</div>

@@ -2,13 +2,12 @@
 <%@ include file="/WEB-INF/jspf/head.jspf"%>
 </head>
 <%@ include file="/WEB-INF/jspf/header.jspf"%>
-<c:set var="title" value="Oops" scope="page" />
 
 <div class="jumbotron">
 	<div class="container">
-		<h1>Oops!</h1>
+		<h1><fmt:message key="label.oops"/>!</h1>
 		<br />
-		<p>It seems like some error occurred. We're sorry.</p>
+		<p><fmt:message key="message.error_occurred"/></p>
 		<div class="list-group">
 			<ul>
 				<c:forEach items="${errors}" var="error">
@@ -16,11 +15,9 @@
 				</c:forEach>
 			</ul>
 		</div>
-		<p>If you are not able to fix those on your own, please, contact
-			your system administrator.</p>
+		<p><fmt:message key="message.not_able_to_fix"/></p>
 		<p>
-			<a class="btn btn-success btn-lg" href="javascript: history.go(-1)">Go
-				back</a>
+			<a class="btn btn-success btn-lg" href="javascript: history.go(-1)"><fmt:message key="label.go_back"/></a>
 		</p>
 	</div>
 </div>

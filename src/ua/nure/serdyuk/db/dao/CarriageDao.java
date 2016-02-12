@@ -8,8 +8,9 @@ import ua.nure.serdyuk.entity.Carriage.CarriageType;
 
 public interface CarriageDao extends GenericDao<Carriage> {
 
-	List<Carriage> getAllByTrainId(long trainId, long routeId);
-	
+	List<Carriage> getAllByTrainId(long trainId, long routeId,
+			long routeItemFrom, long routeItemTo);
+
 	public Map<Integer, CarriageType> getTypes(long routeItemFrom,
 			long routeItemTo, long trainId);
 

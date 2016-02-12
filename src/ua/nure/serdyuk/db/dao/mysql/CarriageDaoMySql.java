@@ -49,7 +49,8 @@ public class CarriageDaoMySql implements CarriageDao {
 	}
 
 	@Override
-	public List<Carriage> getAllByTrainId(long trainId, long routeId) {
+	public List<Carriage> getAllByTrainId(long trainId, long routeId,
+			long routeItemFrom, long routeItemTo) {
 		Connection conn = DbUtils.getConnection();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -71,7 +72,8 @@ public class CarriageDaoMySql implements CarriageDao {
 			carriages = new ArrayList<>();
 
 			while (rs.next()) {
-				carriages.add(extract(conn, rs, routeId));
+				carriages.add(extract(conn, rs, routeId, routeItemFrom,
+						routeItemTo, trainId));
 			}
 		} catch (SQLException e) {
 			LOG.error(e.getMessage());
@@ -83,8 +85,9 @@ public class CarriageDaoMySql implements CarriageDao {
 		return carriages;
 	}
 
-	private Carriage extract(Connection conn, ResultSet rs, long routeId)
-			throws SQLException {
+	private Carriage extract(Connection conn, ResultSet rs, long routeId,
+			long routeItemFrom, long routeItemTo, long trainId)
+					throws SQLException {
 		Carriage c = new Carriage();
 		PreparedStatement ps = null;
 		ResultSet rsSeats = null;
@@ -99,6 +102,10 @@ public class CarriageDaoMySql implements CarriageDao {
 			int k = 1;
 			ps.setLong(k++, c.getId());
 			ps.setLong(k++, routeId);
+			ps.setLong(k++, trainId);
+			ps.setLong(k++, routeItemFrom);
+			ps.setLong(k++, routeItemTo);
+			ps.setLong(k++, trainId);
 
 			LOG.debug(ps);
 

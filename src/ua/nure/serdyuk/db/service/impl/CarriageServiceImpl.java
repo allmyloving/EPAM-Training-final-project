@@ -19,8 +19,8 @@ public class CarriageServiceImpl implements CarriageService {
 	@Override
 	public List<Carriage> getAll(long routeItemFrom, long routeItemTo,
 			long trainId, long routeId) {
-		List<Carriage> carriages = carriageDao.getAllByTrainId(trainId,
-				routeId);
+		List<Carriage> carriages = carriageDao.getAllByTrainId(trainId, routeId,
+				routeItemFrom, routeItemTo);
 		Map<Integer, CarriageType> types = carriageDao.getTypes(routeItemFrom,
 				routeItemTo, trainId);
 		for (Carriage item : carriages) {

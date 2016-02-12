@@ -16,8 +16,8 @@ import ua.nure.serdyuk.PropertyContainer;
 import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.db.DbUtils;
 import ua.nure.serdyuk.db.dao.TrainInfoDao;
-import ua.nure.serdyuk.entity.TrainInfoBean;
-import ua.nure.serdyuk.entity.TrainInfoBean.RouteInfoBean;
+import ua.nure.serdyuk.entity.bean.TrainBean;
+import ua.nure.serdyuk.entity.bean.TrainBean.RouteInfo;
 import ua.nure.serdyuk.exception.DbException;
 
 public class TrainInfoDaoMySql implements TrainInfoDao {
@@ -25,37 +25,37 @@ public class TrainInfoDaoMySql implements TrainInfoDao {
 	private static final Logger LOG = Logger.getLogger(TrainInfoDaoMySql.class);
 
 	@Override
-	public boolean create(TrainInfoBean item) {
+	public boolean create(TrainBean item) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public TrainInfoBean get(long id) {
+	public TrainBean get(long id) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean update(TrainInfoBean item) {
+	public boolean update(TrainBean item) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean delete(TrainInfoBean item) {
+	public boolean delete(TrainBean item) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public List<TrainInfoBean> getAll() {
+	public List<TrainBean> getAll() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public TrainInfoBean getFullInfo(long trainId, long stFromId, long stToId,
+	public TrainBean getFullInfo(long trainId, long stFromId, long stToId,
 			long routeId) {
 		Connection conn = DbUtils.getConnection();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		TrainInfoBean bean = null;
+		TrainBean bean = null;
 
 		try {
 			ps = conn.prepareStatement(PropertyContainer
@@ -67,7 +67,7 @@ public class TrainInfoDaoMySql implements TrainInfoDao {
 
 			rs = ps.executeQuery();
 
-			bean = new TrainInfoBean();
+			bean = new TrainBean();
 
 			java.sql.Date depDate = null;
 			// throw ex?
@@ -75,9 +75,11 @@ public class TrainInfoDaoMySql implements TrainInfoDao {
 				depDate = rs.getDate("date");
 				bean.setTrainTag(rs.getString("tag"));
 				bean.setStationFrom(rs.getString("name"));
+				bean.setRouteItemIdFrom(rs.getLong("id"));
 
 				if (rs.next()) {
 					bean.setStationTo(rs.getString("name"));
+					bean.setRouteItemIdTo(rs.getLong("id"));
 				}
 			}
 			LOG.debug(String.format("Bean after 1st query ==> %s",
@@ -175,11 +177,11 @@ public class TrainInfoDaoMySql implements TrainInfoDao {
 		return dCal.getTime();
 	}
 
-	private List<RouteInfoBean> getRouteInfo(long trainId) {
+	private List<RouteInfo> getRouteInfo(long trainId) {
 		Connection conn = DbUtils.getConnection();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		List<RouteInfoBean> beans = null;
+		List<RouteInfo> beans = null;
 
 		try {
 			ps = conn.prepareStatement(
@@ -203,8 +205,8 @@ public class TrainInfoDaoMySql implements TrainInfoDao {
 		return beans;
 	}
 
-	private RouteInfoBean extractRouteInfo(ResultSet rs) throws SQLException {
-		RouteInfoBean bean = new RouteInfoBean();
+	private RouteInfo extractRouteInfo(ResultSet rs) throws SQLException {
+		RouteInfo bean = new RouteInfo();
 		bean.setStationName(rs.getString("name"));
 		bean.setArrTime(rs.getTime("arr_time"));
 		bean.setDepTime(rs.getTime("dep_time"));

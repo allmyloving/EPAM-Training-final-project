@@ -13,6 +13,10 @@ public final class Const {
 	public static final String LAST_NAME = "lastName";
 
 	public static final String ROLE = "role";
+	
+	public static final String STATION_FROM = "stationFrom";
+	
+	public static final String STATION_TO = "stationTo";
 
 	public static final String CURRENT_USER = "currentUser";
 
@@ -86,6 +90,8 @@ public final class Const {
 	public static final String GET_TAKEN_SEATS_BY_CAR_ID_AND_ROUTE_ID = "SQL_GET_TAKEN_SEATS_BY_CAR_ID_AND_ROUTE_ID";
 
 	public static final String GET_PRICE_BY_TRAIN_ID_CAR_TYPE_AND_ORDINALS = "SQL_GET_PRICE_BY_TRAIN_ID_CAR_TYPE_AND_ORDINALS";
+	
+	public static final String GET_CARRIAGE_TYPES = "SQL_GET_CARRIAGE_TYPES";
 
 	public static final String INSERT_ROUTE = "SQL_INSERT_ROUTE";
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import ua.nure.serdyuk.db.dao.RouteInfoDao;
 import ua.nure.serdyuk.db.service.RouteInfoService;
-import ua.nure.serdyuk.entity.TrainInfoBean.RouteInfoBean;
+import ua.nure.serdyuk.entity.bean.TrainBean.RouteInfo;
 
 public class RouteInfoServiceImpl implements RouteInfoService {
 	
@@ -15,7 +15,7 @@ public class RouteInfoServiceImpl implements RouteInfoService {
 	}
 
 	@Override
-	public List<RouteInfoBean> getAllByTrainId(long trainId) {
+	public List<RouteInfo> getAllByTrainId(long trainId) {
 		return routeInfoDao.getAllByTrainId(trainId);
 	}
 

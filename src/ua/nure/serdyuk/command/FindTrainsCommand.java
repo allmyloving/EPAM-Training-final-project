@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import ua.nure.serdyuk.Message;
 import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.constants.Path;
 import ua.nure.serdyuk.db.service.RouteService;
@@ -17,7 +18,7 @@ import ua.nure.serdyuk.db.service.StationService;
 import ua.nure.serdyuk.db.service.TrainInfoService;
 import ua.nure.serdyuk.entity.Route;
 import ua.nure.serdyuk.entity.Station;
-import ua.nure.serdyuk.entity.TrainInfoBean;
+import ua.nure.serdyuk.entity.bean.TrainBean;
 
 public class FindTrainsCommand implements Command {
 
@@ -25,16 +26,16 @@ public class FindTrainsCommand implements Command {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse res) {
-		String stationFrom = req.getParameter("stationFrom");
-		String stationTo = req.getParameter("stationTo");
+		String stationFrom = req.getParameter(Const.STATION_FROM);
+		String stationTo = req.getParameter(Const.STATION_TO);
 		String date = req.getParameter("date");
 
 		HttpSession session = req.getSession();
 
 		// req.getSession().invalidate();
 
-		req.setAttribute("stationFrom", stationFrom);
-		req.setAttribute("stationTo", stationTo);
+		req.setAttribute(Const.STATION_FROM, stationFrom);
+		req.setAttribute(Const.STATION_TO, stationTo);
 		req.setAttribute("date", date);
 
 		LOG.debug("date=" + date);
@@ -64,14 +65,14 @@ public class FindTrainsCommand implements Command {
 			error = true;
 			req.setAttribute("stationFromError",
 					"Station was not found, select from the drop-down list");
-			LOG.error(String.format("Station %s was not found.", stationFrom));
+			LOG.error(String.format(Message.ERR_STATION_NOT_FOUND, stationFrom));
 		}
 
 		if (to == null) {
 			error = true;
 			req.setAttribute("stationToError",
 					"Station was not found, select from the drop-down list");
-			LOG.error(String.format("Station %s was not found.", stationTo));
+			LOG.error(String.format(Message.ERR_STATION_NOT_FOUND, stationTo));
 		}
 
 		if (error) {
@@ -86,7 +87,7 @@ public class FindTrainsCommand implements Command {
 
 		TrainInfoService trainInfoService = (TrainInfoService) context
 				.getAttribute(Const.TRAIN_INFO_SERVICE);
-		List<TrainInfoBean> trainBeans = new ArrayList<>();
+		List<TrainBean> trainBeans = new ArrayList<>();
 		for (Route r : routes) {
 			trainBeans.add(trainInfoService.getFullInfo(r.getTrainId(),
 					from.getId(), to.getId(), r.getId()));

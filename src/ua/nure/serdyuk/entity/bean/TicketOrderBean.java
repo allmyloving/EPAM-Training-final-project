@@ -1,4 +1,4 @@
-package ua.nure.serdyuk.entity;
+package ua.nure.serdyuk.entity.bean;
 
 import java.io.Serializable;
 

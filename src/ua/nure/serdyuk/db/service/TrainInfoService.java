@@ -1,9 +1,9 @@
 package ua.nure.serdyuk.db.service;
 
-import ua.nure.serdyuk.entity.TrainInfoBean;
+import ua.nure.serdyuk.entity.bean.TrainBean;
 
 public interface TrainInfoService {
 
-	TrainInfoBean getFullInfo(long trainId, long stFromId, long stToId,
+	TrainBean getFullInfo(long trainId, long stFromId, long stToId,
 			long routeId);
 }

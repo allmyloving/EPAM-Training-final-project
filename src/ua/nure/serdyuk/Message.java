@@ -15,9 +15,10 @@ public final class Message {
 	public static final String ERR_CONTAINERS_NOT_INITIALIZED = "Containers were not initialized";
 	
 	public static final String ERR_CANNOT_CONFIGURE_LOG4J = "Cannot configure Log4j";
-	
+		
 	public static final String SERVICE_INITIALIZED = "%s service initialized and binded";
 	
+	public static final String ERR_STATION_NOT_FOUND = "Station %s was not found.";
 	
 
 }

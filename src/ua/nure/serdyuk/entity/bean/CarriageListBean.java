@@ -1,8 +1,10 @@
-package ua.nure.serdyuk.entity;
+package ua.nure.serdyuk.entity.bean;
 
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+
+import ua.nure.serdyuk.entity.Carriage;
 
 public class CarriageListBean {
 
@@ -15,7 +17,7 @@ public class CarriageListBean {
 	public Set<String> getTypes() {
 		Set<String> types = new TreeSet<>();
 		for (Carriage c : carriages) {
-			types.add(c.getType());
+			types.add(c.getType().getName());
 		}
 		return types;
 	}

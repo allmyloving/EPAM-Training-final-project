@@ -11,7 +11,7 @@ import ua.nure.serdyuk.db.dao.RouteItemDao;
 import ua.nure.serdyuk.db.dao.TrainInfoDao;
 import ua.nure.serdyuk.db.service.TrainInfoService;
 import ua.nure.serdyuk.entity.RouteItem;
-import ua.nure.serdyuk.entity.TrainInfoBean;
+import ua.nure.serdyuk.entity.bean.TrainBean;
 
 public class TrainInfoServiceImpl implements TrainInfoService {
 
@@ -29,9 +29,9 @@ public class TrainInfoServiceImpl implements TrainInfoService {
 	}
 
 	@Override
-	public TrainInfoBean getFullInfo(long trainId, long stFromId, long stToId,
+	public TrainBean getFullInfo(long trainId, long stFromId, long stToId,
 			long routeId) {
-		TrainInfoBean bean = trainInfoDao.getFullInfo(trainId, stFromId, stToId,
+		TrainBean bean = trainInfoDao.getFullInfo(trainId, stFromId, stToId,
 				routeId);
 		bean.setTrainId(trainId);
 		bean.setRouteId(routeId);

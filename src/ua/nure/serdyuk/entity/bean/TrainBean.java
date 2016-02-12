@@ -1,16 +1,22 @@
-package ua.nure.serdyuk.entity;
+package ua.nure.serdyuk.entity.bean;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class TrainInfoBean implements Serializable {
+import ua.nure.serdyuk.entity.Carriage;
+
+public class TrainBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private long trainId;
 
 	private long routeId;
+	
+	private long routeItemIdFrom;
+	
+	private long routeItemIdTo;
 
 	private String trainTag;
 
@@ -24,7 +30,7 @@ public class TrainInfoBean implements Serializable {
 
 	private Date duration;
 
-	List<RouteInfoBean> routes;
+	List<RouteInfo> routes;
 
 	List<Carriage> carriages;
 
@@ -34,6 +40,22 @@ public class TrainInfoBean implements Serializable {
 
 	public void setTrainTag(String trainTag) {
 		this.trainTag = trainTag;
+	}
+
+	public long getRouteItemIdFrom() {
+		return routeItemIdFrom;
+	}
+
+	public void setRouteItemIdFrom(long routeItemIdFrom) {
+		this.routeItemIdFrom = routeItemIdFrom;
+	}
+
+	public long getRouteItemIdTo() {
+		return routeItemIdTo;
+	}
+
+	public void setRouteItemIdTo(long routeItemIdTo) {
+		this.routeItemIdTo = routeItemIdTo;
 	}
 
 	public String getStationFrom() {
@@ -100,11 +122,11 @@ public class TrainInfoBean implements Serializable {
 		this.carriages = carriages;
 	}
 
-	public List<RouteInfoBean> getRoutes() {
+	public List<RouteInfo> getRoutes() {
 		return routes;
 	}
 
-	public void setRoutes(List<RouteInfoBean> routes) {
+	public void setRoutes(List<RouteInfo> routes) {
 		this.routes = routes;
 	}
 
@@ -119,11 +141,11 @@ public class TrainInfoBean implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		TrainInfoBean other = (TrainInfoBean) obj;
+		TrainBean other = (TrainBean) obj;
 		return this.routeId == other.routeId;
 	}
 
-	public static class RouteInfoBean implements Serializable {
+	public static class RouteInfo implements Serializable {
 
 		private static final long serialVersionUID = 7584579995712772109L;
 

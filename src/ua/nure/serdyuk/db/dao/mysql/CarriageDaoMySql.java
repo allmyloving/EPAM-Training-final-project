@@ -1,6 +1,5 @@
 package ua.nure.serdyuk.db.dao.mysql;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,6 +16,7 @@ import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.db.DbUtils;
 import ua.nure.serdyuk.db.dao.CarriageDao;
 import ua.nure.serdyuk.entity.Carriage;
+import ua.nure.serdyuk.entity.Carriage.CarriageType;
 import ua.nure.serdyuk.exception.DbException;
 
 public class CarriageDaoMySql implements CarriageDao {
@@ -91,9 +91,7 @@ public class CarriageDaoMySql implements CarriageDao {
 
 		try {
 			c.setId(rs.getLong("id"));
-			c.setTypeId(rs.getInt("type_id"));
-			c.setType(rs.getString("name"));
-			c.setSeatNum(rs.getInt("seat_num"));
+			c.setCarTypeId(rs.getInt("type_id"));
 			c.setTag(rs.getString("tag"));
 
 			ps = conn.prepareStatement(PropertyContainer
@@ -120,39 +118,85 @@ public class CarriageDaoMySql implements CarriageDao {
 		return c;
 	}
 
-	public Map<Integer, BigDecimal> getPrice(long trainId,
-			List<Integer> carTypes, long routeItemFrom, long routeItemTo) {
+	@Override
+	public Map<Integer, CarriageType> getTypes(long routeItemFrom,
+			long routeItemTo, long trainId) {
 		Connection conn = DbUtils.getConnection();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Map<Integer, BigDecimal> map = new HashMap<>();
+
+		Map<Integer, CarriageType> types = null;
 
 		try {
-			ps = conn.prepareStatement(PropertyContainer
-					.get(Const.GET_PRICE_BY_TRAIN_ID_CAR_TYPE_AND_ORDINALS));
+			ps = conn.prepareStatement(
+					PropertyContainer.get(Const.GET_CARRIAGE_TYPES));
 
 			int k = 1;
-			for (int carType : carTypes) {
-				ps.clearParameters();
+			ps.setLong(k++, routeItemFrom);
+			ps.setLong(k++, routeItemTo);
+			ps.setLong(k++, trainId);
 
-				ps.setLong(k++, trainId);
-				ps.setInt(k++, carType);
-				ps.setLong(k++, trainId);
-				ps.setLong(k++, routeItemFrom);
-				ps.setLong(k++, routeItemTo);
-				ps.setLong(k++, trainId);
+			rs = ps.executeQuery();
+			types = new HashMap<>();
 
-				rs = ps.executeQuery();
-
-				map.put(carType, rs.getBigDecimal("full_price"));
+			while (rs.next()) {
+				CarriageType type = extractType(rs);
+				types.put(type.getId(), type);
 			}
+			LOG.debug(String.format("Types obtained for trainId=%d ==> %s",
+					trainId, types));
 		} catch (SQLException e) {
 			LOG.error(e.getMessage());
 			throw new DbException(e.getMessage());
 		} finally {
 			DbUtils.close(conn, ps, rs);
 		}
-		return map;
+		return types;
 	}
+
+	private CarriageType extractType(ResultSet rs) throws SQLException {
+		CarriageType type = new CarriageType();
+		type.setId(rs.getInt("id"));
+		type.setName(rs.getString("name"));
+		type.setPrice(rs.getBigDecimal("full_price"));
+		type.setSeatNum(rs.getInt("seat_num"));
+
+		return type;
+	}
+
+	// public Map<Integer, BigDecimal> getPrice(long trainId,
+	// List<Integer> carTypes, long routeItemFrom, long routeItemTo) {
+	// Connection conn = DbUtils.getConnection();
+	// PreparedStatement ps = null;
+	// ResultSet rs = null;
+	// Map<Integer, BigDecimal> map = new HashMap<>();
+	//
+	// try {
+	// ps = conn.prepareStatement(PropertyContainer
+	// .get(Const.GET_PRICE_BY_TRAIN_ID_CAR_TYPE_AND_ORDINALS));
+	//
+	// int k = 1;
+	// for (int carType : carTypes) {
+	// ps.clearParameters();
+	//
+	// ps.setLong(k++, trainId);
+	// ps.setInt(k++, carType);
+	// ps.setLong(k++, trainId);
+	// ps.setLong(k++, routeItemFrom);
+	// ps.setLong(k++, routeItemTo);
+	// ps.setLong(k++, trainId);
+	//
+	// rs = ps.executeQuery();
+	//
+	// map.put(carType, rs.getBigDecimal("full_price"));
+	// }
+	// } catch (SQLException e) {
+	// LOG.error(e.getMessage());
+	// throw new DbException(e.getMessage());
+	// } finally {
+	// DbUtils.close(conn, ps, rs);
+	// }
+	// return map;
+	// }
 
 }

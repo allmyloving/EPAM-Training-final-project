@@ -1,12 +1,12 @@
 package ua.nure.serdyuk.db.service.impl;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
 import ua.nure.serdyuk.db.dao.CarriageDao;
 import ua.nure.serdyuk.db.service.CarriageService;
 import ua.nure.serdyuk.entity.Carriage;
+import ua.nure.serdyuk.entity.Carriage.CarriageType;
 
 public class CarriageServiceImpl implements CarriageService {
 
@@ -17,19 +17,15 @@ public class CarriageServiceImpl implements CarriageService {
 	}
 
 	@Override
-	public List<Carriage> getAllByTrainId(long trainId, long routeId) {
+	public List<Carriage> getAll(long routeItemFrom, long routeItemTo,
+			long trainId, long routeId) {
 		List<Carriage> carriages = carriageDao.getAllByTrainId(trainId,
 				routeId);
-//		Map<Integer, BigDecimal> prices = carriageDao.getPrice(trainId,
-//				carTypes, routeItemFrom, routeItemTo);
+		Map<Integer, CarriageType> types = carriageDao.getTypes(routeItemFrom,
+				routeItemTo, trainId);
+		for (Carriage item : carriages) {
+			item.setType(types.get(item.getCarTypeId()));
+		}
 		return carriages;
-	}
-
-	@Override
-	public Map<Integer, BigDecimal> getPrice(long trainId,
-			List<Integer> carTypes, long routeItemFrom, long routeItemTo) {
-		// TODO Auto-generated method stub
-		return carriageDao.getPrice(trainId, carTypes, routeItemFrom,
-				routeItemTo);
 	}
 }

@@ -11,8 +11,8 @@ import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.constants.Path;
 import ua.nure.serdyuk.db.service.CarriageService;
 import ua.nure.serdyuk.entity.Carriage;
-import ua.nure.serdyuk.entity.CarriageListBean;
-import ua.nure.serdyuk.entity.TrainInfoBean;
+import ua.nure.serdyuk.entity.bean.CarriageListBean;
+import ua.nure.serdyuk.entity.bean.TrainBean;
 
 public class GetFreeSeatsCommand implements Command {
 
@@ -22,19 +22,21 @@ public class GetFreeSeatsCommand implements Command {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse res) {
 		String param = req.getParameter("routeId");
-		List<TrainInfoBean> trainInfoBeans = (List<TrainInfoBean>) req
-				.getSession().getAttribute(Const.TRAIN_INFO_BEANS);
-		TrainInfoBean temp = new TrainInfoBean();
+
+		List<TrainBean> trainInfoBeans = (List<TrainBean>) req.getSession()
+				.getAttribute(Const.TRAIN_INFO_BEANS);
+		TrainBean temp = new TrainBean();
 		temp.setRouteId(Long.valueOf(param));
 
 		LOG.debug("beans ==> " + trainInfoBeans);
 
-		TrainInfoBean bean = trainInfoBeans.get(trainInfoBeans.indexOf(temp));
+		TrainBean bean = trainInfoBeans.get(trainInfoBeans.indexOf(temp));
 
 		CarriageService carriageService = (CarriageService) req
 				.getServletContext().getAttribute(Const.CARRIAGE_SERVICE);
-		List<Carriage> carriages = carriageService
-				.getAllByTrainId(bean.getTrainId(), bean.getRouteId());
+		List<Carriage> carriages = carriageService.getAll(
+				bean.getRouteItemIdFrom(), bean.getRouteItemIdTo(),
+				bean.getTrainId(), bean.getRouteId());
 
 		LOG.debug("carriages found ==> " + carriages);
 

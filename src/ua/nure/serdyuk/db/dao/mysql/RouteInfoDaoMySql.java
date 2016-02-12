@@ -13,7 +13,7 @@ import ua.nure.serdyuk.PropertyContainer;
 import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.db.DbUtils;
 import ua.nure.serdyuk.db.dao.RouteInfoDao;
-import ua.nure.serdyuk.entity.TrainInfoBean.RouteInfoBean;
+import ua.nure.serdyuk.entity.bean.TrainBean.RouteInfo;
 import ua.nure.serdyuk.exception.DbException;
 
 public class RouteInfoDaoMySql implements RouteInfoDao {
@@ -21,36 +21,36 @@ public class RouteInfoDaoMySql implements RouteInfoDao {
 	private static final Logger LOG = Logger.getLogger(RouteInfoDaoMySql.class);
 
 	@Override
-	public boolean create(RouteInfoBean item) {
+	public boolean create(RouteInfo item) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public RouteInfoBean get(long id) {
+	public RouteInfo get(long id) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean update(RouteInfoBean item) {
+	public boolean update(RouteInfo item) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean delete(RouteInfoBean item) {
+	public boolean delete(RouteInfo item) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public List<RouteInfoBean> getAll() {
+	public List<RouteInfo> getAll() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public List<RouteInfoBean> getAllByTrainId(long trainId) {
+	public List<RouteInfo> getAllByTrainId(long trainId) {
 		Connection conn = DbUtils.getConnection();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		List<RouteInfoBean> beans = null;
+		List<RouteInfo> beans = null;
 
 		try {
 			ps = conn.prepareStatement(
@@ -74,8 +74,8 @@ public class RouteInfoDaoMySql implements RouteInfoDao {
 		return beans;
 	}
 
-	private RouteInfoBean extract(ResultSet rs) throws SQLException {
-		RouteInfoBean bean = new RouteInfoBean();
+	private RouteInfo extract(ResultSet rs) throws SQLException {
+		RouteInfo bean = new RouteInfo();
 		bean.setArrTime(rs.getTime("arr_time"));
 		bean.setDepTime(rs.getTime("dep_time"));
 		bean.setStationName(rs.getString("name"));

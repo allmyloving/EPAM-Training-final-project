@@ -76,7 +76,7 @@
 				</c:forEach>
 
 			</table>
-			<div class="well">Time is local.</div>
+			<div class="well">	<fmt:message key="message.time_local" /></div>
 		</c:when>
 		<c:otherwise>
 			<div class="well well-lg">

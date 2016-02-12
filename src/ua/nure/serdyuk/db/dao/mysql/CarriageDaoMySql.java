@@ -1,11 +1,14 @@
 package ua.nure.serdyuk.db.dao.mysql;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -88,6 +91,7 @@ public class CarriageDaoMySql implements CarriageDao {
 
 		try {
 			c.setId(rs.getLong("id"));
+			c.setTypeId(rs.getInt("type_id"));
 			c.setType(rs.getString("name"));
 			c.setSeatNum(rs.getInt("seat_num"));
 			c.setTag(rs.getString("tag"));
@@ -97,7 +101,7 @@ public class CarriageDaoMySql implements CarriageDao {
 			int k = 1;
 			ps.setLong(k++, c.getId());
 			ps.setLong(k++, routeId);
-			
+
 			LOG.debug(ps);
 
 			rsSeats = ps.executeQuery();
@@ -114,6 +118,41 @@ public class CarriageDaoMySql implements CarriageDao {
 			DbUtils.close(null, ps, rsSeats);
 		}
 		return c;
+	}
+
+	public Map<Integer, BigDecimal> getPrice(long trainId,
+			List<Integer> carTypes, long routeItemFrom, long routeItemTo) {
+		Connection conn = DbUtils.getConnection();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Map<Integer, BigDecimal> map = new HashMap<>();
+
+		try {
+			ps = conn.prepareStatement(PropertyContainer
+					.get(Const.GET_PRICE_BY_TRAIN_ID_CAR_TYPE_AND_ORDINALS));
+
+			int k = 1;
+			for (int carType : carTypes) {
+				ps.clearParameters();
+
+				ps.setLong(k++, trainId);
+				ps.setInt(k++, carType);
+				ps.setLong(k++, trainId);
+				ps.setLong(k++, routeItemFrom);
+				ps.setLong(k++, routeItemTo);
+				ps.setLong(k++, trainId);
+
+				rs = ps.executeQuery();
+
+				map.put(carType, rs.getBigDecimal("full_price"));
+			}
+		} catch (SQLException e) {
+			LOG.error(e.getMessage());
+			throw new DbException(e.getMessage());
+		} finally {
+			DbUtils.close(conn, ps, rs);
+		}
+		return map;
 	}
 
 }

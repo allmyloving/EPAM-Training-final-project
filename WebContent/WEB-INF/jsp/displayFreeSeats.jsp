@@ -28,7 +28,7 @@
 							</div>
 						</div>
 						<div class="well">
-							<fmt:message key="label.click_row" />
+							<fmt:message key="message.click_row" />
 						</div>
 					</div>
 				</div>

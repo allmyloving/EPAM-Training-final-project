@@ -7,6 +7,8 @@ public class Carriage {
 	
 	private long id;
 	
+	private int typeId;
+	
 	private String type;
 	
 	private String tag;
@@ -23,6 +25,14 @@ public class Carriage {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public int getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(int typeId) {
+		this.typeId = typeId;
 	}
 
 	public String getType() {

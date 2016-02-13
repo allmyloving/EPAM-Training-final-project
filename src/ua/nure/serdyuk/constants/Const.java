@@ -23,6 +23,8 @@ public final class Const {
 	public static final String CURRENT_USER = "currentUser";
 
 	public static final String CARRIAGE_LIST = "carriageList";
+	
+	public static final String TICKET_ORDER_BEAN = "ticketOrderBean";
 
 	public static final String USER_SERVICE = "userService";
 
@@ -37,6 +39,8 @@ public final class Const {
 	public static final String ROUTE_INFO_SERVICE = "routeInfoService";
 
 	public static final String CARRIAGE_SERVICE = "carriageService";
+	
+	public static final String TICKET_SERVICE = "ticketService";
 
 	public static final String CURRENT_LOCALE = "currentLocale";
 
@@ -68,6 +72,8 @@ public final class Const {
 	public static final String GET_ALL_STATIONS = "SQL_GET_ALL_STATIONS";
 
 	public static final String GET_ALL_STATIONS_LIKE = "SQL_GET_ALL_STATIONS_LIKE";
+	
+	public static final String GET_STATIONS_BY_ROUTE_ITEMS = "SQL_SELECT_STATIONS_BY_ROUTE_ITEMS";
 
 	public static final String GET_ROUTE_INFO_BY_TRAIN_ID = "SQL_GET_ROUTE_INFO_BY_TRAIN_ID";
 
@@ -104,7 +110,7 @@ public final class Const {
 
 	public static final String REGEX_PASSWORD = "^\\w{4,}$";
 
-	public static final String REGEX_NAME = "^(\\p{javaUpperCase}[a-zà-ÿ]*\\s?)+$";
+	public static final String REGEX_NAME = "^(\\p{javaUpperCase}[a-zа-я]*\\s?)+$";
 
 	// stuff
 	public static final String CLIENT_DATE_FORMAT = "MM/dd/yyyy";

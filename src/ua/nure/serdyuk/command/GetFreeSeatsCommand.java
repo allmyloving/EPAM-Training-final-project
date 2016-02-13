@@ -24,6 +24,7 @@ public class GetFreeSeatsCommand implements Command {
 		String routeIdStr = req.getParameter("routeId");
 		long routeId = Long.valueOf(routeIdStr);
 
+		@SuppressWarnings("unchecked")
 		List<TrainBean> trainInfoBeans = (List<TrainBean>) req.getSession()
 				.getAttribute(Const.TRAIN_INFO_BEANS);
 		TrainBean temp = new TrainBean();
@@ -39,6 +40,8 @@ public class GetFreeSeatsCommand implements Command {
 		List<Carriage> carriages = carriageService.getAll(
 				bean.getRouteItemIdFrom(), bean.getRouteItemIdTo(),
 				bean.getTrainId(), bean.getRouteId());
+		
+		bean.setCarriages(carriages);
 
 		LOG.debug("carriages found ==> " + carriages);
 

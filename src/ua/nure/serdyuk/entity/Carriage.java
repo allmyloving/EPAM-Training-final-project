@@ -6,7 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Carriage {
+public class Carriage implements Serializable{
+
+	private static final long serialVersionUID = -2429606477947350669L;
 
 	private long id;
 

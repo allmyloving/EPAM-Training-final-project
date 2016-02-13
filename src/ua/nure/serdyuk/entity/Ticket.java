@@ -2,7 +2,6 @@ package ua.nure.serdyuk.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Map;
 
 public class Ticket implements Serializable {
 
@@ -16,14 +15,22 @@ public class Ticket implements Serializable {
 	
 	private long userId;
 	
-	private long seatId;
+	private int seatNum;
 	
 	// or use enum
-	private String status;
+	private Integer statusId;
 	
-	private long discountTypeId;
+	private Integer discountTypeId;
 	
-	private Map<String, BigDecimal> facilities;
+	private BigDecimal price;
+	
+	private long carriageId;
+	
+	private long routeId;
+	
+	private long routeItemDepId;
+	
+	private long routeItemArrId;
 
 	public long getId() {
 		return id;
@@ -57,43 +64,77 @@ public class Ticket implements Serializable {
 		this.userId = userId;
 	}
 
-	public long getSeatId() {
-		return seatId;
+	public Integer getStatusId() {
+		return statusId;
 	}
 
-	public void setSeatId(long seatId) {
-		this.seatId = seatId;
+	public void setStatusId(int statusId) {
+		this.statusId = statusId;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public long getDiscountTypeId() {
+	public Integer getDiscountTypeId() {
 		return discountTypeId;
 	}
 
-	public void setDiscountTypeId(long discountTypeId) {
+	public int getSeatNum() {
+		return seatNum;
+	}
+
+	public void setSeatNum(int seatNum) {
+		this.seatNum = seatNum;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+	public long getCarriageId() {
+		return carriageId;
+	}
+
+	public void setCarriageId(long carriageId) {
+		this.carriageId = carriageId;
+	}
+
+	public long getRouteId() {
+		return routeId;
+	}
+
+	public void setRouteId(long routeId) {
+		this.routeId = routeId;
+	}
+
+	public long getRouteItemDepId() {
+		return routeItemDepId;
+	}
+
+	public void setRouteItemDepId(long routeItemDepId) {
+		this.routeItemDepId = routeItemDepId;
+	}
+
+	public long getRouteItemArrId() {
+		return routeItemArrId;
+	}
+
+	public void setRouteItemArrId(long routeItemArrId) {
+		this.routeItemArrId = routeItemArrId;
+	}
+
+	public void setDiscountTypeId(int discountTypeId) {
 		this.discountTypeId = discountTypeId;
-	}
-
-	public Map<String, BigDecimal> getFacilities() {
-		return facilities;
-	}
-
-	public void setFacilities(Map<String, BigDecimal> facilities) {
-		this.facilities = facilities;
 	}
 
 	@Override
 	public String toString() {
 		return "Ticket [id=" + id + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", userId=" + userId + ", seatId=" + seatId
-				+ ", status=" + status + ", discountTypeId=" + discountTypeId
-				+ ", facilities=" + facilities + "]";
+				+ lastName + ", userId=" + userId + ", seatNum=" + seatNum
+				+ ", statusId=" + statusId + ", discountTypeId="
+				+ discountTypeId + ", price=" + price + ", carriageId="
+				+ carriageId + ", routeId=" + routeId + ", routeItemDepId="
+				+ routeItemDepId + ", routeItemArrId=" + routeItemArrId + "]";
 	}
 }

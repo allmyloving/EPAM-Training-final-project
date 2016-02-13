@@ -116,6 +116,37 @@ public class StationDaoMySql implements StationDao {
 		return station;
 	}
 
+	@Override
+	public List<Station> getByRouteItems(long routeItemId1, long routeItemId2) {
+		Connection conn = DbUtils.getConnection();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		List<Station> stations = null;
+
+		try {
+			ps = conn.prepareStatement(
+					PropertyContainer.get(Const.GET_STATIONS_BY_ROUTE_ITEMS));
+			int k = 1;
+			ps.setLong(k++, routeItemId1);
+			ps.setLong(k++, routeItemId2);
+
+			rs = ps.executeQuery();
+			stations = new ArrayList<>();
+			while (rs.next()) {
+				stations.add(extractStation(rs));
+			}
+		} catch (SQLException e) {
+			LOG.error(e.getMessage());
+			throw new DbException(e.getMessage());
+		} finally {
+			DbUtils.close(conn, ps, rs);
+		}
+		if (stations.size() != 2) {
+			throw new DbException("Unexpected result set.");
+		}
+		return stations;
+	}
+
 	private Station extractStation(ResultSet rs) throws SQLException {
 		Station s = new Station();
 		s.setId(rs.getLong("id"));

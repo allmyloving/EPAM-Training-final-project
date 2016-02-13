@@ -23,6 +23,7 @@ public final class CommandContainer {
 		commands.put("showRouteInfo", new ShowRouteInfoCommand());
 		commands.put("getFreeSeats", new GetFreeSeatsCommand());
 		commands.put("orderTicketView", new OrderTicketViewCommand());
+		commands.put("orderTicket", new OrderTicketCommand());
 		
 		commands.put("loginView", new LoginViewCommand());
 		commands.put("signUpView", new SignUpViewCommand());

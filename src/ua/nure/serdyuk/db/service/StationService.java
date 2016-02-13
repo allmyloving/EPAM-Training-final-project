@@ -22,4 +22,6 @@ public interface StationService {
 	 * @return
 	 */
 	List<Station> getAll(String filter);
+	
+	List<Station> getByRouteItems(long routeItemId1, long routeItemId2);
 }

@@ -17,21 +17,21 @@ $(document).ready(function() {
 	// });
 
 	// index.jsp
-	$('[data-toggle="popover"]').popover({
-		html : true,
-		content : function() {
-			var d = $.ajax({
-				url : "serv?param=stations&filter=Ха",
-				type : "get",
-				async : false,
-				success : function(data) {
-					return data;
-				}
-			});
-			console.log(d);
-			return d;
-		}
-	});
+//	$('[data-toggle="popover"]').popover({
+//		html : true,
+//		content : function() {
+//			var d = $.ajax({
+//				url : "serv?param=stations&filter=Ха",
+//				type : "get",
+//				async : false,
+//				success : function(data) {
+//					return data;
+//				}
+//			});
+//			console.log(d);
+//			return d;
+//		}
+//	});
 	$('#swapStations').click(function(event) {
 		var text1 = $('#stationFrom').val();
 		var text2 = $('#stationTo').val();
@@ -52,11 +52,11 @@ $(document).ready(function() {
 		$('div[id=' + id + ']').slideToggle('slow');
 	});
 	$('.seat').click(function() {
-		//$(this).blur();
+		// $(this).blur();
 		var idVal = $(this).html().trim();
-		console.log('seat num==> ' +idVal);
+		console.log('seat num==> ' + idVal);
 		$('#seatNum').val(idVal);
-		//$(this).toggleClass('active');
+		// $(this).toggleClass('active');
 	});
 
 	$('#signUpForm').submit(function(event) {
@@ -97,8 +97,26 @@ $(document).ready(function() {
 			$err.html(errors[key]);
 			proceed = false;
 		}
-		// proceed = true;
-		// console.log(proceed);
+		
+		if (proceed) {
+			$(this).off("submit");
+			this.submit();
+		}
+	});
+	$('#ticketOrderForm').submit(function(event) {
+		event.preventDefault();
+		var proceed = true;
+		var items = $(this).find('.form-control');
+
+		for (var i = 0; i < items.length; i++) {
+			var id = $(items[i]).attr('id');
+			if ($(items[i]).val() == '') {
+				$('#' + id + 'Error').html("Cannot be empty.");
+				proceed = false;
+			} else {
+				$('#' + id + 'Error').html('');
+			}
+		}
 		if (proceed) {
 			$(this).off("submit");
 			this.submit();
@@ -106,9 +124,13 @@ $(document).ready(function() {
 	});
 });
 
-function toggleButton(button){
+function toggleButton(button) {
 	console.log($(button).attr('id'));
 	$(button).toggleClass('focus');
+};
+
+function validateTicketForm(){
+	
 }
 
 function getStations(input) {

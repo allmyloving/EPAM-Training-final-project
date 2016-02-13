@@ -292,7 +292,7 @@ create table if not exists `ticket` (
 	`seat_num` tinyint not null,
 	`price` decimal(5,2) not null,
 	
-	`user_id` bigint unsigned,
+	`user_id` bigint unsigned not null,
 	`discount_type_id` tinyint unsigned,
 	`status_id` tinyint unsigned references `status`(`id`),
 	`carriage_id` bigint unsigned not null,

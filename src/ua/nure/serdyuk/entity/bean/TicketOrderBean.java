@@ -4,21 +4,31 @@ import java.io.Serializable;
 
 import ua.nure.serdyuk.entity.Carriage;
 
-public class TicketOrderBean implements Serializable{
+public class TicketOrderBean implements Serializable {
 
 	private static final long serialVersionUID = -592514764415037535L;
 
 	private String firstName;
-	
+
 	private String lastName;
 	
-	private long routeItemIdFrom;
+	private String stationFrom;
 	
-	private long routeItemIdTo;
-	
+	private String stationTo;
+
+	private TrainBean trainBean;
+
 	private int seatNum;
-	
+
 	private Carriage carriage;
+	
+	public TrainBean getTrainBean() {
+		return trainBean;
+	}
+	
+	public void setTrainBean(TrainBean trainBean) {
+		this.trainBean = trainBean;
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -36,28 +46,28 @@ public class TicketOrderBean implements Serializable{
 		this.lastName = lastName;
 	}
 
-	public long getRouteItemIdFrom() {
-		return routeItemIdFrom;
-	}
-
-	public void setRouteItemIdFrom(long routeItemIdFrom) {
-		this.routeItemIdFrom = routeItemIdFrom;
-	}
-
-	public long getRouteItemIdTo() {
-		return routeItemIdTo;
-	}
-
-	public void setRouteItemIdTo(long routeItemIdTo) {
-		this.routeItemIdTo = routeItemIdTo;
-	}
-
 	public int getSeatNum() {
 		return seatNum;
 	}
 
 	public void setSeatNum(int seatNum) {
 		this.seatNum = seatNum;
+	}
+
+	public String getStationFrom() {
+		return stationFrom;
+	}
+
+	public void setStationFrom(String stationFrom) {
+		this.stationFrom = stationFrom;
+	}
+
+	public String getStationTo() {
+		return stationTo;
+	}
+
+	public void setStationTo(String stationTo) {
+		this.stationTo = stationTo;
 	}
 
 	public Carriage getCarriage() {
@@ -71,8 +81,8 @@ public class TicketOrderBean implements Serializable{
 	@Override
 	public String toString() {
 		return "TicketOrderBean [firstName=" + firstName + ", lastName="
-				+ lastName + ", routeItemIdFrom=" + routeItemIdFrom
-				+ ", routeItemIdTo=" + routeItemIdTo + ", seatNum=" + seatNum
+				+ lastName + ", trainBean=" + trainBean + ", seatNum=" + seatNum
 				+ ", carriage=" + carriage + "]";
 	}
+
 }

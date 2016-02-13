@@ -16,8 +16,8 @@ import ua.nure.serdyuk.PropertyContainer;
 import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.db.DbUtils;
 import ua.nure.serdyuk.db.dao.TrainInfoDao;
+import ua.nure.serdyuk.entity.bean.RouteBean;
 import ua.nure.serdyuk.entity.bean.TrainBean;
-import ua.nure.serdyuk.entity.bean.TrainBean.RouteInfo;
 import ua.nure.serdyuk.exception.DbException;
 
 public class TrainInfoDaoMySql implements TrainInfoDao {
@@ -177,11 +177,11 @@ public class TrainInfoDaoMySql implements TrainInfoDao {
 		return dCal.getTime();
 	}
 
-	private List<RouteInfo> getRouteInfo(long trainId) {
+	private List<RouteBean> getRouteInfo(long trainId) {
 		Connection conn = DbUtils.getConnection();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		List<RouteInfo> beans = null;
+		List<RouteBean> beans = null;
 
 		try {
 			ps = conn.prepareStatement(
@@ -205,8 +205,8 @@ public class TrainInfoDaoMySql implements TrainInfoDao {
 		return beans;
 	}
 
-	private RouteInfo extractRouteInfo(ResultSet rs) throws SQLException {
-		RouteInfo bean = new RouteInfo();
+	private RouteBean extractRouteInfo(ResultSet rs) throws SQLException {
+		RouteBean bean = new RouteBean();
 		bean.setStationName(rs.getString("name"));
 		bean.setArrTime(rs.getTime("arr_time"));
 		bean.setDepTime(rs.getTime("dep_time"));

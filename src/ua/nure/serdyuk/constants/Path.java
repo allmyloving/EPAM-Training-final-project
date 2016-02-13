@@ -16,6 +16,8 @@ public final class Path {
 	
 	public static final String FREE_SEATS_VIEW = "/WEB-INF/jsp/displayFreeSeats.jsp";
 	
+	public static final String ORDER_TICKET_VIEW = "/WEB-INF/jsp/orderTicket.jsp";
+	
 	public static final String ERROR_VIEW = "/WEB-INF/jsp/error/error_main.jsp";
 	
 	public static final String ERROR_404_VIEW = "/WEB-INF/jsp/error/error_404.jsp";

@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.constants.Path;
-import ua.nure.serdyuk.db.service.RouteInfoService;
+import ua.nure.serdyuk.db.service.RouteBeanService;
 
 public class ShowRouteInfoCommand implements Command {
 
@@ -14,7 +14,7 @@ public class ShowRouteInfoCommand implements Command {
 		String trainIdStr = req.getParameter("trainId");
 		long trainId = Long.valueOf(trainIdStr);
 
-		RouteInfoService service = (RouteInfoService) req.getServletContext()
+		RouteBeanService service = (RouteBeanService) req.getServletContext()
 				.getAttribute(Const.ROUTE_INFO_SERVICE);
 		req.setAttribute(Const.ROUTE_INFO_BEANS,
 				service.getAllByTrainId(trainId));

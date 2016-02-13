@@ -1,4 +1,3 @@
--- drop table user;
 drop database `st4`;
 create database `st4`;
 use `st4`;
@@ -252,19 +251,19 @@ insert into `allowed_val` values(0);
 insert into `allowed_val` values(1);
 -- ------------------------------------------------------------------------
 	-- DROP
-create table if not exists `seat` (
-	`id` tinyint unsigned auto_increment not null unique,
-	-- -1 ==> all, 0 -- odd, 1 -- even
-	`coef` tinyint unsigned references `allowed_val`(`val`),
-	`seat_type_id` tinyint unsigned not null,
-	`car_type_id`  tinyint unsigned not null,
-	
-	primary key(`id`),
-	
-	constraint `fk_seat_seat_type` foreign key(`seat_type_id`) references `seat_type`(`id`) on update cascade on delete cascade,
-	constraint `fk_seat_car_type` foreign key(`car_type_id`) references `carriage_type`(`id`) on update cascade on delete cascade
-) charset=utf8;
-
+-- create table if not exists `seat` (
+-- `id` tinyint unsigned auto_increment not null unique,
+-- -- -1 ==> all, 0 -- odd, 1 -- even
+-- `coef` tinyint unsigned references `allowed_val`(`val`),
+-- `seat_type_id` tinyint unsigned not null,
+-- `car_type_id`  tinyint unsigned not null,
+-- 
+-- primary key(`id`),
+-- 
+-- constraint `fk_seat_seat_type` foreign key(`seat_type_id`) references `seat_type`(`id`) on update cascade on delete cascade,
+-- constraint `fk_seat_car_type` foreign key(`car_type_id`) references `carriage_type`(`id`) on update cascade on delete cascade
+-- ) charset=utf8;
+-- 
 -- -------------------------------------------------------------------------
 
 create table if not exists `discount_type` (
@@ -340,11 +339,3 @@ create table if not exists `facility` (
 	constraint `fk_facility_ticket` foreign key(`ticket_id`) references `ticket`(`id`) on delete cascade on update cascade
 ) charset=utf8;
 
--- ---------------------------------------------------
--- DROP
-create table if not exists `ext_cost`(
-	id tinyint unsigned auto_increment not null unique,
-	name varchar(10) not null,
-	cost decimal(5,2) not null,
-	perc tinyint unsigned 
-);

@@ -68,7 +68,7 @@ public class RouteDaoMySql implements RouteDao {
 				routes.add(extract(rs));
 			}
 		} catch (SQLException e) {
-
+			LOG.error(e.getMessage());
 			throw new DbException(e.getMessage());
 		}
 		return routes;

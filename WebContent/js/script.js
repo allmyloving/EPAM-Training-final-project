@@ -1,3 +1,5 @@
+var seatsSelected = {};
+
 $(document).ready(function() {
 	console.log("ready!!");
 	// $('#errorDiv').hide();
@@ -14,18 +16,7 @@ $(document).ready(function() {
 	// }
 	// });
 
-	// init elements
-	$('#date').datepicker({
-		startDate : '0'
-	// ,todayBtn: "linked"
-	});
-	$('.seat-container').css('display', 'none');
-	$('.carriage-item').click(function() {
-		var id = $(this).attr('id');
-		console.log(id);
-		console.log($('div[id=' + id+']').html());
-		$('div[id=' + id+']').slideToggle('slow');
-	});
+	// index.jsp
 	$('[data-toggle="popover"]').popover({
 		html : true,
 		content : function() {
@@ -40,6 +31,32 @@ $(document).ready(function() {
 			console.log(d);
 			return d;
 		}
+	});
+	$('#swapStations').click(function(event) {
+		var text1 = $('#stationFrom').val();
+		var text2 = $('#stationTo').val();
+		$('#stationFrom').val(text2);
+		$('#stationTo').val(text1);
+	});
+	$('#date').datepicker({
+		startDate : '0'
+	// ,todayBtn: "linked"
+	});
+
+	// displayFreeSeats
+	$('.seat-container').css('display', 'none');
+	$('.carriage-item').click(function() {
+		var id = $(this).attr('id');
+		console.log("carriage ==> " + id);
+		$('#carriageId').val(id);
+		$('div[id=' + id + ']').slideToggle('slow');
+	});
+	$('.seat').click(function() {
+		//$(this).blur();
+		var idVal = $(this).html().trim();
+		console.log('seat num==> ' +idVal);
+		$('#seatNum').val(idVal);
+		//$(this).toggleClass('active');
 	});
 
 	$('#signUpForm').submit(function(event) {
@@ -88,6 +105,11 @@ $(document).ready(function() {
 		}
 	});
 });
+
+function toggleButton(button){
+	console.log($(button).attr('id'));
+	$(button).toggleClass('focus');
+}
 
 function getStations(input) {
 	$.ajax({

@@ -14,6 +14,8 @@ public final class Const {
 
 	public static final String ROLE = "role";
 	
+	public static final String ROUTE_ID = "routeId";
+	
 	public static final String STATION_FROM = "stationFrom";
 	
 	public static final String STATION_TO = "stationTo";

@@ -15,7 +15,7 @@ import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.constants.Path;
 import ua.nure.serdyuk.db.service.RouteService;
 import ua.nure.serdyuk.db.service.StationService;
-import ua.nure.serdyuk.db.service.TrainInfoService;
+import ua.nure.serdyuk.db.service.TrainBeanService;
 import ua.nure.serdyuk.entity.Route;
 import ua.nure.serdyuk.entity.Station;
 import ua.nure.serdyuk.entity.bean.TrainBean;
@@ -85,7 +85,7 @@ public class FindTrainsCommand implements Command {
 
 		LOG.debug("found ==> " + routes);
 
-		TrainInfoService trainInfoService = (TrainInfoService) context
+		TrainBeanService trainInfoService = (TrainBeanService) context
 				.getAttribute(Const.TRAIN_INFO_SERVICE);
 		List<TrainBean> trainBeans = new ArrayList<>();
 		for (Route r : routes) {

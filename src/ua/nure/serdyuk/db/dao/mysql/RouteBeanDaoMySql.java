@@ -12,45 +12,45 @@ import org.apache.log4j.Logger;
 import ua.nure.serdyuk.PropertyContainer;
 import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.db.DbUtils;
-import ua.nure.serdyuk.db.dao.RouteInfoDao;
-import ua.nure.serdyuk.entity.bean.TrainBean.RouteInfo;
+import ua.nure.serdyuk.db.dao.RouteBeanDao;
+import ua.nure.serdyuk.entity.bean.RouteBean;
 import ua.nure.serdyuk.exception.DbException;
 
-public class RouteInfoDaoMySql implements RouteInfoDao {
+public class RouteBeanDaoMySql implements RouteBeanDao {
 
-	private static final Logger LOG = Logger.getLogger(RouteInfoDaoMySql.class);
+	private static final Logger LOG = Logger.getLogger(RouteBeanDaoMySql.class);
 
 	@Override
-	public boolean create(RouteInfo item) {
+	public boolean create(RouteBean item) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public RouteInfo get(long id) {
+	public RouteBean get(long id) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean update(RouteInfo item) {
+	public boolean update(RouteBean item) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean delete(RouteInfo item) {
+	public boolean delete(RouteBean item) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public List<RouteInfo> getAll() {
+	public List<RouteBean> getAll() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public List<RouteInfo> getAllByTrainId(long trainId) {
+	public List<RouteBean> getAllByTrainId(long trainId) {
 		Connection conn = DbUtils.getConnection();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		List<RouteInfo> beans = null;
+		List<RouteBean> beans = null;
 
 		try {
 			ps = conn.prepareStatement(
@@ -74,8 +74,8 @@ public class RouteInfoDaoMySql implements RouteInfoDao {
 		return beans;
 	}
 
-	private RouteInfo extract(ResultSet rs) throws SQLException {
-		RouteInfo bean = new RouteInfo();
+	private RouteBean extract(ResultSet rs) throws SQLException {
+		RouteBean bean = new RouteBean();
 		bean.setArrTime(rs.getTime("arr_time"));
 		bean.setDepTime(rs.getTime("dep_time"));
 		bean.setStationName(rs.getString("name"));

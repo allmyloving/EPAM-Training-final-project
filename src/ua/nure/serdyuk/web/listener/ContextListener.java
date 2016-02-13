@@ -18,17 +18,17 @@ import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.constants.Path;
 import ua.nure.serdyuk.db.dao.mysql.CarriageDaoMySql;
 import ua.nure.serdyuk.db.dao.mysql.RouteDaoMySql;
-import ua.nure.serdyuk.db.dao.mysql.RouteInfoDaoMySql;
+import ua.nure.serdyuk.db.dao.mysql.RouteBeanDaoMySql;
 import ua.nure.serdyuk.db.dao.mysql.RouteItemDaoMySql;
 import ua.nure.serdyuk.db.dao.mysql.StationDaoMySql;
 import ua.nure.serdyuk.db.dao.mysql.TrainInfoDaoMySql;
 import ua.nure.serdyuk.db.dao.mysql.UserDaoMySql;
 import ua.nure.serdyuk.db.service.impl.CarriageServiceImpl;
-import ua.nure.serdyuk.db.service.impl.RouteInfoServiceImpl;
+import ua.nure.serdyuk.db.service.impl.RouteBeanServiceImpl;
 import ua.nure.serdyuk.db.service.impl.RouteItemServiceMySql;
 import ua.nure.serdyuk.db.service.impl.RouteServiceMySql;
 import ua.nure.serdyuk.db.service.impl.StationServiceMySql;
-import ua.nure.serdyuk.db.service.impl.TrainInfoServiceImpl;
+import ua.nure.serdyuk.db.service.impl.TrainBeanServiceImpl;
 import ua.nure.serdyuk.db.service.impl.UserServiceMySql;
 
 @WebListener
@@ -109,12 +109,12 @@ public class ContextListener implements ServletContextListener {
 				new RouteItemServiceMySql(new RouteItemDaoMySql()));
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "RouteItem"));
 
-		context.setAttribute(Const.TRAIN_INFO_SERVICE, new TrainInfoServiceImpl(
+		context.setAttribute(Const.TRAIN_INFO_SERVICE, new TrainBeanServiceImpl(
 				new TrainInfoDaoMySql(), new RouteItemDaoMySql()));
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "TrainInfo"));
 
-		context.setAttribute(Const.ROUTE_INFO_SERVICE, new RouteInfoServiceImpl(
-				new RouteInfoDaoMySql()));
+		context.setAttribute(Const.ROUTE_INFO_SERVICE, new RouteBeanServiceImpl(
+				new RouteBeanDaoMySql()));
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "RouteInfo"));
 		
 		context.setAttribute(Const.CARRIAGE_SERVICE, new CarriageServiceImpl(

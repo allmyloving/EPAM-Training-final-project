@@ -2,16 +2,14 @@ package ua.nure.serdyuk.db.service.impl;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import ua.nure.serdyuk.db.dao.StationDao;
 import ua.nure.serdyuk.db.service.StationService;
 import ua.nure.serdyuk.entity.Station;
 
 public class StationServiceMySql implements StationService {
 
-	private static final Logger LOG = Logger
-			.getLogger(StationServiceMySql.class);
+//	private static final Logger LOG = Logger
+//			.getLogger(StationServiceMySql.class);
 
 	private StationDao stationDao;
 

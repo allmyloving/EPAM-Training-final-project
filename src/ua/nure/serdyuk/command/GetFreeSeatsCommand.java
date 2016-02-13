@@ -21,12 +21,14 @@ public class GetFreeSeatsCommand implements Command {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse res) {
-		String param = req.getParameter("routeId");
+		String routeIdStr = req.getParameter("routeId");
+		long routeId = Long.valueOf(routeIdStr);
 
 		List<TrainBean> trainInfoBeans = (List<TrainBean>) req.getSession()
 				.getAttribute(Const.TRAIN_INFO_BEANS);
 		TrainBean temp = new TrainBean();
-		temp.setRouteId(Long.valueOf(param));
+		temp.setRouteId(routeId);
+		
 
 		LOG.debug("beans ==> " + trainInfoBeans);
 
@@ -41,6 +43,7 @@ public class GetFreeSeatsCommand implements Command {
 		LOG.debug("carriages found ==> " + carriages);
 
 		req.setAttribute(Const.CARRIAGE_LIST, new CarriageListBean(carriages));
+		req.setAttribute(Const.ROUTE_ID, routeId);
 
 		return Path.FREE_SEATS_VIEW;
 	}

@@ -2,6 +2,24 @@
 </head>
 <%@ include file="/WEB-INF/jspf/header.jspf"%>
 <body>
+	<c:set var="routeId" scope="session" value="${routeId}"></c:set>
+	<div class="container" id="proceedContainer">
+		<div class="row">
+			<form role="form" action="controller">
+				<input type="hidden" name="command" value="orderTicketView" /> <input
+					type="hidden" name="carriageId" id="carriageId" /> <input
+					type="hidden" name="seatNum" id="seatNum" />
+				<div class="form-group">
+					<span class="pull-right">
+						<button class="btn btn-success">
+							<fmt:message key="action.proceed" />
+							<span class="glyphicon glyphicon-arrow-right" />
+						</button>
+					</span>
+				</div>
+			</form>
+		</div>
+	</div>
 	<div class="container">
 		<div class="row">
 			<c:forEach items="${carriageList.types}" var="t">
@@ -9,8 +27,10 @@
 					<div class="panel panel-info">
 						<div class="panel-heading">
 							<h3 class="panel-title">
-								<fmt:message key="${t.name}" />
-								<span class="pull-right"> &#8372;${t.price}</span>
+
+								<span class="glyphicon glyphicon-briefcase"> <fmt:message
+										key="${t.name}" /></span> <span class="pull-right">
+									&#8372;${t.price}</span>
 							</h3>
 						</div>
 						<div class="panel-body">
@@ -29,10 +49,12 @@
 												var="seat">
 												<c:choose>
 													<c:when test="${empty c.seats[seat]}">
-														<a href="#" class="btn btn-warning">
+														<a href="javascript:void(0)" class="btn btn-warning seat"
+															id="seatBtn">
 													</c:when>
 													<c:otherwise>
-														<a href="#" class="btn btn-warning disabled">
+														<a href="#" class="btn btn-warning disabled"
+															id="seatBtnDisabled">
 													</c:otherwise>
 												</c:choose>
 												${seat }</a>

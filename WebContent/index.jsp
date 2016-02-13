@@ -19,6 +19,9 @@
 						onkeyup="getStations(this)" value="${stationFrom}" />
 					<p class="text-warning" id="stationFromError">${stationFromError}</p>
 				</div>
+				<div class="text-center">
+					<a href="#" class="btn btn-default" id="swapStations"><span class="glyphicon glyphicon-sort"/></a>
+				</div>
 				<div class="form-group">
 					<label class="control-label" for="stationTo"> <fmt:message
 							key="label.to" />:

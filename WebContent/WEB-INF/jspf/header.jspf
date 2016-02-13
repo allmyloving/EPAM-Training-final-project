@@ -20,10 +20,10 @@
 								class="glyphicon glyphicon-log-out" /> <fmt:message key="action.log_out"/></a></li>
 					</c:when>
 					<c:otherwise>
-						<li><a href="controller?command=signUpView"><span
-								class="glyphicon glyphicon-chevron-up"></span> <fmt:message key="label.sign_up"/></a></li>
+						<li><a href="controller?command=signUpView"> <span
+								class="glyphicon glyphicon-bell"></span> <fmt:message key="label.sign_up"/></a></li>
 						<li><a href="controller?command=loginView"><span
-								class="glyphicon glyphicon-user"></span><fmt:message key="label.login"/> </a></li>
+								class="glyphicon glyphicon-user"></span> <fmt:message key="label.login"/> </a></li>
 					</c:otherwise>
 				</c:choose>
 				<c:if test="${fn:length(localeList) != 0}">

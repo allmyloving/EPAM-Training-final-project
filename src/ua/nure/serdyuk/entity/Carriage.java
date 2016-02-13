@@ -16,12 +16,10 @@ public class Carriage {
 
 	private String tag;
 
-	private BigDecimal price;
-
 	private List<Integer> seatsTaken;
-	
+
 	private Map<Integer, Boolean> seats;
-	
+
 	public Carriage() {
 		seats = new HashMap<>();
 	}
@@ -50,14 +48,6 @@ public class Carriage {
 		this.tag = tag;
 	}
 
-	public BigDecimal getPrice() {
-		return price;
-	}
-
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
-
 	public Map<Integer, Boolean> getSeats() {
 		return seats;
 	}
@@ -83,9 +73,15 @@ public class Carriage {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		Carriage other = (Carriage) obj;
+		return id == other.id;
+	}
+
+	@Override
 	public String toString() {
 		return "Carriage [id=" + id + ", type=" + type + ", tag=" + tag
-				+ ", price=" + price + ", seatsTaken=" + seatsTaken + "]";
+				+ ", seatsTaken=" + seatsTaken + "]";
 	}
 
 	public static class CarriageType
@@ -142,7 +138,7 @@ public class Carriage {
 		@Override
 		public String toString() {
 			return "CarriageType [id=" + id + ", name=" + name + ", seatNum="
-					+ seatNum + "]";
+					+ seatNum + ", price=" + price + "]";
 		}
 
 		@Override

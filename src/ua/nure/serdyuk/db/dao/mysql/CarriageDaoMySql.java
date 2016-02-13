@@ -103,12 +103,12 @@ public class CarriageDaoMySql implements CarriageDao {
 			ps.setLong(k++, c.getId());
 			ps.setLong(k++, routeId);
 			ps.setLong(k++, trainId);
-			ps.setLong(k++, routeItemFrom);
 			ps.setLong(k++, routeItemTo);
 			ps.setLong(k++, trainId);
+			ps.setLong(k++, routeItemFrom);
 
-			LOG.debug(ps);
-
+			LOG.debug("seats taken ps " + ps);
+			
 			rsSeats = ps.executeQuery();
 
 			List<Integer> seats = new ArrayList<>();

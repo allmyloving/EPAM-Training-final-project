@@ -1,7 +1,10 @@
 package ua.nure.serdyuk.db.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.log4j.Logger;
 
 import ua.nure.serdyuk.db.dao.CarriageDao;
 import ua.nure.serdyuk.db.service.CarriageService;
@@ -9,6 +12,9 @@ import ua.nure.serdyuk.entity.Carriage;
 import ua.nure.serdyuk.entity.Carriage.CarriageType;
 
 public class CarriageServiceImpl implements CarriageService {
+
+	private static final Logger LOG = Logger
+			.getLogger(CarriageServiceImpl.class);
 
 	private CarriageDao carriageDao;
 
@@ -25,6 +31,13 @@ public class CarriageServiceImpl implements CarriageService {
 				routeItemTo, trainId);
 		for (Carriage item : carriages) {
 			item.setType(types.get(item.getCarTypeId()));
+			List<Integer> list = item.getSeatsTaken();
+			Map<Integer, Boolean> seats = new HashMap<Integer, Boolean>();
+			for (int k : list) {
+				seats.put(k, true);
+			}
+			LOG.debug("seats ==> " + seats);
+			item.setSeats(seats);
 		}
 		return carriages;
 	}

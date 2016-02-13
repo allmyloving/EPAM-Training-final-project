@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import ua.nure.serdyuk.entity.Carriage;
+import ua.nure.serdyuk.entity.Carriage.CarriageType;
 
 public class CarriageListBean {
 
@@ -14,10 +15,10 @@ public class CarriageListBean {
 		this.carriages = carriages;
 	}
 
-	public Set<String> getTypes() {
-		Set<String> types = new TreeSet<>();
+	public Set<CarriageType> getTypes() {
+		Set<CarriageType> types = new TreeSet<>();
 		for (Carriage c : carriages) {
-			types.add(c.getType().getName());
+			types.add(c.getType());
 		}
 		return types;
 	}

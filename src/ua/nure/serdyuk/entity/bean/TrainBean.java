@@ -148,6 +148,10 @@ public class TrainBean implements Serializable {
 	public static class RouteInfo implements Serializable {
 
 		private static final long serialVersionUID = 7584579995712772109L;
+		
+		private String trainTag;
+		
+		// create inner class here
 
 		private String stationName;
 
@@ -177,6 +181,14 @@ public class TrainBean implements Serializable {
 
 		public void setArrTime(Date arrDate) {
 			this.arrTime = arrDate;
+		}
+
+		public String getTrainTag() {
+			return trainTag;
+		}
+
+		public void setTrainTag(String trainTag) {
+			this.trainTag = trainTag;
 		}
 
 		@Override

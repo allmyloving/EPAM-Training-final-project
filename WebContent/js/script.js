@@ -19,9 +19,16 @@ $(document).ready(function() {
 		startDate : '0'
 	// ,todayBtn: "linked"
 	});
+	$('.seat-container').css('display', 'none');
+	$('.carriage-item').click(function() {
+		var id = $(this).attr('id');
+		console.log(id);
+		console.log($('div[id=' + id+']').html());
+		$('div[id=' + id+']').slideToggle('slow');
+	});
 	$('[data-toggle="popover"]').popover({
-		html: true,
-		content: function(){
+		html : true,
+		content : function() {
 			var d = $.ajax({
 				url : "serv?param=stations&filter=Ха",
 				type : "get",

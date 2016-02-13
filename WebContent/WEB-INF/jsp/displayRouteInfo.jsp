@@ -35,7 +35,7 @@
 	</div>
 	<div class="container">
 		<ul class="pager">
-			<li ><a href="javascript:history.go(-1)">Go back</a></li>
+			<li><a href="javascript:history.go(-1)">Go back</a></li>
 		</ul>
 	</div>
 

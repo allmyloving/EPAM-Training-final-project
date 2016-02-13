@@ -1,12 +1,15 @@
 package ua.nure.serdyuk.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Carriage {
 
 	private long id;
-	
+
 	private int carTypeId;
 
 	private CarriageType type;
@@ -16,6 +19,12 @@ public class Carriage {
 	private BigDecimal price;
 
 	private List<Integer> seatsTaken;
+	
+	private Map<Integer, Boolean> seats;
+	
+	public Carriage() {
+		seats = new HashMap<>();
+	}
 
 	public long getId() {
 		return id;
@@ -49,6 +58,14 @@ public class Carriage {
 		this.price = price;
 	}
 
+	public Map<Integer, Boolean> getSeats() {
+		return seats;
+	}
+
+	public void setSeats(Map<Integer, Boolean> seats) {
+		this.seats = seats;
+	}
+
 	public List<Integer> getSeatsTaken() {
 		return seatsTaken;
 	}
@@ -71,14 +88,17 @@ public class Carriage {
 				+ ", price=" + price + ", seatsTaken=" + seatsTaken + "]";
 	}
 
-	public static class CarriageType {
+	public static class CarriageType
+			implements Serializable, Comparable<CarriageType> {
+
+		private static final long serialVersionUID = 6944319122658319857L;
 
 		private int id;
 
 		private String name;
 
 		private int seatNum;
-		
+
 		private BigDecimal price;
 
 		public int getId() {
@@ -123,6 +143,11 @@ public class Carriage {
 		public String toString() {
 			return "CarriageType [id=" + id + ", name=" + name + ", seatNum="
 					+ seatNum + "]";
+		}
+
+		@Override
+		public int compareTo(CarriageType o) {
+			return o.getPrice().compareTo(getPrice());
 		}
 	}
 }

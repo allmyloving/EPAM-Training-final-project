@@ -33,6 +33,7 @@ public class UserDaoMySql implements UserDao {
 			ps.setString(k++, u.getPassword());
 			ps.setString(k++, u.getFirstName());
 			ps.setString(k++, u.getLastName());
+			ps.setString(k++, u.getDocumentTag());
 			ps.setLong(k++, u.getRole().getId());
 
 			int count = ps.executeUpdate();

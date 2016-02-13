@@ -48,25 +48,25 @@
 						<div class="list-group">
 
 							<a class="list-group-item"><b><fmt:message
-										key="label.train_tag" /></b><span class="pull-right">${ticketBean.trainBean.trainTag}</span></a>
+										key="label.train_tag" /></b><span class="pull-right">${ticketOrderBean.trainBean.trainTag}</span></a>
 							<a class="list-group-item"><b><fmt:message
 										key="label.departure" /></b><span class="pull-right"> <fmt:formatDate
-										value="${ticketBean.trainBean.depDate}" type="both"
-										timeStyle="short" dateStyle="long" /> <b>${ticketBean.stationFrom}</b></span></a>
+										value="${ticketOrderBean.trainBean.depDate}" type="both"
+										timeStyle="short" dateStyle="long" /> <b>${ticketOrderBean.stationFrom}</b></span></a>
 							<a class="list-group-item"><b><fmt:message
 										key="label.arrival" /> </b> <span class="pull-right"><fmt:formatDate
-										value="${ticketBean.trainBean.arrDate}" type="both"
-										timeStyle="short" dateStyle="long" /> <b>${ticketBean.stationTo}</b></span></a>
+										value="${ticketOrderBean.trainBean.arrDate}" type="both"
+										timeStyle="short" dateStyle="long" /> <b>${ticketOrderBean.stationTo}</b></span></a>
 							<a class="list-group-item"><b><fmt:message
-										key="label.carriage_tag" /></b><span class="pull-right">${ticketBean.carriage.tag}</span></a>
+										key="label.carriage_tag" /></b><span class="pull-right">${ticketOrderBean.carriage.tag}</span></a>
 							<a class="list-group-item"><b><fmt:message
 										key="label.seat_num" /></b><span class="pull-right">
-									${ticketBean.seatNum}</span></a> <a class="list-group-item"><b><fmt:message
+									${ticketOrderBean.seatNum}</span></a> <a class="list-group-item"><b><fmt:message
 										key="label.carriage_type" /></b> <span class="pull-right"><fmt:message
-										key="${ticketBean.carriage.type.name}" /></span></a> <a
+										key="${ticketOrderBean.carriage.type.name}" /></span></a> <a
 								class="list-group-item"><b><fmt:message
 										key="label.price" /></b><span class="pull-right">&#8372;
-									${ticketBean.carriage.type.price}</span></a>
+									${ticketOrderBean.carriage.type.price}</span></a>
 						</div>
 					</div>
 				</div>

@@ -59,7 +59,7 @@ public class OrderTicketViewCommand implements Command {
 		ticketBean.setStationTo(stations.get(1).getName());
 		// .bean.set
 
-		req.setAttribute("ticketBean", ticketBean);
+		req.getSession().setAttribute(Const.TICKET_ORDER_BEAN, ticketBean);
 
 		return Path.ORDER_TICKET_VIEW;
 	}

@@ -22,13 +22,16 @@ public class User implements Serializable {
 
 	@Validation(regex = Const.REGEX_NAME, required = false, message = "Name should start with upper-case letter")
 	private String lastName;
+	
+	private String documentTag;
 
 	private Role role;
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", role=" + role + "]";
+		return "User [id=" + id + ", email=" + email + ", password=" + password
+				+ ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", documentTag=" + documentTag + ", role=" + role + "]";
 	}
 
 	public long getId() {
@@ -77,5 +80,13 @@ public class User implements Serializable {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	public String getDocumentTag() {
+		return documentTag;
+	}
+
+	public void setDocumentTag(String documentTag) {
+		this.documentTag = documentTag;
 	}
 }

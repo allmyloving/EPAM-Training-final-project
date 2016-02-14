@@ -36,12 +36,15 @@ public class SignUpCommand implements Command {
 
 		// validate
 		if (repPassword == null || !repPassword.equals(password)) {
-			errors.add("Passwords are not equal");
-			 throw new ValidationException();
+			errors.add("message.passwords_not_equal");
+			 //throw new ValidationException();
 		}
 
 		User user = validate(email, repPassword, role, errors);
-
+		if(!errors.isEmpty()){
+			throw new ValidationException();
+		}
+		
 		UserService service = (UserService) req.getServletContext()
 				.getAttribute(Const.USER_SERVICE);
 		if (service.create(user)) {
@@ -67,8 +70,6 @@ public class SignUpCommand implements Command {
 		if (!errors.isEmpty()) {
 			LOG.error(String.format("Validation failed -- %s",
 					errors.toString()));
-			user = null;
-			 throw new ValidationException();
 		}
 
 		return user;

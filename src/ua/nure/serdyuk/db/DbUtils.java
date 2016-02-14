@@ -12,7 +12,7 @@ import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
 
-import ua.nure.serdyuk.Message;
+import ua.nure.serdyuk.constants.Message;
 import ua.nure.serdyuk.exception.DbException;
 
 public final class DbUtils {

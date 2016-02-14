@@ -13,8 +13,8 @@ import javax.servlet.annotation.WebListener;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import ua.nure.serdyuk.Message;
 import ua.nure.serdyuk.constants.Const;
+import ua.nure.serdyuk.constants.Message;
 import ua.nure.serdyuk.constants.Path;
 import ua.nure.serdyuk.db.dao.mysql.CarriageDaoMySql;
 import ua.nure.serdyuk.db.dao.mysql.RouteBeanDaoMySql;

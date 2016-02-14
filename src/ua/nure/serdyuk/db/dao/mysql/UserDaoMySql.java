@@ -8,13 +8,13 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import ua.nure.serdyuk.PropertyContainer;
 import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.db.DbUtils;
 import ua.nure.serdyuk.db.dao.UserDao;
 import ua.nure.serdyuk.entity.Role;
 import ua.nure.serdyuk.entity.User;
 import ua.nure.serdyuk.exception.DbException;
+import ua.nure.serdyuk.util.PropertyContainer;
 
 public class UserDaoMySql implements UserDao {
 

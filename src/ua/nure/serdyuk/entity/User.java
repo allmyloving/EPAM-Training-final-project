@@ -11,16 +11,16 @@ public class User implements Serializable {
 
 	private long id;
 
-	@Validation(regex = Const.REGEX_EMAIL, message = "Email is not valid")
+	@Validation(regex = Const.REGEX_EMAIL, message = "message.email_not_valid")
 	private String email;
 
-	@Validation(regex = Const.REGEX_PASSWORD, message = "Password should contain at least 4 symbols")
+	@Validation(regex = Const.REGEX_PASSWORD, message = "message.password_not_valid")
 	private String password;
 
-	@Validation(regex = Const.REGEX_NAME, required = false, message = "Name should start with upper-case letter")
+	@Validation(regex = Const.REGEX_NAME, required = false, message = "message.name_not_valid")
 	private String firstName;
 
-	@Validation(regex = Const.REGEX_NAME, required = false, message = "Name should start with upper-case letter")
+	@Validation(regex = Const.REGEX_NAME, required = false, message = "message.name_not_valid")
 	private String lastName;
 	
 	private String documentTag;

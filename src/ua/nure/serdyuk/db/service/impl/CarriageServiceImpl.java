@@ -29,10 +29,14 @@ public class CarriageServiceImpl implements CarriageService {
 				routeItemFrom, routeItemTo);
 		Map<Integer, CarriageType> types = carriageDao.getTypes(routeItemFrom,
 				routeItemTo, trainId);
+
+		List<Integer> list = null;
+		Map<Integer, Boolean> seats = null;
 		for (Carriage item : carriages) {
 			item.setType(types.get(item.getCarTypeId()));
-			List<Integer> list = item.getSeatsTaken();
-			Map<Integer, Boolean> seats = new HashMap<Integer, Boolean>();
+			list = item.getSeatsTaken();
+			seats = new HashMap<Integer, Boolean>();
+			
 			for (int k : list) {
 				seats.put(k, true);
 			}

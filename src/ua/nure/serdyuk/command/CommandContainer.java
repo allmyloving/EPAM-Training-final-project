@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import ua.nure.serdyuk.command.ajax.GetStationsCommand;
 import ua.nure.serdyuk.command.view.LoginViewCommand;
 import ua.nure.serdyuk.command.view.SignUpViewCommand;
 
@@ -34,6 +35,8 @@ public final class CommandContainer {
 		commands.put("loginView", new LoginViewCommand());
 		commands.put("signUpView", new SignUpViewCommand());
 		commands.put("paymentSuccessfulView", new PaymentSuccessView());
+		
+		commands.put("getStations", new GetStationsCommand());
 
 		commands.put("noCommand", new NoCommand());
 

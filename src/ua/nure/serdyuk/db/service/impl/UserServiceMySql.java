@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import ua.nure.serdyuk.db.dao.UserDao;
 import ua.nure.serdyuk.db.service.UserService;
 import ua.nure.serdyuk.entity.User;
+import ua.nure.serdyuk.exception.AppException;
 
 public class UserServiceMySql implements UserService {
 
@@ -43,11 +44,6 @@ public class UserServiceMySql implements UserService {
 	}
 
 	private String generateHash(String email, String password) {
-
-		// stub
-		if (password == null) {
-			password = "asdf";
-		}
 		StringBuilder hash = new StringBuilder(password).append(email);
 		String modified = hash.toString();
 		hash.setLength(0);
@@ -64,7 +60,7 @@ public class UserServiceMySql implements UserService {
 		} catch (NoSuchAlgorithmException e) {
 			LOG.error(String.format("Error while creating hash -- %s",
 					e.getMessage()));
-			throw new RuntimeException(e.getMessage());
+			throw new AppException(e.getMessage());
 		}
 		return hash.toString();
 	}

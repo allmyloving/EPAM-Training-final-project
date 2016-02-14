@@ -9,41 +9,16 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import ua.nure.serdyuk.PropertyContainer;
 import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.db.DbUtils;
 import ua.nure.serdyuk.db.dao.RouteBeanDao;
 import ua.nure.serdyuk.entity.bean.RouteBean;
 import ua.nure.serdyuk.exception.DbException;
+import ua.nure.serdyuk.util.PropertyContainer;
 
 public class RouteBeanDaoMySql implements RouteBeanDao {
 
 	private static final Logger LOG = Logger.getLogger(RouteBeanDaoMySql.class);
-
-	@Override
-	public boolean create(RouteBean item) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public RouteBean get(long id) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public boolean update(RouteBean item) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public boolean delete(RouteBean item) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public List<RouteBean> getAll() {
-		throw new UnsupportedOperationException();
-	}
 
 	@Override
 	public List<RouteBean> getAllByTrainId(long trainId) {
@@ -81,6 +56,31 @@ public class RouteBeanDaoMySql implements RouteBeanDao {
 		bean.setStationName(rs.getString("name"));
 
 		return bean;
+	}
+
+	@Override
+	public boolean create(RouteBean item) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public RouteBean get(long id) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean update(RouteBean item) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean delete(RouteBean item) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public List<RouteBean> getAll() {
+		throw new UnsupportedOperationException();
 	}
 
 }

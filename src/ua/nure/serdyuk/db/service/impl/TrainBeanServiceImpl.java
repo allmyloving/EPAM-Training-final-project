@@ -3,7 +3,6 @@ package ua.nure.serdyuk.db.service.impl;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 
@@ -12,6 +11,7 @@ import ua.nure.serdyuk.db.dao.TrainInfoDao;
 import ua.nure.serdyuk.db.service.TrainBeanService;
 import ua.nure.serdyuk.entity.RouteItem;
 import ua.nure.serdyuk.entity.bean.TrainBean;
+import ua.nure.serdyuk.util.DateUtils;
 
 public class TrainBeanServiceImpl implements TrainBeanService {
 
@@ -40,7 +40,7 @@ public class TrainBeanServiceImpl implements TrainBeanService {
 				stFromId, stToId);
 		
 		bean.setArrDate(arrDate);
-		bean.setDuration(getDuration(depDate, arrDate));
+		bean.setDuration(DateUtils.getDuration(depDate, arrDate));
 
 		return bean;
 	}
@@ -72,33 +72,9 @@ public class TrainBeanServiceImpl implements TrainBeanService {
 		}
 
 		if (days > 0) {
-			increaseDays(arrDate, days);
+			DateUtils.increaseDays(arrDate, days);
 		}
 
 		return arrDate;
-	}
-
-	private void increaseDays(Date date, int days) {
-		LOG.debug(String.format("Days increased by %d", days));
-
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		cal.add(Calendar.DATE, days);
-		date.setTime(cal.getTime().getTime());
-	}
-
-	private Date getDuration(Date depDate, Date arrDate) {
-		Calendar cal = Calendar.getInstance();
-		int h = (int) getDateDiff(arrDate, depDate, TimeUnit.HOURS);
-		int m = (int) getDateDiff(arrDate, depDate, TimeUnit.MINUTES) - 60 * h;
-		cal.set(Calendar.HOUR, h);
-		cal.set(Calendar.MINUTE, m);
-
-		return cal.getTime();
-	}
-
-	private long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
-		long diffInMillies = date1.getTime() - date2.getTime();
-		return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
 	}
 }

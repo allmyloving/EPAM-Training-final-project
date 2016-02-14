@@ -1,5 +1,4 @@
 <%@ include file="/WEB-INF/jspf/head.jspf"%>
-<script src="js/error.js"></script>
 </head>
 <%@ include file="/WEB-INF/jspf/header.jspf"%>
 <fmt:message key="label.sign_up" var="signUpLoc" />

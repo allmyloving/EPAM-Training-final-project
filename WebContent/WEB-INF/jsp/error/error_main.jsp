@@ -11,7 +11,7 @@
 		<div class="list-group">
 			<ul>
 				<c:forEach items="${errors}" var="error">
-					<li>${error}</li>
+					<li><fmt:message key="${error}"/></li>
 				</c:forEach>
 			</ul>
 		</div>

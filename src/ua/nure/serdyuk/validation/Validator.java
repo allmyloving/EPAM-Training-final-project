@@ -4,13 +4,19 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import ua.nure.serdyuk.Message;
+import ua.nure.serdyuk.constants.Message;
 
+/**
+ * This class validates entities using {@code Validation} annotation.
+ * 
+ * @author Daria Serdiuk
+ * @see Validation
+ */
 public class Validator {
 
-	private static final long LOWER_BOUND = getDefaultLower();
+	private static final long LOWER_BOUND = getDefault("lowerBound");
 
-	private static final long UPPER_BOUND = getDefaultUpper();
+	private static final long UPPER_BOUND = getDefault("upperBound");
 
 	/**
 	 * Validates an entity using @Validation annotation.
@@ -30,7 +36,6 @@ public class Validator {
 		return errors;
 	}
 
-	// add `required` validation
 	private static List<String> validateField(Field f, Object obj) {
 		List<String> errors = new ArrayList<>();
 		Validation v = f.getAnnotation(Validation.class);
@@ -72,20 +77,10 @@ public class Validator {
 		return errors;
 	}
 
-	private static long getDefaultUpper() {
+	private static long getDefault(String fieldName) {
 		Class<?> clazz = Validation.class;
 		try {
-			return (Long) clazz.getMethod("upperBound").getDefaultValue();
-		} catch (NoSuchMethodException | SecurityException e) {
-			throw new AssertionError(
-					"Shouldn't happen unless an entity has changed", e);
-		}
-	}
-
-	private static long getDefaultLower() {
-		Class<?> clazz = Validation.class;
-		try {
-			return (Long) clazz.getMethod("lowerBound").getDefaultValue();
+			return (Long) clazz.getMethod(fieldName).getDefaultValue();
 		} catch (NoSuchMethodException | SecurityException e) {
 			throw new AssertionError(
 					"Shouldn't happen unless an entity has changed", e);

@@ -9,12 +9,12 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import ua.nure.serdyuk.PropertyContainer;
 import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.db.DbUtils;
 import ua.nure.serdyuk.db.dao.StationDao;
 import ua.nure.serdyuk.entity.Station;
 import ua.nure.serdyuk.exception.DbException;
+import ua.nure.serdyuk.util.PropertyContainer;
 
 public class StationDaoMySql implements StationDao {
 
@@ -42,26 +42,27 @@ public class StationDaoMySql implements StationDao {
 
 	@Override
 	public List<Station> getAll() {
-		Connection conn = DbUtils.getConnection();
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		List<Station> stations = new ArrayList<>();
-		final String query = PropertyContainer.get(Const.GET_ALL_STATIONS);
-
-		try {
-			ps = conn.prepareStatement(query);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				stations.add(extractStation(rs));
-			}
-		} catch (SQLException e) {
-			DbUtils.rollback(conn);
-			LOG.error(e.getMessage());
-			throw new DbException(e.getMessage(), e);
-		} finally {
-			DbUtils.close(conn, ps, rs);
-		}
-		return stations;
+		throw new UnsupportedOperationException();
+//		Connection conn = DbUtils.getConnection();
+//		PreparedStatement ps = null;
+//		ResultSet rs = null;
+//		List<Station> stations = new ArrayList<>();
+//		final String query = PropertyContainer.get(Const.GET_ALL_STATIONS);
+//
+//		try {
+//			ps = conn.prepareStatement(query);
+//			rs = ps.executeQuery();
+//			while (rs.next()) {
+//				stations.add(extractStation(rs));
+//			}
+//		} catch (SQLException e) {
+//			DbUtils.rollback(conn);
+//			LOG.error(e.getMessage());
+//			throw new DbException(e.getMessage(), e);
+//		} finally {
+//			DbUtils.close(conn, ps, rs);
+//		}
+//		return stations;
 	}
 
 	@Override
@@ -70,10 +71,15 @@ public class StationDaoMySql implements StationDao {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		List<Station> stations = new ArrayList<>();
-		final String query = PropertyContainer.get(Const.GET_ALL_STATIONS_LIKE);
+		String query = (filter != null)
+				? PropertyContainer.get(Const.GET_ALL_STATIONS_LIKE)
+				: PropertyContainer.get(Const.GET_ALL_STATIONS);
 
 		try {
-			ps = conn.prepareStatement(query.replace("?", filter));
+			if(filter!=null){
+				query = query.replace("?", filter);
+			}
+			ps = conn.prepareStatement(query);
 			LOG.debug(String.format("Executing statement %s", ps.toString()));
 
 			rs = ps.executeQuery();

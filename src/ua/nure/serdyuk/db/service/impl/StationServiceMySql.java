@@ -19,7 +19,7 @@ public class StationServiceMySql implements StationService {
 
 	@Override
 	public List<Station> getAll() {
-		return stationDao.getAll();
+		return stationDao.getAll(null);
 	}
 
 	@Override

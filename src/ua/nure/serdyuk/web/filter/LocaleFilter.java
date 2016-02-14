@@ -20,6 +20,13 @@ import org.apache.log4j.Logger;
 
 import ua.nure.serdyuk.constants.Const;
 
+/**
+ * This filter is used to determine initial locale value, and furthermore to
+ * change locale settings by client.
+ * 
+ * @author Daria Serdiuk
+ *
+ */
 @WebFilter(displayName = "LocaleFilter", initParams = {
 		@WebInitParam(name = Const.DEFAULT_LOCALE, value = "en") }, filterName = "/LocaleFilter", urlPatterns = "/*")
 public class LocaleFilter implements Filter {
@@ -32,7 +39,7 @@ public class LocaleFilter implements Filter {
 
 	public void init(FilterConfig fConfig) throws ServletException {
 		defaultLocale = fConfig.getInitParameter(Const.DEFAULT_LOCALE);
-		LOG.debug(
+		LOG.info(
 				String.format("LocaleFilter initialized, default locale ==> %s",
 						defaultLocale));
 
@@ -41,55 +48,6 @@ public class LocaleFilter implements Filter {
 
 	@SuppressWarnings("unchecked")
 	public void doFilter(ServletRequest request, ServletResponse response,
-			FilterChain chain) throws IOException, ServletException {
-		m(request, response, chain);
-		// List<String> avLocales = (List<String>) request.getServletContext()
-		// .getAttribute(Const.LOCALE_LIST);
-		// String newLocale = request.getParameter(Const.NEW_LOCALE);
-		//
-		// HttpServletRequest req = (HttpServletRequest) request;
-		// HttpSession session = req.getSession();
-		//
-		// String curLocale = (String)
-		// session.getAttribute(Const.CURRENT_LOCALE);
-		//
-		// LOG.debug(String.format("Current locale in session ==> %s",
-		// curLocale));
-		//
-		// if (newLocale != null && avLocales.contains(newLocale)) {
-		// LOG.debug(
-		// String.format("Locale is set by client ==> %s", newLocale));
-		// } else if (curLocale == null) {
-		// // locale is set the first time
-		// Enumeration<Locale> reqLocales = req.getLocales();
-		// while (reqLocales.hasMoreElements()) {
-		// String loc = reqLocales.nextElement().getLanguage();
-		// if (avLocales.contains(loc)) {
-		// newLocale = loc;
-		// LOG.debug(String.format("Locale is set from request ==> %s",
-		// loc));
-		// break;
-		// }
-		// }
-		// if (newLocale == null) {
-		// newLocale = defaultLocale;
-		// LOG.debug("Locale is set to default");
-		// }
-		// } else {
-		// newLocale = null;
-		// }
-		// if (newLocale != null) {
-		// session.setAttribute(Const.CURRENT_LOCALE, newLocale);
-		// LOG.info(String.format("Locale was set to %s", newLocale));
-		// }
-		//
-		// LOG.info(String.format("Current locale ==> %s",
-		// session.getAttribute(Const.CURRENT_LOCALE)));
-		//
-		// chain.doFilter(request, response);
-	}
-
-	private void m(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		List<Locale> avLocales = (List<Locale>) request.getServletContext()
 				.getAttribute(Const.LOCALE_LIST_LOCALE);

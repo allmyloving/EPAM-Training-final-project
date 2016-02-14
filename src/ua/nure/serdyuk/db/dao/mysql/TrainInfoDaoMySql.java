@@ -7,18 +7,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import ua.nure.serdyuk.PropertyContainer;
 import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.db.DbUtils;
 import ua.nure.serdyuk.db.dao.TrainInfoDao;
 import ua.nure.serdyuk.entity.bean.RouteBean;
 import ua.nure.serdyuk.entity.bean.TrainBean;
 import ua.nure.serdyuk.exception.DbException;
+import ua.nure.serdyuk.util.DateUtils;
+import ua.nure.serdyuk.util.PropertyContainer;
 
 public class TrainInfoDaoMySql implements TrainInfoDao {
 
@@ -101,13 +101,11 @@ public class TrainInfoDaoMySql implements TrainInfoDao {
 			if (rs.next()) {
 				bean.setDepDate(depDate);
 				Time depTime = rs.getTime("dep_time");
-				LOG.debug(String.format(
-						"departure time as time=%s, as date=%s, as timestamp=%s",
-						depTime, rs.getDate("dep_time"),
-						rs.getTimestamp("dep_time")));
-				LOG.debug("departure date is " + getDate(depDate, depTime));
+				java.util.Date depDateUtil = DateUtils.extractDate(depDate, depTime);
+				LOG.debug(String.format("departure date is %s",
+						depDateUtil.toString()));
 
-				bean.setDepDate(getDate(depDate, depTime));
+				bean.setDepDate(depDateUtil);
 				bean.setArrDate(
 						new java.util.Date(rs.getTime("arr_time").getTime()));
 			}
@@ -159,23 +157,6 @@ public class TrainInfoDaoMySql implements TrainInfoDao {
 		return price;
 	}
 
-	private java.util.Date getDate(java.sql.Date date, Time time) {
-		java.util.Date d = new java.util.Date(date.getTime());
-		java.util.Date t = new java.util.Date(time.getTime());
-
-		Calendar dCal = Calendar.getInstance();
-		dCal.setTime(d);
-
-		Calendar tCal = Calendar.getInstance();
-		tCal.setTime(t);
-
-		dCal.set(Calendar.HOUR_OF_DAY, tCal.get(Calendar.HOUR_OF_DAY));
-		dCal.set(Calendar.MINUTE, tCal.get(Calendar.MINUTE));
-		dCal.set(Calendar.SECOND, tCal.get(Calendar.SECOND));
-
-		// return new java.util.Date(date.getTime() + time.getTime());
-		return dCal.getTime();
-	}
 
 	private List<RouteBean> getRouteInfo(long trainId) {
 		Connection conn = DbUtils.getConnection();
@@ -213,7 +194,4 @@ public class TrainInfoDaoMySql implements TrainInfoDao {
 
 		return bean;
 	}
-
-	// private List<Time> getArrDepTime();
-
 }

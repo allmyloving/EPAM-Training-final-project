@@ -5,8 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import ua.nure.serdyuk.Message;
 import ua.nure.serdyuk.constants.Const;
+import ua.nure.serdyuk.constants.Message;
 import ua.nure.serdyuk.constants.Path;
 import ua.nure.serdyuk.db.service.UserService;
 import ua.nure.serdyuk.entity.User;

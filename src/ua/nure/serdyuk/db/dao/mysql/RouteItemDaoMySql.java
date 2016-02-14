@@ -9,58 +9,16 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import ua.nure.serdyuk.PropertyContainer;
 import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.db.DbUtils;
 import ua.nure.serdyuk.db.dao.RouteItemDao;
 import ua.nure.serdyuk.entity.RouteItem;
 import ua.nure.serdyuk.exception.DbException;
+import ua.nure.serdyuk.util.PropertyContainer;
 
 public class RouteItemDaoMySql implements RouteItemDao {
 
 	private static final Logger LOG = Logger.getLogger(RouteItemDaoMySql.class);
-
-	@Override
-	public boolean create(RouteItem item) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public RouteItem get(long id) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public boolean update(RouteItem item) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public boolean delete(RouteItem item) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public List<RouteItem> getAll() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public List<RouteItem> getAll(long routeId) {
-		throw new UnsupportedOperationException();
-	}
-
-	private RouteItem extract(ResultSet rs) throws SQLException {
-		RouteItem item = new RouteItem();
-		item.setId(rs.getLong("id"));
-		item.setArrivalTime(rs.getTime("arr_time"));
-		item.setDepartureTime(rs.getTime("dep_time"));
-		item.setOrdinal(rs.getInt("ordinal"));
-		item.setRouteId(rs.getInt("train_id"));
-		item.setStationId(rs.getInt("station_id"));
-
-		return item;
-	}
 
 	@Override
 	public List<RouteItem> getAllByStations(long trainId, long stFromId,
@@ -96,4 +54,45 @@ public class RouteItemDaoMySql implements RouteItemDao {
 		return items;
 	}
 
+	private RouteItem extract(ResultSet rs) throws SQLException {
+		RouteItem item = new RouteItem();
+		item.setId(rs.getLong("id"));
+		item.setArrivalTime(rs.getTime("arr_time"));
+		item.setDepartureTime(rs.getTime("dep_time"));
+		item.setOrdinal(rs.getInt("ordinal"));
+		item.setRouteId(rs.getInt("train_id"));
+		item.setStationId(rs.getInt("station_id"));
+		
+		return item;
+	}
+	
+	@Override
+	public boolean create(RouteItem item) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public RouteItem get(long id) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean update(RouteItem item) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean delete(RouteItem item) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public List<RouteItem> getAll() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public List<RouteItem> getAll(long routeId) {
+		throw new UnsupportedOperationException();
+	}
 }

@@ -13,7 +13,7 @@ import ua.nure.serdyuk.constants.Path;
 import ua.nure.serdyuk.db.service.UserService;
 import ua.nure.serdyuk.entity.Role;
 import ua.nure.serdyuk.entity.User;
-import ua.nure.serdyuk.exception.DbException;
+import ua.nure.serdyuk.exception.AppException;
 import ua.nure.serdyuk.exception.ValidationException;
 import ua.nure.serdyuk.validation.Validator;
 
@@ -32,38 +32,46 @@ public class SignUpCommand implements Command {
 		req.setAttribute(Const.EMAIL, email);
 
 		List<String> errors = new ArrayList<>();
-		req.setAttribute("errors", errors);
+		req.setAttribute(Const.ERRORS, errors);
 
 		// validate
 		if (repPassword == null || !repPassword.equals(password)) {
 			errors.add("Passwords are not equal");
-			throw new ValidationException();
+			 throw new ValidationException();
 		}
 
+		User user = validate(email, repPassword, role, errors);
+
+		UserService service = (UserService) req.getServletContext()
+				.getAttribute(Const.USER_SERVICE);
+		if (service.create(user)) {
+			errors = null;
+			LOG.info("User was successfully created");
+			path = Path.LOGIN_VIEW_COMMAND;
+		} else {
+			LOG.error("User creation failed");
+			throw new AppException("User creation failed");
+		}
+
+		return path;
+	}
+
+	private User validate(String email, String password, String role,
+			List<String> errors) {
 		User user = new User();
 		user.setEmail(email);
 		user.setPassword(password);
 		user.setRole(Role.ADMIN.name().equals(role) ? Role.ADMIN : Role.USER);
 
-		// possible null pointer
 		errors.addAll(Validator.validate(user));
 		if (!errors.isEmpty()) {
-			LOG.debug(String.format("Validation failed -- %s",
+			LOG.error(String.format("Validation failed -- %s",
 					errors.toString()));
-			throw new ValidationException();
-		}
-		
-		UserService service = (UserService) req.getServletContext()
-				.getAttribute(Const.USER_SERVICE);
-		if (service.create(user)) {
-			LOG.info("User was successfully created");
-			path = Path.LOGIN_VIEW;
-		} else {
-			LOG.info("User creation failed");
-			throw new DbException("User creation failed");
+			user = null;
+			 throw new ValidationException();
 		}
 
-		return path;
+		return user;
 	}
 
 }

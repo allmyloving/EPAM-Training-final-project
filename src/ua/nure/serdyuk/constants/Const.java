@@ -2,6 +2,8 @@ package ua.nure.serdyuk.constants;
 
 public final class Const {
 	// attributes
+	public static final String ERRORS = "errors";
+	
 	public static final String EMAIL = "email";
 
 	public static final String PASSWORD = "password";
@@ -13,17 +15,19 @@ public final class Const {
 	public static final String LAST_NAME = "lastName";
 
 	public static final String ROLE = "role";
-	
+
 	public static final String ROUTE_ID = "routeId";
-	
+
 	public static final String STATION_FROM = "stationFrom";
-	
+
 	public static final String STATION_TO = "stationTo";
+
+	public static final String DATE = "date";
 
 	public static final String CURRENT_USER = "currentUser";
 
 	public static final String CARRIAGE_LIST = "carriageList";
-	
+
 	public static final String TICKET_ORDER_BEAN = "ticketOrderBean";
 
 	public static final String USER_SERVICE = "userService";
@@ -34,12 +38,12 @@ public final class Const {
 
 	public static final String ROUTE_ITEM_SERVICE = "routeItemService";
 
-	public static final String TRAIN_INFO_SERVICE = "trainInfoService";
+	public static final String TRAIN_BEAN_SERVICE = "trainBeanService";
 
 	public static final String ROUTE_INFO_SERVICE = "routeInfoService";
 
 	public static final String CARRIAGE_SERVICE = "carriageService";
-	
+
 	public static final String TICKET_SERVICE = "ticketService";
 
 	public static final String CURRENT_LOCALE = "currentLocale";
@@ -72,7 +76,7 @@ public final class Const {
 	public static final String GET_ALL_STATIONS = "SQL_GET_ALL_STATIONS";
 
 	public static final String GET_ALL_STATIONS_LIKE = "SQL_GET_ALL_STATIONS_LIKE";
-	
+
 	public static final String GET_STATIONS_BY_ROUTE_ITEMS = "SQL_SELECT_STATIONS_BY_ROUTE_ITEMS";
 
 	public static final String GET_ROUTE_INFO_BY_TRAIN_ID = "SQL_GET_ROUTE_INFO_BY_TRAIN_ID";
@@ -90,7 +94,7 @@ public final class Const {
 	public static final String GET_TAKEN_SEATS_BY_CAR_ID_AND_ROUTE_ID = "SQL_GET_TAKEN_SEATS_BY_CAR_ID_AND_ROUTE_ID";
 
 	public static final String GET_PRICE_BY_TRAIN_ID_CAR_TYPE_AND_ORDINALS = "SQL_GET_PRICE_BY_TRAIN_ID_CAR_TYPE_AND_ORDINALS";
-	
+
 	public static final String GET_CARRIAGE_TYPES = "SQL_GET_CARRIAGE_TYPES";
 
 	public static final String INSERT_ROUTE = "SQL_INSERT_ROUTE";

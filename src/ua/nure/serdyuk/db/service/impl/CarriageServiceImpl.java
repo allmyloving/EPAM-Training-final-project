@@ -36,7 +36,6 @@ public class CarriageServiceImpl implements CarriageService {
 			for (int k : list) {
 				seats.put(k, true);
 			}
-			LOG.debug("seats ==> " + seats);
 			item.setSeats(seats);
 		}
 		return carriages;

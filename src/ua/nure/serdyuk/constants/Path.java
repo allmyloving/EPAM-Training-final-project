@@ -8,9 +8,13 @@ public final class Path {
 	
 	public static final String LOGIN_VIEW = "/WEB-INF/jsp/user/login.jsp";
 	
+	public static final String LOGIN_VIEW_COMMAND = "/controller?command=loginView";
+	
 	public static final String INDEX_VIEW = "/index.jsp";
 	
 	public static final String SIGN_UP_VIEW = "/WEB-INF/jsp/user/signUp.jsp";
+	
+	public static final String SIGN_UP_VIEW_COMMAND = "/controller?command=signUpView";
 	
 	public static final String ROUTE_INFO_VIEW = "/WEB-INF/jsp/displayRouteInfo.jsp";
 	
@@ -19,6 +23,8 @@ public final class Path {
 	public static final String ORDER_TICKET_VIEW = "/WEB-INF/jsp/orderTicket.jsp";
 	
 	public static final String PAYMENT_SUCCESSFUL_VIEW = "/WEB-INF/jsp/paymentSuccess.jsp";
+	
+	public static final String PAYMENT_SUCCESSFUL_VIEW_COMMAND = "/controller?command=paymentSuccessfulView";
 	
 	public static final String ERROR_VIEW = "/WEB-INF/jsp/error/error_main.jsp";
 	

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import ua.nure.serdyuk.constants.Const;
+import ua.nure.serdyuk.constants.Path;
 
 public class LogoutCommand implements Command {
 
@@ -16,7 +17,7 @@ public class LogoutCommand implements Command {
 		req.getSession().setAttribute(Const.CURRENT_USER, null);
 		LOG.info("Logged out");
 		
-		return "index.jsp";
+		return Path.INDEX_VIEW;
 	}
 
 }

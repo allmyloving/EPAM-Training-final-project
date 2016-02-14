@@ -1,7 +1,9 @@
 package ua.nure.serdyuk.command;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -28,15 +30,16 @@ public class FindTrainsCommand implements Command {
 	public String execute(HttpServletRequest req, HttpServletResponse res) {
 		String stationFrom = req.getParameter(Const.STATION_FROM);
 		String stationTo = req.getParameter(Const.STATION_TO);
-		String date = req.getParameter("date");
+		String date = req.getParameter(Const.DATE);
 
 		HttpSession session = req.getSession();
+		ServletContext context = req.getServletContext();
 
 		// req.getSession().invalidate();
 
 		req.setAttribute(Const.STATION_FROM, stationFrom);
 		req.setAttribute(Const.STATION_TO, stationTo);
-		req.setAttribute("date", date);
+		req.setAttribute(Const.DATE, date);
 
 		LOG.debug("date=" + date);
 
@@ -47,56 +50,75 @@ public class FindTrainsCommand implements Command {
 			session.setAttribute(Const.TRAIN_INFO_BEANS, null);
 			return Path.INDEX_VIEW;
 		}
-
-		ServletContext context = req.getServletContext();
-		RouteService routeService = (RouteService) context
-				.getAttribute(Const.ROUTE_SERVICE);
-		StationService stationService = (StationService) context
-				.getAttribute(Const.STATION_SERVICE);
-
 		LOG.debug(String.format("Looking for train from %s to %s, date: %s",
 				stationFrom, stationTo, date));
 
-		Station from = stationService.getByName(stationFrom);
-		Station to = stationService.getByName(stationTo);
+		Map<String, Station> stations = getStations(req, stationFrom,
+				stationTo);
+		Station from = stations.get(stationFrom);
+		Station to = stations.get(stationTo);
 
+		if (hasErrors(req, from, to)) {
+			session.setAttribute(Const.TRAIN_INFO_BEANS, null);
+			return Path.INDEX_VIEW;
+		}
+
+		// not session -- WRONG
+		session.setAttribute(Const.TRAIN_INFO_BEANS, getTrainBeans(context, from, to, date));
+
+		return Path.INDEX_VIEW;
+	}
+
+	private Map<String, Station> getStations(HttpServletRequest req,
+			String stationFrom, String stationTo) {
+		Map<String, Station> stations = new HashMap<>();
+
+		ServletContext context = req.getServletContext();
+		StationService stationService = (StationService) context
+				.getAttribute(Const.STATION_SERVICE);
+
+		stations.put(stationFrom, stationService.getByName(stationFrom));
+		stations.put(stationTo, stationService.getByName(stationTo));
+
+		return stations;
+	}
+
+	private boolean hasErrors(HttpServletRequest req, Station from,
+			Station to) {
 		boolean error = false;
 		if (from == null) {
 			error = true;
 			req.setAttribute("stationFromError",
 					"Station was not found, select from the drop-down list");
-			LOG.error(String.format(Message.ERR_STATION_NOT_FOUND, stationFrom));
+			LOG.error(String.format(Message.ERR_STATION_NOT_FOUND, from));
 		}
 
 		if (to == null) {
 			error = true;
 			req.setAttribute("stationToError",
 					"Station was not found, select from the drop-down list");
-			LOG.error(String.format(Message.ERR_STATION_NOT_FOUND, stationTo));
+			LOG.error(String.format(Message.ERR_STATION_NOT_FOUND, to));
 		}
 
-		if (error) {
-			session.setAttribute(Const.TRAIN_INFO_BEANS, null);
-			return Path.INDEX_VIEW;
-		}
+		return error;
+	}
 
+	private List<TrainBean> getTrainBeans(ServletContext context, Station from, Station to,
+			String date) {
+		RouteService routeService = (RouteService) context.getAttribute(Const.ROUTE_SERVICE);
+		TrainBeanService trainBeanService = (TrainBeanService) context.getAttribute(Const.TRAIN_BEAN_SERVICE);
+		
 		List<Route> routes = routeService.getAllByStationsAndDate(from.getId(),
 				to.getId(), date);
+		LOG.info(String.format("Routes found ==> ", routes.toString()));
 
-		LOG.debug("found ==> " + routes);
-
-		TrainBeanService trainInfoService = (TrainBeanService) context
-				.getAttribute(Const.TRAIN_INFO_SERVICE);
 		List<TrainBean> trainBeans = new ArrayList<>();
 		for (Route r : routes) {
-			trainBeans.add(trainInfoService.getFullInfo(r.getTrainId(),
+			trainBeans.add(trainBeanService.getFullInfo(r.getTrainId(),
 					from.getId(), to.getId(), r.getId()));
 		}
 
-		// not session -- WRONG
-		req.getSession().setAttribute(Const.TRAIN_INFO_BEANS, trainBeans);
-
-		return Path.INDEX_VIEW;
+		return trainBeans;
 	}
 
 }

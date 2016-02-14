@@ -1,37 +1,20 @@
-var seatsSelected = {};
-
 $(document).ready(function() {
 	console.log("ready!!");
-	// $('#errorDiv').hide();
-	// $.ajax({
-	// url : "serv?param=errors",
-	// type : "get",
-	// async : true,
-	// success : function(data) {
-	// console.log('errors ==> ' + data);
-	// if (data.length > 4) {
-	// $('#errorDiv').html(data);
-	// $('#errorDiv').show();
-	// }
-	// }
-	// });
-
-	// index.jsp
-//	$('[data-toggle="popover"]').popover({
-//		html : true,
-//		content : function() {
-//			var d = $.ajax({
-//				url : "serv?param=stations&filter=Ха",
-//				type : "get",
-//				async : false,
-//				success : function(data) {
-//					return data;
-//				}
-//			});
-//			console.log(d);
-//			return d;
+//	 $('#errorDiv').hide();
+//	$.ajax({
+//		url : "serv?param=errors",
+//		type : "get",
+//		async : true,
+//		success : function(data) {
+//			console.log('errors ==> ' + data);
+//			if (data.length > 4) {
+//				$('#errorDiv').html(data);
+//				$('#errorDiv').show();
+//			}
 //		}
 //	});
+
+	// index.jsp
 	$('#swapStations').click(function(event) {
 		var text1 = $('#stationFrom').val();
 		var text2 = $('#stationTo').val();
@@ -58,52 +41,50 @@ $(document).ready(function() {
 		$('#seatNum').val(idVal);
 		// $(this).toggleClass('active');
 	});
-
-	$('#signUpForm').submit(function(event) {
-		event.preventDefault();
-		var map = {
-			"email" : /\w+@\w+\.\w+/,
-			"password" : /\w{4,50}/
-
-		};
-		var errors = {
-			"email" : "Email is not valid",
-			"password" : "Password should contain more than 4 symbols",
-			"repPassword" : "Passwords should match"
-		};
-
-		var proceed = true;
-		var $sel, $err, div;
-		for (key in map) {
-			$sel = $('#' + key);
-			div = $sel.parent();
-			var regex = new RegExp(map[key]);
-			$err = $('#' + key + "Error");
-
-			if (!regex.test($sel.val())) {
-				proceed = false;
-				div.addClass('has-error');
-				$err.html(errors[key]);
-			} else {
-				div.removeClass('has-error');
-				$err.html('');
-			}
-		}
-		var key = 'repPassword';
-		var $sel = $('#' + key);
-		$err = $('#' + key + 'Error');
-		if ($sel.val() != $('#password').val()) {
-			$sel.parent().addClass('has-error');
-			$err.html(errors[key]);
-			proceed = false;
-		}
-		
-		if (proceed) {
-			$(this).off("submit");
-			this.submit();
-		}
-	});
-	$('#ticketOrderForm').submit(function(event) {
+	
+//	$('#signUpForm').submit(function(event) {
+//		event.preventDefault();
+//		var map = {
+//			"email" : /\w+@\w+\.\w+/,
+//			"password" : /\w{4,50}/
+//
+//		};
+//		var errors = {
+//			"email" : "Email is not valid",
+//			"password" : "Password should contain at least 4 symbols",
+//			"repPassword" : "Passwords should match"
+//		};
+//
+//		var proceed = true;
+//		var $sel, $err, div;
+//		for (key in map) {
+//			$sel = $('#' + key);
+//			div = $sel.parent();
+//			var regex = new RegExp(map[key]);
+//			$err = $('#' + key + "Error");
+//
+//			if (!regex.test($sel.val())) {
+//				proceed = false;
+//				$err.html(errors[key]);
+//			} else {
+//				$err.html('');
+//			}
+//		}
+//		var key = 'repPassword';
+//		var $sel = $('#' + key);
+//		$err = $('#' + key + 'Error');
+//		if ($sel.val() != $('#password').val()) {
+//			$err.html(errors[key]);
+//			proceed = false;
+//		}
+//		
+//		if (proceed) {
+//			$(this).off("submit");
+//			this.submit();
+//		}
+//	});
+	
+	$('.input-not-empty').submit(function(event) {
 		event.preventDefault();
 		var proceed = true;
 		var items = $(this).find('.form-control');
@@ -128,10 +109,6 @@ function toggleButton(button) {
 	console.log($(button).attr('id'));
 	$(button).toggleClass('focus');
 };
-
-function validateTicketForm(){
-	
-}
 
 function getStations(input) {
 	$.ajax({

@@ -2,7 +2,7 @@
 <script src="js/error.js"></script>
 </head>
 <%@ include file="/WEB-INF/jspf/header.jspf"%>
-<fmt:message key="label.sign_up" var="signUpLoc"/>
+<fmt:message key="label.sign_up" var="signUpLoc" />
 <c:set var="title" value="${signUpLoc}" scope="page" />
 <div class="container">
 	<div class="row">
@@ -13,8 +13,15 @@
 					<legend>
 						<fmt:message key="label.sign_up" />
 					</legend>
-					<div class="alert alert-dismissible alert-warning" id="errorDiv">
-					</div>
+					<c:if test="${not empty errors}">
+						<div class="alert alert-dismissible alert-warning" id="errorDiv">
+							<ul>
+								<c:forEach items="${errors}" var="e">
+									<li>${e}</li>
+								</c:forEach>
+							</ul>
+						</div>
+					</c:if>
 					<div class="form-group">
 						<label class="control-label" for="email"><fmt:message
 								key="label.email" />:</label> <input class="form-control" id="email"
@@ -26,6 +33,7 @@
 								key="label.password" />:</label> <input type="password"
 							class="form-control" id="password" name="password">
 						<p class="text-warning" id="passwordError"></p>
+						<span class="help-block"><fmt:message key="label.password_advice"/></span>
 					</div>
 					<div class="form-group">
 						<label class="control-label" for="repPassword"> <fmt:message
@@ -35,7 +43,9 @@
 						<p class="text-warning" id="repPasswordError"></p>
 					</div>
 					<button type="submit" class="btn btn-default btn-block"
-						id="signUpSubmit" onclick="validateSignUp()"><fmt:message key="label.proceed"/></button>
+						id="signUpSubmit">
+						<fmt:message key="action.proceed" />
+					</button>
 				</fieldset>
 			</form>
 		</div>

@@ -29,26 +29,29 @@ public class GetFreeSeatsCommand implements Command {
 				.getAttribute(Const.TRAIN_INFO_BEANS);
 		TrainBean temp = new TrainBean();
 		temp.setRouteId(routeId);
-		
 
 		LOG.debug("beans ==> " + trainInfoBeans);
 
 		TrainBean bean = trainInfoBeans.get(trainInfoBeans.indexOf(temp));
+		List<Carriage> carriages = getCarriageList(req, bean);
+		bean.setCarriages(carriages);
 
+		req.setAttribute(Const.CARRIAGE_LIST, new CarriageListBean(carriages));
+		req.setAttribute(Const.ROUTE_ID, routeId);
+
+		return Path.FREE_SEATS_VIEW;
+	}
+	
+	private List<Carriage> getCarriageList(HttpServletRequest req, TrainBean bean){
 		CarriageService carriageService = (CarriageService) req
 				.getServletContext().getAttribute(Const.CARRIAGE_SERVICE);
 		List<Carriage> carriages = carriageService.getAll(
 				bean.getRouteItemIdFrom(), bean.getRouteItemIdTo(),
 				bean.getTrainId(), bean.getRouteId());
 		
-		bean.setCarriages(carriages);
-
 		LOG.debug("carriages found ==> " + carriages);
-
-		req.setAttribute(Const.CARRIAGE_LIST, new CarriageListBean(carriages));
-		req.setAttribute(Const.ROUTE_ID, routeId);
-
-		return Path.FREE_SEATS_VIEW;
+		
+		return carriages;
 	}
 
 }

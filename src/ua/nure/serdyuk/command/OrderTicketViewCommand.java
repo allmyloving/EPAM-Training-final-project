@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -28,23 +29,11 @@ public class OrderTicketViewCommand implements Command {
 		long carriageId = Long.valueOf(carriageIdStr);
 		int seatNum = Integer.valueOf(seatNumStr);
 		long routeId = (long) req.getSession().getAttribute(Const.ROUTE_ID);
-		// CarriageListBean list = (CarriageListBean) req
-		// .getAttribute(Const.CARRIAGE_LIST);
 
-		List<TrainBean> trainBeans = (List<TrainBean>) req.getSession()
-				.getAttribute(Const.TRAIN_INFO_BEANS);
-		TrainBean temp = new TrainBean();
-		temp.setRouteId(routeId);
-		TrainBean trainBean = trainBeans.get(trainBeans.indexOf(temp));
+		HttpSession session = req.getSession();
 
-		LOG.info("Train bean ==> " + trainBean);
-
-		Carriage tmp = new Carriage();
-		tmp.setId(carriageId);
-		Carriage carriage = trainBean.getCarriages()
-				.get(trainBean.getCarriages().indexOf(tmp));
-
-		LOG.info("Carriage ==> " + carriage);
+		TrainBean trainBean = getTrainBean(session, routeId);
+		Carriage carriage = getCarriage(trainBean, carriageId);
 
 		StationService stationService = (StationService) req.getServletContext()
 				.getAttribute(Const.STATION_SERVICE);
@@ -57,11 +46,35 @@ public class OrderTicketViewCommand implements Command {
 		ticketBean.setTrainBean(trainBean);
 		ticketBean.setStationFrom(stations.get(0).getName());
 		ticketBean.setStationTo(stations.get(1).getName());
-		// .bean.set
 
-		req.getSession().setAttribute(Const.TICKET_ORDER_BEAN, ticketBean);
+		session.setAttribute(Const.TICKET_ORDER_BEAN, ticketBean);
 
 		return Path.ORDER_TICKET_VIEW;
+	}
+
+	private TrainBean getTrainBean(HttpSession session, long routeId) {
+		@SuppressWarnings("unchecked")
+		List<TrainBean> trainBeans = (List<TrainBean>) session
+				.getAttribute(Const.TRAIN_INFO_BEANS);
+		TrainBean trainBean = new TrainBean();
+		trainBean.setRouteId(routeId);
+		trainBean = trainBeans.get(trainBeans.indexOf(trainBean));
+
+		LOG.info("Train bean ==> " + trainBean);
+
+		return trainBean;
+	}
+
+	private Carriage getCarriage(TrainBean trainBean, long carriageId) {
+		Carriage carriage = new Carriage();
+		carriage.setId(carriageId);
+		carriage = trainBean.getCarriages()
+				.get(trainBean.getCarriages().indexOf(carriage));
+
+		LOG.info("Carriage ==> " + carriage);
+
+		return carriage;
+
 	}
 
 }

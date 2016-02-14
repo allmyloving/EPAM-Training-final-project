@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+import ua.nure.serdyuk.Message;
 import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.constants.Path;
 import ua.nure.serdyuk.db.service.UserService;
@@ -29,8 +30,11 @@ public class LoginCommand implements Command {
 		}
 
 		LOG.info(String.format("Login failed for email %s", email));
-		// throw new exception
-		return "login_unsuccessful.jsp";
+
+		req.setAttribute(Const.EMAIL, email);
+		req.setAttribute("loginError", Message.INVALID_USER_NAME_OR_PASSWORD);
+		
+		return Path.LOGIN_VIEW;
 	}
 
 }

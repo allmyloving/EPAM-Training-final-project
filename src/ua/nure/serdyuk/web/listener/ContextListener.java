@@ -111,7 +111,7 @@ public class ContextListener implements ServletContextListener {
 				new RouteItemServiceMySql(new RouteItemDaoMySql()));
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "RouteItem"));
 
-		context.setAttribute(Const.TRAIN_INFO_SERVICE, new TrainBeanServiceImpl(
+		context.setAttribute(Const.TRAIN_BEAN_SERVICE, new TrainBeanServiceImpl(
 				new TrainInfoDaoMySql(), new RouteItemDaoMySql()));
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "TrainInfo"));
 

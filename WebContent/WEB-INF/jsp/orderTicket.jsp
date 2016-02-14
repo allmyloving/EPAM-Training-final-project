@@ -7,7 +7,7 @@
 		<div class="row">
 			<div class="col-md-6">
 				<form role="form" action="controller" method="post"
-					id="ticketOrderForm">
+					id="ticketOrderForm" class="input-not-empty">
 					<input type="hidden" value="orderTicket" name="command" />
 
 					<fieldset>

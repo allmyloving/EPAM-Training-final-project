@@ -40,7 +40,7 @@ public class TrainBeanDaoMySql implements TrainBeanDao {
 	}
 
 	@Override
-	public boolean delete(TrainBean item) {
+	public boolean delete(long id) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -6,6 +6,12 @@ import ua.nure.serdyuk.entity.Station;
 
 public interface StationService {
 
+	boolean create(Station station);
+	
+	boolean update(Station station);
+	
+	boolean delete(long id);
+
 	Station getByName(String name);
 
 	/**
@@ -22,6 +28,6 @@ public interface StationService {
 	 * @return
 	 */
 	List<Station> getAll(String filter);
-	
+
 	List<Station> getByRouteItems(long routeItemId1, long routeItemId2);
 }

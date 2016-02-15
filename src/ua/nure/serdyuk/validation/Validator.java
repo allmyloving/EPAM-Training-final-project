@@ -4,6 +4,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import ua.nure.serdyuk.constants.Message;
 
 /**
@@ -13,6 +15,8 @@ import ua.nure.serdyuk.constants.Message;
  * @see Validation
  */
 public class Validator {
+
+	private static final Logger LOG = Logger.getLogger(Validator.class);
 
 	private static final long LOWER_BOUND = getDefault("lowerBound");
 

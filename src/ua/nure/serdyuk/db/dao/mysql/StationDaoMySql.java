@@ -9,6 +9,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.mysql.jdbc.Statement;
+
 import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.db.DbUtils;
 import ua.nure.serdyuk.db.dao.StationDao;
@@ -22,7 +24,34 @@ public class StationDaoMySql implements StationDao {
 
 	@Override
 	public boolean create(Station item) {
-		throw new UnsupportedOperationException();
+		Connection conn = DbUtils.getConnection();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int result = 0;
+
+		try {
+			ps = conn.prepareStatement(
+					PropertyContainer.get(Const.SQL_CREATE_STATION),
+					Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, item.getName());
+
+			result = ps.executeUpdate();
+
+			rs = ps.getGeneratedKeys();
+			if (!rs.next()) {
+				throw new DbException("A key for station was not generated");
+			}
+			item.setId(rs.getLong(1));
+
+			conn.commit();
+		} catch (SQLException e) {
+			LOG.error(e.getMessage());
+			throw new DbException(e.getMessage());
+		} finally {
+			DbUtils.close(conn, ps, null);
+		}
+		return result != 0;
+
 	}
 
 	@Override
@@ -32,37 +61,55 @@ public class StationDaoMySql implements StationDao {
 
 	@Override
 	public boolean update(Station item) {
-		throw new UnsupportedOperationException();
+		Connection conn = DbUtils.getConnection();
+		PreparedStatement ps = null;
+		int result = 0;
+
+		try {
+			ps = conn.prepareStatement(
+					PropertyContainer.get(Const.SQL_UPDATE_STATION));
+
+			int k = 1;
+			ps.setString(k++, item.getName());
+			ps.setLong(k++, item.getId());
+
+			result = ps.executeUpdate();
+			conn.commit();
+		} catch (SQLException e) {
+			LOG.error(e.getMessage());
+			throw new DbException(e.getMessage());
+		} finally {
+			DbUtils.close(conn, ps, null);
+		}
+		return result != 0;
 	}
 
 	@Override
-	public boolean delete(Station item) {
-		throw new UnsupportedOperationException();
+	public boolean delete(long id) {
+		Connection conn = DbUtils.getConnection();
+		PreparedStatement ps = null;
+		int result = 0;
+
+		try {
+			ps = conn.prepareStatement(
+					PropertyContainer.get(Const.SQL_DELETE_STATION));
+			ps.setLong(1, id);
+
+			result = ps.executeUpdate();
+			conn.commit();
+		} catch (SQLException e) {
+			LOG.error(e.getMessage());
+			throw new DbException(e.getMessage());
+		} finally {
+			DbUtils.close(conn, ps, null);
+		}
+		return result != 0;
+
 	}
 
 	@Override
 	public List<Station> getAll() {
 		throw new UnsupportedOperationException();
-//		Connection conn = DbUtils.getConnection();
-//		PreparedStatement ps = null;
-//		ResultSet rs = null;
-//		List<Station> stations = new ArrayList<>();
-//		final String query = PropertyContainer.get(Const.GET_ALL_STATIONS);
-//
-//		try {
-//			ps = conn.prepareStatement(query);
-//			rs = ps.executeQuery();
-//			while (rs.next()) {
-//				stations.add(extractStation(rs));
-//			}
-//		} catch (SQLException e) {
-//			DbUtils.rollback(conn);
-//			LOG.error(e.getMessage());
-//			throw new DbException(e.getMessage(), e);
-//		} finally {
-//			DbUtils.close(conn, ps, rs);
-//		}
-//		return stations;
 	}
 
 	@Override
@@ -76,7 +123,7 @@ public class StationDaoMySql implements StationDao {
 				: PropertyContainer.get(Const.GET_ALL_STATIONS);
 
 		try {
-			if(filter!=null){
+			if (filter != null) {
 				query = query.replace("?", filter);
 			}
 			ps = conn.prepareStatement(query);

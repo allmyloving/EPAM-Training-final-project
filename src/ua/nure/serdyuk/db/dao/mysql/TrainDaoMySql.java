@@ -26,7 +26,7 @@ public class TrainDaoMySql implements TrainDao {
 	}
 
 	@Override
-	public boolean delete(Train item) {
+	public boolean delete(long id) {
 		// TODO Auto-generated method stub
 		return false;
 	}

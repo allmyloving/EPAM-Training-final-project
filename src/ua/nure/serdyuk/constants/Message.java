@@ -32,5 +32,7 @@ public final class Message {
 	public static final String ERR_STATION_NOT_FOUND = "Station %s was not found.";
 
 	public static final String INVALID_USER_NAME_OR_PASSWORD = "message.invalid_email_pass";
+	
+	public static final String SERVER_ERROR = "message.server_error";
 
 }

@@ -24,6 +24,7 @@ public class MyServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		
 		// what if wrong command?
 		String commandParam = req.getParameter("command");
 		Command command = CommandContainer.get(commandParam);
@@ -34,5 +35,11 @@ public class MyServlet extends HttpServlet {
 		PrintWriter writer = resp.getWriter();
 		writer.print(out);
 		writer.flush();
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		doGet(req, resp);
 	}
 }

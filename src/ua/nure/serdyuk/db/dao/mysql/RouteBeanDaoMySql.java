@@ -74,7 +74,7 @@ public class RouteBeanDaoMySql implements RouteBeanDao {
 	}
 
 	@Override
-	public boolean delete(RouteBean item) {
+	public boolean delete(long id) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -67,7 +67,7 @@ public class TicketDaoMySql implements TicketDao {
 	}
 
 	@Override
-	public boolean delete(Ticket item) {
+	public boolean delete(long id) {
 		throw new UnsupportedOperationException();
 	}
 

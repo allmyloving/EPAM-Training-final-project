@@ -84,7 +84,7 @@ public class UserDaoMySql implements UserDao {
 	}
 
 	@Override
-	public boolean delete(User item) {
+	public boolean delete(long id) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -82,7 +82,7 @@ public class RouteItemDaoMySql implements RouteItemDao {
 	}
 
 	@Override
-	public boolean delete(RouteItem item) {
+	public boolean delete(long id) {
 		throw new UnsupportedOperationException();
 	}
 

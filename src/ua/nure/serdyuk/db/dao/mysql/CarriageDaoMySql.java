@@ -162,7 +162,7 @@ public class CarriageDaoMySql implements CarriageDao {
 	}
 	
 	@Override
-	public boolean delete(Carriage item) {
+	public boolean delete(long id) {
 		throw new UnsupportedOperationException();
 	}
 	

@@ -36,4 +36,19 @@ public class StationServiceMySql implements StationService {
 	public List<Station> getByRouteItems(long routeItemId1, long routeItemId2) {
 		return stationDao.getByRouteItems(routeItemId1, routeItemId2);
 	}
+
+	@Override
+	public boolean create(Station station) {
+		return stationDao.create(station);
+	}
+
+	@Override
+	public boolean update(Station station) {
+		return stationDao.update(station);
+	}
+
+	@Override
+	public boolean delete(long id) {
+		return stationDao.delete(id);
+	}
 }

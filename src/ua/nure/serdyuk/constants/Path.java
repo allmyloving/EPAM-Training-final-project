@@ -30,6 +30,8 @@ public final class Path {
 	
 	public static final String STATIONS_VIEW = "/WEB-INF/jsp/admin/stationsView.jsp";
 	
+	public static final String STATIONS_VIEW_COMMAND = "/controller?command=viewStations";
+	
 	public static final String ADD_ROUTE_VIEW = "/WEB-INF/jsp/admin/addRoute.jsp";
 	
 	public static final String ADD_TRAIN_VIEW = "/WEB-INF/jsp/admin/addTrain.jsp";

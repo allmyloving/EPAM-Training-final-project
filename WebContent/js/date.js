@@ -2,6 +2,9 @@ $(document)
 		.ready(
 				function() {
 					var lang = $('body').attr('lang');
+					console.log(lang);
+
+
 					$.fn.datepicker.dates['ru'] = {
 						days : [ "Воскресенье", "Понедельник", "Вторник",
 								"Среда", "Четверг", "Пятница", "Суббота" ],
@@ -26,6 +29,6 @@ $(document)
 					$('#date').datepicker({
 						startDate : '0',
 						language : lang
-					// ,todayBtn: "linked"
+						// ,todayBtn: "linked"
 					});
 				});

@@ -14,8 +14,8 @@ create table if not exists `user` (
 	primary key (`id`)
 ) charset=utf8;
 
-insert into user values(default, 'daria@gmail.com', '1234', 'Daria', 'Serdiuk', null, 1);
-insert into user values(default, 'daria13@gmail.com', '1234', 'Дарья', 'Сердюк', null, 0);
+INSERT INTO `user` (`id`, `email`, `password`, `f_name`, `l_name`, `document_tag`, `role_id`) VALUES (3, 'daria@gmail.com', '39032b363c5c4990ff5a399d470d2b10b7269263', NULL, NULL, NULL, 1);
+
 
 
 create table if not exists `train_type` (
@@ -69,11 +69,10 @@ insert into station values(14, 'Здолбунов');
 insert into station values(16, 'Броды');
 insert into station values(17, 'Львов');
 insert into station values(18, 'Ивано-Франковск');
-INSERT INTO `station` (`id`, `name`) VALUES (13, 'Славута 1');
-INSERT INTO `station` (`id`, `name`) VALUES (1, 'Харьков-Пасс');
-INSERT INTO `station` (`id`, `name`) VALUES (9, 'Херсон');
-
-
+insert into station values(19, 'Лозовая');
+insert into station values(20, 'Павлоград');
+insert into station values(21, 'Новоалексеевка');
+insert into station values(22, 'Лихачево');
 -- finish here
 create table if not exists `route`(
 	`id` smallint unsigned auto_increment not null unique,
@@ -81,6 +80,7 @@ create table if not exists `route`(
 	`train_id` bigint unsigned not null,
 	
 	primary key (`id`),
+	unique key `date_train` (`date`, `train_id`),
 	constraint `fk_route_train` foreign key (`train_id`) references `train`(`id`) on delete cascade on update cascade
 ) charset=utf8;
 
@@ -117,6 +117,7 @@ create table if not exists `route_item`(
 	`station_id` smallint unsigned not null,
 	
 	primary key (`id`),
+	unique key `ordinal_train_station` (`ordinal`, `train_id`, `station_id`),
 	constraint `fk_route_item_train` foreign key (`train_id`) references `train`(`id`) on delete cascade on update cascade,
 	constraint `fk_route_item_station` foreign key (`station_id`) references `station`(`id`) on update cascade
 ) charset=utf8;
@@ -175,6 +176,7 @@ create table if not exists `car_price` (
 	`car_type_id` tinyint unsigned not null,
 	
 	primary key(`id`),
+	unique key `car_type_train` (`car_type_id`, `train_id`),
 	constraint `fk_car_price_train` foreign key(`train_id`) references `train`(`id`) on update cascade on delete cascade,
 	constraint `fk_car_price_car_type` foreign key(`car_type_id`) references `carriage_type`(`id`) on update cascade
 );
@@ -197,6 +199,7 @@ create table if not exists `carriage` (
 	`train_id` bigint unsigned not null,
 	
 	primary key (`id`),
+	unique key `tag_train` (`tag`, `train_id`),
 	constraint `fk_carriage_car_type` foreign key (`type_id`) references `carriage_type`(`id`) on update cascade,
 	constraint `fk_carriage_train` foreign key (`train_id`) references `train`(`id`) on delete cascade on update cascade
 ) charset=utf8;
@@ -240,32 +243,7 @@ insert into `seat_type` values(1, 'db.upper');
 insert into `seat_type` values(2, 'db.lower');
 insert into `seat_type` values(3, 'db.sitting');
 
--- DROP
-create table `allowed_val`(
-	`val` tinyint not null unique,
-	primary key(`val`)
-);
-
-insert into `allowed_val` values(-1);
-insert into `allowed_val` values(0);
-insert into `allowed_val` values(1);
--- ------------------------------------------------------------------------
-	-- DROP
--- create table if not exists `seat` (
--- `id` tinyint unsigned auto_increment not null unique,
--- -- -1 ==> all, 0 -- odd, 1 -- even
--- `coef` tinyint unsigned references `allowed_val`(`val`),
--- `seat_type_id` tinyint unsigned not null,
--- `car_type_id`  tinyint unsigned not null,
--- 
--- primary key(`id`),
--- 
--- constraint `fk_seat_seat_type` foreign key(`seat_type_id`) references `seat_type`(`id`) on update cascade on delete cascade,
--- constraint `fk_seat_car_type` foreign key(`car_type_id`) references `carriage_type`(`id`) on update cascade on delete cascade
--- ) charset=utf8;
--- 
--- -------------------------------------------------------------------------
-
+-- --------------------------------------------------------
 create table if not exists `discount_type` (
 	`id` tinyint unsigned auto_increment not null unique,
 	`name` varchar(15) not null unique,
@@ -302,6 +280,8 @@ create table if not exists `ticket` (
 	
 	primary key(`id`),
 	
+	unique key `ticket_uniq` (`seat_num`, `carriage_id`, `route_id`, `route_item_dep_id`, `route_item_arr_id`),
+	
 	constraint `fk_ticket_user` foreign key(`user_id`) references `user`(`id`) on update cascade on delete cascade,
 	constraint `fk_ticket_discount` foreign key(`discount_type_id`) references `discount_type`(`id`) on update cascade on delete cascade,
 	constraint `fk_ticket_carriage` foreign key(`carriage_id`) references `carriage`(`id`) on update cascade on delete cascade,
@@ -310,10 +290,16 @@ create table if not exists `ticket` (
 	constraint `fk_ticket_arr_station` foreign key(`route_item_arr_id`) references `route_item`(`id`) on update cascade
 ) charset=utf8;
 
-INSERT INTO `ticket` (`id`, `f_name`, `l_name`, `seat_num`, `price`, `user_id`, `discount_type_id`, `status_id`, `carriage_id`, `route_id`, `route_item_dep_id`, `route_item_arr_id`) VALUES (1, 'Дарья', 'Сердюк', 10, 112.00, NULL, NULL, NULL, 10, 10, 3, 2);
-INSERT INTO `ticket` (`id`, `f_name`, `l_name`, `seat_num`, `price`, `user_id`, `discount_type_id`, `status_id`, `carriage_id`, `route_id`, `route_item_dep_id`, `route_item_arr_id`) VALUES (2, 'Дарья', 'Сердюк', 11, 112.00, NULL, NULL, NULL, 10, 10, 1, 3);
-INSERT INTO `ticket` (`id`, `f_name`, `l_name`, `seat_num`, `price`, `user_id`, `discount_type_id`, `status_id`, `carriage_id`, `route_id`, `route_item_dep_id`, `route_item_arr_id`) VALUES (3, 'Дарья', 'Сердюк', 13, 112.00, NULL, NULL, NULL, 10, 10, 3, 2);
-INSERT INTO `ticket` (`id`, `f_name`, `l_name`, `seat_num`, `price`, `user_id`, `discount_type_id`, `status_id`, `carriage_id`, `route_id`, `route_item_dep_id`, `route_item_arr_id`) VALUES (4, 'Дарья', 'Сердюк', 1, 112.00, NULL, NULL, NULL, 10, 10, 3, 2);
+INSERT INTO `ticket` (`id`, `f_name`, `l_name`, `seat_num`, `price`, `user_id`, `discount_type_id`, `status_id`, `carriage_id`, `route_id`, `route_item_dep_id`, `route_item_arr_id`) VALUES (1, 'Дарья', 'Сердюк', 10, 112.00, 3, NULL, NULL, 10, 10, 3, 2);
+INSERT INTO `ticket` (`id`, `f_name`, `l_name`, `seat_num`, `price`, `user_id`, `discount_type_id`, `status_id`, `carriage_id`, `route_id`, `route_item_dep_id`, `route_item_arr_id`) VALUES (2, 'Дарья', 'Сердюк', 11, 112.00, 3, NULL, NULL, 10, 10, 1, 3);
+INSERT INTO `ticket` (`id`, `f_name`, `l_name`, `seat_num`, `price`, `user_id`, `discount_type_id`, `status_id`, `carriage_id`, `route_id`, `route_item_dep_id`, `route_item_arr_id`) VALUES (3, 'Дарья', 'Сердюк', 13, 112.00, 3, NULL, NULL, 10, 10, 3, 2);
+INSERT INTO `ticket` (`id`, `f_name`, `l_name`, `seat_num`, `price`, `user_id`, `discount_type_id`, `status_id`, `carriage_id`, `route_id`, `route_item_dep_id`, `route_item_arr_id`) VALUES (4, 'Дарья', 'Сердюк', 1, 112.00, 3, NULL, NULL, 10, 10, 3, 2);
+INSERT INTO `ticket` (`id`, `f_name`, `l_name`, `seat_num`, `price`, `user_id`, `discount_type_id`, `status_id`, `carriage_id`, `route_id`, `route_item_dep_id`, `route_item_arr_id`) VALUES (7, 'asdf', 'asf', 5, 110.00, 3, NULL, NULL, 2, 3, 1, 5);
+INSERT INTO `ticket` (`id`, `f_name`, `l_name`, `seat_num`, `price`, `user_id`, `discount_type_id`, `status_id`, `carriage_id`, `route_id`, `route_item_dep_id`, `route_item_arr_id`) VALUES (8, 'Дарья', 'Сердюк', 24, 110.00, 3, NULL, NULL, 2, 3, 1, 5);
+INSERT INTO `ticket` (`id`, `f_name`, `l_name`, `seat_num`, `price`, `user_id`, `discount_type_id`, `status_id`, `carriage_id`, `route_id`, `route_item_dep_id`, `route_item_arr_id`) VALUES (9, 'Ольга', 'Красникова', 1, 110.00, 3, NULL, NULL, 1, 2, 1, 5);
+INSERT INTO `ticket` (`id`, `f_name`, `l_name`, `seat_num`, `price`, `user_id`, `discount_type_id`, `status_id`, `carriage_id`, `route_id`, `route_item_dep_id`, `route_item_arr_id`) VALUES (10, 'Иван', 'Иванов', 3, 110.00, 3, NULL, NULL, 1, 2, 1, 5);
+INSERT INTO `ticket` (`id`, `f_name`, `l_name`, `seat_num`, `price`, `user_id`, `discount_type_id`, `status_id`, `carriage_id`, `route_id`, `route_item_dep_id`, `route_item_arr_id`) VALUES (11, 'Андрей', 'Кумпан', 13, 78.00, 3, NULL, NULL, 5, 2, 1, 5);
+
 
 
 -- ---------------------------------------------------

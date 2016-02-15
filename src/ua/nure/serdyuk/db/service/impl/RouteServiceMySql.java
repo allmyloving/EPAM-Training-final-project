@@ -25,4 +25,9 @@ public class RouteServiceMySql implements RouteService {
 		return routeDao.getAllByStationsAndDate(stationFromId, stationToId,
 				DateUtils.extractDate(date));
 	}
+
+	@Override
+	public boolean create(Route item) {
+		return routeDao.create(item);
+	}
 }

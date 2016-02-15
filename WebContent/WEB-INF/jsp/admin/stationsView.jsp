@@ -47,7 +47,7 @@
 					<td><form action="controller">
 							<input type="hidden" name="command" value="deleteStation" /> <input
 								type="hidden" name="stationId" value="${s.id}" />
-							<button class="btn btn-default btn-sm">
+							<button class="btn btn-danger btn-sm">
 								<span class="glyphicon glyphicon-remove"></span>
 							</button>
 						</form></td>

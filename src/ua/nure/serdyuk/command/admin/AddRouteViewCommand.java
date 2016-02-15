@@ -1,12 +1,17 @@
 package ua.nure.serdyuk.command.admin;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
 import ua.nure.serdyuk.command.Command;
+import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.constants.Path;
+import ua.nure.serdyuk.db.service.TrainBeanService;
+import ua.nure.serdyuk.entity.bean.TrainBean;
 
 public class AddRouteViewCommand implements Command {
 
@@ -15,7 +20,14 @@ public class AddRouteViewCommand implements Command {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse res) {
-		// get all trains
+		TrainBeanService service = (TrainBeanService) req.getServletContext()
+				.getAttribute(Const.TRAIN_BEAN_SERVICE);
+		List<TrainBean> beans = service.getAll();
+
+		LOG.info(String.format("Trains found ==> %s", beans));
+		
+		req.setAttribute("trainBeans", beans);
+
 		return Path.ADD_ROUTE_VIEW;
 	}
 

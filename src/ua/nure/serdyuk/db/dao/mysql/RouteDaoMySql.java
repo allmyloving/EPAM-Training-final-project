@@ -9,6 +9,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.mysql.jdbc.Statement;
+
 import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.db.DbUtils;
 import ua.nure.serdyuk.db.dao.RouteDao;
@@ -57,10 +59,39 @@ public class RouteDaoMySql implements RouteDao {
 
 		return route;
 	}
-	
+
 	@Override
 	public boolean create(Route item) {
-		throw new UnsupportedOperationException();
+		Connection conn = DbUtils.getConnection();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int result = 0;
+
+		try {
+			ps = conn.prepareStatement(
+					PropertyContainer.get(Const.INSERT_ROUTE),
+					Statement.RETURN_GENERATED_KEYS);
+			int k = 1;
+			ps.setDate(k++, item.getDate());
+			ps.setLong(k++, item.getTrainId());
+
+			result = ps.executeUpdate();
+
+			rs = ps.getGeneratedKeys();
+			if (rs.next()) {
+				item.setId(rs.getInt(1));
+			}
+
+			conn.commit();
+		} catch (SQLException e) {
+			DbUtils.rollback(conn);
+			LOG.error(e.getMessage());
+			throw new DbException(e.getMessage());
+		} finally {
+			DbUtils.close(conn, ps, rs);
+		}
+
+		return result != 0;
 	}
 
 	@Override

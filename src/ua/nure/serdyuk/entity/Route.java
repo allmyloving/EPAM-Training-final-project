@@ -1,7 +1,7 @@
 package ua.nure.serdyuk.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 public class Route implements Serializable{
 	

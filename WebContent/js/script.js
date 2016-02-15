@@ -9,7 +9,7 @@ var errors = {
 		"email" : "Email не валидный",
 		"password" : "Пароль должен содержать не менее 4 символов",
 		"repPassword" : "Пароли должны совпадать",
-		"notEmpty": "Заполните поле"
+		"notEmpty" : "Заполните поле"
 	}
 }
 
@@ -97,7 +97,7 @@ $(document).ready(function() {
 			this.submit();
 		}
 	});
-	
+
 });
 
 function toggleButton(button) {
@@ -126,9 +126,19 @@ function getStations(input) {
 	});
 };
 
-function addStationSelect(event){
+function addStationSelect(event) {
 	event.preventDefault();
 	var html = $('#selectStation').html();
 	$('#stationContainer').append(html);
 };
 
+function addRoute() {
+	$.ajax({
+		url : "serv?command=addRoute&trainId=" + $('#trainSelect').val() + "&date=" + $('#date').val(),
+		type : "post",
+		async : true,
+		success : function(data) {
+			console.log('success!!!');
+		}
+	});
+}

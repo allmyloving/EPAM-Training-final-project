@@ -3,7 +3,7 @@
 <link rel="stylesheet" type="text/css" href="css/timepicker.css" />
 </head>
 <%@ include file="/WEB-INF/jspf/header.jspf"%>
-<body>
+<body lang="ru">
 	<div class="container">
 		<form role="form" action="controller">
 			<input type="hidden" name="command" value="addRoute" />

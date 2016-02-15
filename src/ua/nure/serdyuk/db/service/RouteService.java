@@ -6,6 +6,8 @@ import ua.nure.serdyuk.entity.Route;
 
 public interface RouteService {
 
+	boolean create(Route item);
+
 	List<Route> getAllByStationsAndDate(long stationFromId, long stationToId,
 			String date);
 

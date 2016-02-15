@@ -38,7 +38,7 @@ public class TrainBeanServiceImpl implements TrainBeanService {
 		Date depDate = bean.getDepDate();
 		Date arrDate = getArrivalDate(bean.getArrDate(), depDate, trainId,
 				stFromId, stToId);
-		
+
 		bean.setArrDate(arrDate);
 		bean.setDuration(DateUtils.getDuration(depDate, arrDate));
 
@@ -76,5 +76,10 @@ public class TrainBeanServiceImpl implements TrainBeanService {
 		}
 
 		return arrDate;
+	}
+
+	@Override
+	public List<TrainBean> getAll() {
+		return trainInfoDao.getAll();
 	}
 }

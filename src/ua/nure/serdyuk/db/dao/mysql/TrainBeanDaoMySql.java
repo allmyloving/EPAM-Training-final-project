@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,39 @@ public class TrainBeanDaoMySql implements TrainBeanDao {
 
 	@Override
 	public List<TrainBean> getAll() {
-		throw new UnsupportedOperationException();
+		Connection conn = DbUtils.getConnection();
+		Statement s = null;
+		ResultSet rs = null;
+		List<TrainBean> beans = null;
+
+		try {
+			s = conn.createStatement();
+			rs = s.executeQuery(
+					PropertyContainer.get(Const.SQL_GET_ALL_TRAINS));
+
+			beans = new ArrayList<>();
+			while (rs.next()) {
+				beans.add(extractBean(rs));
+			}
+		} catch (SQLException e) {
+			LOG.error(e.getMessage());
+			throw new DbException(e.getMessage());
+		} finally {
+			DbUtils.close(conn, s, rs);
+		}
+		return beans;
+	}
+
+	private TrainBean extractBean(ResultSet rs) throws SQLException {
+		TrainBean bean = new TrainBean();
+		bean.setTrainId(rs.getLong("train_id"));
+		bean.setTrainTag(rs.getString("tag"));
+		bean.setStationFrom(rs.getString("name"));
+
+		if (rs.next()) {
+			bean.setStationTo(rs.getString("name"));
+		}
+		return bean;
 	}
 
 	@Override
@@ -101,7 +134,8 @@ public class TrainBeanDaoMySql implements TrainBeanDao {
 			if (rs.next()) {
 				bean.setDepDate(depDate);
 				Time depTime = rs.getTime("dep_time");
-				java.util.Date depDateUtil = DateUtils.extractDate(depDate, depTime);
+				java.util.Date depDateUtil = DateUtils.extractDate(depDate,
+						depTime);
 				LOG.debug(String.format("departure date is %s",
 						depDateUtil.toString()));
 
@@ -156,7 +190,6 @@ public class TrainBeanDaoMySql implements TrainBeanDao {
 		}
 		return price;
 	}
-
 
 	private List<RouteBean> getRouteInfo(long trainId) {
 		Connection conn = DbUtils.getConnection();

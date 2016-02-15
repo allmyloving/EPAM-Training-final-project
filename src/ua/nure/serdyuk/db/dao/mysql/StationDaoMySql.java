@@ -45,6 +45,7 @@ public class StationDaoMySql implements StationDao {
 
 			conn.commit();
 		} catch (SQLException e) {
+			DbUtils.rollback(conn);
 			LOG.error(e.getMessage());
 			throw new DbException(e.getMessage());
 		} finally {
@@ -76,6 +77,7 @@ public class StationDaoMySql implements StationDao {
 			result = ps.executeUpdate();
 			conn.commit();
 		} catch (SQLException e) {
+			DbUtils.rollback(conn);
 			LOG.error(e.getMessage());
 			throw new DbException(e.getMessage());
 		} finally {
@@ -98,6 +100,7 @@ public class StationDaoMySql implements StationDao {
 			result = ps.executeUpdate();
 			conn.commit();
 		} catch (SQLException e) {
+			DbUtils.rollback(conn);
 			LOG.error(e.getMessage());
 			throw new DbException(e.getMessage());
 		} finally {

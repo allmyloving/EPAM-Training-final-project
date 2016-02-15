@@ -105,6 +105,8 @@ public final class Const {
 	
 	public static final String SQL_UPDATE_STATION = "SQL_UPDATE_STATION";
 	
+	public static final String SQL_GET_ALL_TRAINS = "SQL_GET_ALL_TRAINS";
+	
 
 	public static final String INSERT_ROUTE = "SQL_INSERT_ROUTE";
 

@@ -1,5 +1,6 @@
 <%@ include file="/WEB-INF/jspf/head.jspf"%>
 <script src="js/bootstrap-datepicker.min.js"></script>
+<script src="js/date.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="css/bootstrap-datepicker3.css" />
 </head>

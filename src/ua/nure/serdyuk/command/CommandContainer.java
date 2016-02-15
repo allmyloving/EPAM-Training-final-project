@@ -5,7 +5,21 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import ua.nure.serdyuk.command.admin.AddRouteViewCommand;
+import ua.nure.serdyuk.command.admin.AddTrainViewCommand;
+import ua.nure.serdyuk.command.admin.AdminViewCommand;
+import ua.nure.serdyuk.command.admin.ViewStationsCommand;
 import ua.nure.serdyuk.command.ajax.GetStationsCommand;
+import ua.nure.serdyuk.command.train.FindTrainsCommand;
+import ua.nure.serdyuk.command.train.GetFreeSeatsCommand;
+import ua.nure.serdyuk.command.train.NoCommand;
+import ua.nure.serdyuk.command.train.OrderTicketCommand;
+import ua.nure.serdyuk.command.train.OrderTicketViewCommand;
+import ua.nure.serdyuk.command.train.PaymentSuccessView;
+import ua.nure.serdyuk.command.train.ShowRouteInfoCommand;
+import ua.nure.serdyuk.command.user.LoginCommand;
+import ua.nure.serdyuk.command.user.LogoutCommand;
+import ua.nure.serdyuk.command.user.SignUpCommand;
 import ua.nure.serdyuk.command.view.LoginViewCommand;
 import ua.nure.serdyuk.command.view.SignUpViewCommand;
 
@@ -35,6 +49,11 @@ public final class CommandContainer {
 		commands.put("loginView", new LoginViewCommand());
 		commands.put("signUpView", new SignUpViewCommand());
 		commands.put("paymentSuccessfulView", new PaymentSuccessView());
+		
+		commands.put("adminView", new AdminViewCommand());
+		commands.put("viewStations", new ViewStationsCommand());
+		commands.put("addRouteView", new AddRouteViewCommand());
+		commands.put("addTrainView", new AddTrainViewCommand());
 		
 		commands.put("getStations", new GetStationsCommand());
 

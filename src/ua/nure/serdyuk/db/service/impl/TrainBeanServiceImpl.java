@@ -7,7 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import ua.nure.serdyuk.db.dao.RouteItemDao;
-import ua.nure.serdyuk.db.dao.TrainInfoDao;
+import ua.nure.serdyuk.db.dao.TrainBeanDao;
 import ua.nure.serdyuk.db.service.TrainBeanService;
 import ua.nure.serdyuk.entity.RouteItem;
 import ua.nure.serdyuk.entity.bean.TrainBean;
@@ -18,11 +18,11 @@ public class TrainBeanServiceImpl implements TrainBeanService {
 	private static final Logger LOG = Logger
 			.getLogger(TrainBeanServiceImpl.class);
 
-	private TrainInfoDao trainInfoDao;
+	private TrainBeanDao trainInfoDao;
 
 	private RouteItemDao routeItemDao;
 
-	public TrainBeanServiceImpl(TrainInfoDao trainInfoDao,
+	public TrainBeanServiceImpl(TrainBeanDao trainInfoDao,
 			RouteItemDao routeItemDao) {
 		this.trainInfoDao = trainInfoDao;
 		this.routeItemDao = routeItemDao;

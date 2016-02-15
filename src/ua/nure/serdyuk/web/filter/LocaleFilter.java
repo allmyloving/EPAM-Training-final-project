@@ -11,8 +11,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -27,8 +25,6 @@ import ua.nure.serdyuk.constants.Const;
  * @author Daria Serdiuk
  *
  */
-@WebFilter(displayName = "LocaleFilter", initParams = {
-		@WebInitParam(name = Const.DEFAULT_LOCALE, value = "en") }, filterName = "/LocaleFilter", urlPatterns = "/*")
 public class LocaleFilter implements Filter {
 
 	private static final Logger LOG = Logger.getLogger(LocaleFilter.class);

@@ -22,7 +22,8 @@ import ua.nure.serdyuk.db.dao.mysql.RouteDaoMySql;
 import ua.nure.serdyuk.db.dao.mysql.RouteItemDaoMySql;
 import ua.nure.serdyuk.db.dao.mysql.StationDaoMySql;
 import ua.nure.serdyuk.db.dao.mysql.TicketDaoMySql;
-import ua.nure.serdyuk.db.dao.mysql.TrainInfoDaoMySql;
+import ua.nure.serdyuk.db.dao.mysql.TrainBeanDaoMySql;
+import ua.nure.serdyuk.db.dao.mysql.TrainDaoMySql;
 import ua.nure.serdyuk.db.dao.mysql.UserDaoMySql;
 import ua.nure.serdyuk.db.service.impl.CarriageServiceImpl;
 import ua.nure.serdyuk.db.service.impl.RouteBeanServiceImpl;
@@ -31,6 +32,7 @@ import ua.nure.serdyuk.db.service.impl.RouteServiceMySql;
 import ua.nure.serdyuk.db.service.impl.StationServiceMySql;
 import ua.nure.serdyuk.db.service.impl.TicketServiceImpl;
 import ua.nure.serdyuk.db.service.impl.TrainBeanServiceImpl;
+import ua.nure.serdyuk.db.service.impl.TrainServiceImpl;
 import ua.nure.serdyuk.db.service.impl.UserServiceMySql;
 
 @WebListener
@@ -54,7 +56,7 @@ public class ContextListener implements ServletContextListener {
 	private void loadClasses() {
 		try {
 			Class.forName("ua.nure.serdyuk.command.CommandContainer");
-			Class.forName("ua.nure.serdyuk.PropertyContainer");
+			Class.forName("ua.nure.serdyuk.util.PropertyContainer");
 			Class.forName("ua.nure.serdyuk.db.DbUtils");
 		} catch (ClassNotFoundException e) {
 			LOG.error(Message.ERR_CONTAINERS_NOT_INITIALIZED);
@@ -112,7 +114,7 @@ public class ContextListener implements ServletContextListener {
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "RouteItem"));
 
 		context.setAttribute(Const.TRAIN_BEAN_SERVICE, new TrainBeanServiceImpl(
-				new TrainInfoDaoMySql(), new RouteItemDaoMySql()));
+				new TrainBeanDaoMySql(), new RouteItemDaoMySql()));
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "TrainInfo"));
 
 		context.setAttribute(Const.ROUTE_INFO_SERVICE,
@@ -126,6 +128,10 @@ public class ContextListener implements ServletContextListener {
 		context.setAttribute(Const.TICKET_SERVICE,
 				new TicketServiceImpl(new TicketDaoMySql()));
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "Ticket"));
+		
+		context.setAttribute(Const.TRAIN_SERVICE,
+				new TrainServiceImpl(new TrainDaoMySql()));
+		LOG.info(String.format(Message.SERVICE_INITIALIZED, "Train"));
 
 	}
 }

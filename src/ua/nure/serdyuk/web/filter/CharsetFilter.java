@@ -8,7 +8,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 
 import org.apache.log4j.Logger;
 
@@ -21,12 +20,11 @@ import ua.nure.serdyuk.constants.Message;
  * @author Daria Serdiuk
  * @see LocaleFilter
  */
-@WebFilter(filterName = "/CharsetFilter", urlPatterns = "*")
 public class CharsetFilter implements Filter {
 
 	private static final Logger LOG = Logger.getLogger(CharsetFilter.class);
 
-	private static final String ENCODING = "utf8";
+	private static final String ENCODING = "utf-8";
 
 	public void destroy() {
 		// TODO Auto-generated method stub

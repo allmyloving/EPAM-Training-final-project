@@ -1,15 +1,28 @@
+var errors = {
+	'en' : {
+		"email" : "Email is not valid",
+		"password" : "Password should contain at least 4 symbols",
+		"repPassword" : "Passwords should match",
+		"notEmpty" : "Cannot be empty"
+	},
+	'ru' : {
+		"email" : "Email не валидный",
+		"password" : "Пароль должен содержать не менее 4 символов",
+		"repPassword" : "Пароли должны совпадать",
+		"notEmpty": "Заполните поле"
+	}
+}
+
 $(document).ready(function() {
 	console.log("ready!!");
+	var lang = $('body').attr('lang');
+
 	// index.jsp
 	$('#swapStations').click(function(event) {
 		var text1 = $('#stationFrom').val();
 		var text2 = $('#stationTo').val();
 		$('#stationFrom').val(text2);
 		$('#stationTo').val(text1);
-	});
-	$('#date').datepicker({
-		startDate : '0'
-	// ,todayBtn: "linked"
 	});
 
 	// displayFreeSeats
@@ -27,18 +40,13 @@ $(document).ready(function() {
 		$('#seatNum').val(idVal);
 		// $(this).toggleClass('active');
 	});
-	
+
 	$('#signUpForm').submit(function(event) {
 		event.preventDefault();
 		var map = {
 			"email" : /\w+@\w+\.\w+/,
 			"password" : /\w{4,50}/
 
-		};
-		var errors = {
-			"email" : "Email is not valid",
-			"password" : "Password should contain at least 4 symbols",
-			"repPassword" : "Passwords should match"
 		};
 
 		var proceed = true;
@@ -51,7 +59,7 @@ $(document).ready(function() {
 
 			if (!regex.test($sel.val())) {
 				proceed = false;
-				$err.html(errors[key]);
+				$err.html(errors[lang][key]);
 			} else {
 				$err.html('');
 			}
@@ -60,16 +68,16 @@ $(document).ready(function() {
 		var $sel = $('#' + key);
 		$err = $('#' + key + 'Error');
 		if ($sel.val() != $('#password').val()) {
-			$err.html(errors[key]);
+			$err.html(errors[lang][key]);
 			proceed = false;
 		}
-		
+
 		if (proceed) {
 			$(this).off("submit");
 			this.submit();
 		}
 	});
-	
+
 	$('.input-not-empty').submit(function(event) {
 		event.preventDefault();
 		var proceed = true;
@@ -78,7 +86,7 @@ $(document).ready(function() {
 		for (var i = 0; i < items.length; i++) {
 			var id = $(items[i]).attr('id');
 			if ($(items[i]).val() == '') {
-				$('#' + id + 'Error').html("Cannot be empty.");
+				$('#' + id + 'Error').html(errors[lang]['notEmpty']);
 				proceed = false;
 			} else {
 				$('#' + id + 'Error').html('');
@@ -89,6 +97,7 @@ $(document).ready(function() {
 			this.submit();
 		}
 	});
+	
 });
 
 function toggleButton(button) {
@@ -115,5 +124,11 @@ function getStations(input) {
 			});
 		}
 	});
+};
+
+function addStationSelect(event){
+	event.preventDefault();
+	var html = $('#selectStation').html();
+	$('#stationContainer').append(html);
 };
 

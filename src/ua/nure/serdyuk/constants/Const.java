@@ -34,6 +34,8 @@ public final class Const {
 
 	public static final String STATION_SERVICE = "stationService";
 
+	public static final String TRAIN_SERVICE = "trainService";
+	
 	public static final String ROUTE_SERVICE = "routeService";
 
 	public static final String ROUTE_ITEM_SERVICE = "routeItemService";

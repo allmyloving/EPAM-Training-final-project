@@ -2,6 +2,7 @@ package ua.nure.serdyuk.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 public class Train implements Serializable {
 
@@ -14,6 +15,8 @@ public class Train implements Serializable {
 	private BigDecimal price;
 	
 	private int typeId;
+	
+	private List<RouteItem> routeItems;
 
 	public int getId() {
 		return id;
@@ -45,6 +48,14 @@ public class Train implements Serializable {
 
 	public void setTypeId(int typeId) {
 		this.typeId = typeId;
+	}
+
+	public List<RouteItem> getRouteItems() {
+		return routeItems;
+	}
+
+	public void setRouteItems(List<RouteItem> routeItems) {
+		this.routeItems = routeItems;
 	}
 
 	@Override

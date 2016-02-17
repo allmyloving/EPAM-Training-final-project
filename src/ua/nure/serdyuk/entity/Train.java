@@ -14,7 +14,7 @@ public class Train implements Serializable {
 	
 	private BigDecimal price;
 	
-	private int typeId;
+	private Integer typeId;
 	
 	private List<RouteItem> routeItems;
 
@@ -42,7 +42,7 @@ public class Train implements Serializable {
 		this.price = price;
 	}
 
-	public int getTypeId() {
+	public Integer getTypeId() {
 		return typeId;
 	}
 

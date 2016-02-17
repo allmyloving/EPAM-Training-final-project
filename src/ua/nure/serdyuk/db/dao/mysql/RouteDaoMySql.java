@@ -1,6 +1,7 @@
 package ua.nure.serdyuk.db.dao.mysql;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -69,7 +70,7 @@ public class RouteDaoMySql implements RouteDao {
 
 		try {
 			ps = conn.prepareStatement(
-					PropertyContainer.get(Const.INSERT_ROUTE),
+					PropertyContainer.get(Const.SQL_INSERT_ROUTE),
 					Statement.RETURN_GENERATED_KEYS);
 			int k = 1;
 			ps.setDate(k++, item.getDate());
@@ -112,5 +113,32 @@ public class RouteDaoMySql implements RouteDao {
 	@Override
 	public List<Route> getAll() {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public List<Route> getAllByDates(Date from, Date to) {
+		Connection conn = DbUtils.getConnection();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		List<Route> routes = null;
+
+		try {
+			ps = conn.prepareStatement(PropertyContainer
+					.get(Const.SQL_GET_ALL_ROUTES_BY_DATES));
+			int k = 1;
+			ps.setDate(k++, from);
+			ps.setDate(k++, to);
+
+			rs = ps.executeQuery();
+
+			routes = new ArrayList<>();
+			while (rs.next()) {
+				routes.add(extract(rs));
+			}
+		} catch (SQLException e) {
+			LOG.error(e.getMessage());
+			throw new DbException(e.getMessage());
+		}
+		return routes;
 	}
 }

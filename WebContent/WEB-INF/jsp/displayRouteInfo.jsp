@@ -10,21 +10,23 @@
 				<table class="table table-bordered">
 					<tr>
 						<th><fmt:message key="label.station" /></th>
-						<th><fmt:message key="label.departure" /></th>
 						<th><fmt:message key="label.arrival" /></th>
+						<th><fmt:message key="label.departure" /></th>
 					</tr>
 					<c:forEach items="${routeInfoBeans}" var="r">
 						<tr>
 							<td>${r.stationName}</td>
-							<td><fmt:formatDate value="${r.depTime}" type="time"
-									timeStyle="medium" /></td>
 							<td><fmt:formatDate value="${r.arrTime}" type="time"
+									timeStyle="medium" /></td>
+							<td><fmt:formatDate value="${r.depTime}" type="time"
 									timeStyle="medium" /></td>
 						</tr>
 					</c:forEach>
 
 				</table>
-				<div class="well">Time is local.</div>
+				<div class="well">
+					<fmt:message key="message.time_local" />
+				</div>
 			</c:when>
 			<c:otherwise>
 				<div class="well well-lg">
@@ -35,7 +37,8 @@
 	</div>
 	<div class="container">
 		<ul class="pager">
-			<li><a href="javascript:history.go(-1)">Go back</a></li>
+			<li><a href="javascript:history.go(-1)"><fmt:message
+						key="label.go_back" /></a></li>
 		</ul>
 	</div>
 

@@ -1,7 +1,6 @@
 package ua.nure.serdyuk.command.train;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,8 +52,11 @@ public class FindTrainsCommand implements Command {
 		}
 		LOG.debug(String.format("Looking for train from %s to %s, date: %s",
 				stationFrom, stationTo, date));
+		
+		StationService stationService = (StationService) context
+				.getAttribute(Const.STATION_SERVICE);
 
-		Map<String, Station> stations = getStations(req, stationFrom,
+		Map<String, Station> stations = stationService.getStations(stationFrom,
 				stationTo);
 		Station from = stations.get(stationFrom);
 		Station to = stations.get(stationTo);
@@ -69,21 +71,7 @@ public class FindTrainsCommand implements Command {
 
 		return Path.INDEX_VIEW;
 	}
-
-	private Map<String, Station> getStations(HttpServletRequest req,
-			String stationFrom, String stationTo) {
-		Map<String, Station> stations = new HashMap<>();
-
-		ServletContext context = req.getServletContext();
-		StationService stationService = (StationService) context
-				.getAttribute(Const.STATION_SERVICE);
-
-		stations.put(stationFrom, stationService.getByName(stationFrom));
-		stations.put(stationTo, stationService.getByName(stationTo));
-
-		return stations;
-	}
-
+	
 	private boolean hasErrors(HttpServletRequest req, Station from,
 			Station to) {
 		boolean error = false;

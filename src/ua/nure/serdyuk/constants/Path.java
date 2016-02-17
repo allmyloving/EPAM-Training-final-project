@@ -34,6 +34,10 @@ public final class Path {
 	
 	public static final String ADD_ROUTE_VIEW = "/WEB-INF/jsp/admin/addRoute.jsp";
 	
+	public static final String ADD_ROUTE_VIEW_COMMAND = "/controller?command=addRouteView";
+	
+	public static final String ADD_TRAIN_VIEW_COMMAND = "/controller?command=addTrainView";
+	
 	public static final String ADD_TRAIN_VIEW = "/WEB-INF/jsp/admin/addTrain.jsp";
 
 	public static final String ERROR_VIEW = "/WEB-INF/jsp/error/error_main.jsp";

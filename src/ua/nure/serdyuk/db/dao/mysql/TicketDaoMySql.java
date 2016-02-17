@@ -27,7 +27,7 @@ public class TicketDaoMySql implements TicketDao {
 
 		try {
 			ps = conn.prepareStatement(
-					PropertyContainer.get(Const.INSERT_TICKET));
+					PropertyContainer.get(Const.SQL_INSERT_TICKET));
 			int k = 1;
 			ps.setString(k++, ticket.getFirstName());
 			ps.setString(k++, ticket.getLastName());

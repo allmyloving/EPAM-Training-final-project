@@ -5,10 +5,10 @@
 
 		<div class="container">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="index.jsp">ST4</a>
+				<a class="navbar-brand" href="controller?command=indexView">ST4</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="index.jsp"><fmt:message key="label.home"/></a></li>
+				<li class="active"><a href="controller?command=indexView"><fmt:message key="label.home"/></a></li>
 				
 				<li><a href="controller?command=adminView">Admin page</a></li>
 				<li><a href="#">Page 3</a></li>

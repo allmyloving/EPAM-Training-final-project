@@ -3,44 +3,26 @@ var errors = {
 		"email" : "Email is not valid",
 		"password" : "Password should contain at least 4 symbols",
 		"repPassword" : "Passwords should match",
-		"notEmpty" : "Cannot be empty"
+		"notEmpty" : "Cannot be empty",
+		'message.name_not_valid' : "Name should start with upper-case letter",
+		'message.try_again' : "Try again later"
 	},
 	'ru' : {
 		"email" : "Email не валидный",
 		"password" : "Пароль должен содержать не менее 4 символов",
 		"repPassword" : "Пароли должны совпадать",
-		"notEmpty" : "Заполните поле"
+		"notEmpty" : "Заполните поле",
+		'message.name_not_valid' : 'Имя не может быть пустым и должно начинаться с заглавной буквы',
+		'message.try_again' : "Попробуйте позже"
 	}
 }
 
 $(document).ready(function() {
 	console.log("ready!!");
 	var lang = $('body').attr('lang');
-
-	// index.jsp
-	$('#swapStations').click(function(event) {
-		var text1 = $('#stationFrom').val();
-		var text2 = $('#stationTo').val();
-		$('#stationFrom').val(text2);
-		$('#stationTo').val(text1);
-	});
-
-	// displayFreeSeats
-	$('.seat-container').css('display', 'none');
-	$('.carriage-item').click(function() {
-		var id = $(this).attr('id');
-		console.log("carriage ==> " + id);
-		$('#carriageId').val(id);
-		$('div[id=' + id + ']').slideToggle('slow');
-	});
-	$('.seat').click(function() {
-		// $(this).blur();
-		var idVal = $(this).html().trim();
-		console.log('seat num==> ' + idVal);
-		$('#seatNum').val(idVal);
-		// $(this).toggleClass('active');
-	});
-
+	$('#errorDiv').hide();
+	$('#mesDiv').hide();
+	
 	$('#signUpForm').submit(function(event) {
 		event.preventDefault();
 		var map = {
@@ -100,11 +82,6 @@ $(document).ready(function() {
 
 });
 
-function toggleButton(button) {
-	console.log($(button).attr('id'));
-	$(button).toggleClass('focus');
-};
-
 function getStations(input) {
 	$.ajax({
 		url : "serv?command=getStations&filter=" + $(input).val(),
@@ -126,19 +103,21 @@ function getStations(input) {
 	});
 };
 
-function addStationSelect(event) {
-	event.preventDefault();
-	var html = $('#selectStation').html();
-	$('#stationContainer').append(html);
-};
-
 function addRoute() {
 	$.ajax({
-		url : "serv?command=addRoute&trainId=" + $('#trainSelect').val() + "&date=" + $('#date').val(),
+		url : "serv?command=addRoute&trainId=" + $('#trainSelect').val()
+				+ "&date=" + $('#date').val(),
 		type : "post",
 		async : true,
+		error : function(data) {
+			$('#mesDiv').hide();
+			$('#errorDiv').show();
+			$('#errorDiv p').html(data.statusText);
+		},
 		success : function(data) {
-			console.log('success!!!');
+			$('#errorDiv').hide();
+			$('#mesDiv').show();
+			$('#mesDiv p').html(data);
 		}
 	});
 }

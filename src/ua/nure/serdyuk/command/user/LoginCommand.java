@@ -33,9 +33,9 @@ public class LoginCommand implements Command {
 		LOG.info(String.format("Login failed for email %s", email));
 
 		req.setAttribute(Const.EMAIL, email);
-		req.setAttribute("loginError", Message.INVALID_USER_NAME_OR_PASSWORD);
+		req.getSession().setAttribute("loginError", Message.INVALID_USER_NAME_OR_PASSWORD);
 		
-		return Path.LOGIN_VIEW;
+		return Path.LOGIN_VIEW_COMMAND;
 	}
 
 }

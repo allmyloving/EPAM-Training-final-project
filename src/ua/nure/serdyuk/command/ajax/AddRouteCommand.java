@@ -26,16 +26,22 @@ public class AddRouteCommand implements Command {
 				.getAttribute(Const.ROUTE_SERVICE);
 		Route route = new Route();
 		route.setTrainId(trainId);
-		route.setDate(DateUtils.extractDate(date));
+		route.setDate(DateUtils.extractDate(date, Const.CLIENT_DATE_FORMAT));
 
+		String message = "";
+		int status = 0;
 		if (service.create(route)) {
+			status = HttpServletResponse.SC_OK;
+			message = "New route added";
 			LOG.info(String.format("New route added ==> %s", route.toString()));
 		} else {
-			LOG.error("Failed to create route");
+			status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+			message = "Failed to create route";
+			LOG.error(message);
 		}
 
-		res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-		return null;
+		res.setStatus(status);
+		return message;
 	}
 
 }

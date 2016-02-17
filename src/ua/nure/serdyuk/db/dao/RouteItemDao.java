@@ -15,5 +15,7 @@ public interface RouteItemDao extends GenericDao<RouteItem> {
 	List<RouteItem> getAll(long trainId);
 	
 	List<RouteItem> getAllByStations(long routeId, long stFromId, long stToId);
+	
+	boolean createAll(List<RouteItem> items);
 
 }

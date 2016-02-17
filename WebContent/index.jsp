@@ -1,6 +1,8 @@
 <%@ include file="/WEB-INF/jspf/head.jspf"%>
-<script src="js/bootstrap-datepicker.min.js"></script>
+<%@ taglib prefix="st4" uri="/WEB-INF/myTags.tld"%>
+
 <script src="js/date.js"></script>
+<script src="js/bootstrap-datepicker.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="css/bootstrap-datepicker3.css" />
 </head>
@@ -21,7 +23,8 @@
 					<p class="text-warning" id="stationFromError">${stationFromError}</p>
 				</div>
 				<div class="text-center">
-					<a href="#" class="btn btn-default" id="swapStations"><span class="glyphicon glyphicon-sort"/></a>
+					<a href="#" class="btn btn-default" id="swapStations"><span
+						class="glyphicon glyphicon-sort" /></a>
 				</div>
 				<div class="form-group">
 					<label class="control-label" for="stationTo"> <fmt:message
@@ -49,38 +52,11 @@
 	<c:choose>
 		<%-- Make it a list --%>
 		<c:when test="${not empty sessionScope.trainBeans}">
-			<table class="table table-bordered">
-				<tr>
-					<th><fmt:message key="label.train_tag" /></th>
-					<th><fmt:message key="label.from" /></th>
-					<th><fmt:message key="label.to" /></th>
-					<th><fmt:message key="label.departure" /></th>
-					<th><fmt:message key="label.arrival" /></th>
-					<th><fmt:message key="label.duration" /></th>
-				</tr>
-				<c:forEach items="${trainBeans}" var="t">
-					<tr>
-						<td><a
-							href="controller?command=showRouteInfo&trainId=${t.trainId}"
-							data-toggle="popover" data-trigger="hover" data-placement="left"
-							title="Popover Header"
-							data-content="Some content inside the popover"
-							class="btn btn-link">${t.trainTag}</a></td>
-						<td>${t.stationFrom}</td>
-						<td>${t.stationTo}</td>
-						<td><fmt:formatDate value="${t.depDate}" type="both"
-								timeStyle="short" dateStyle="long" /></td>
-						<td><fmt:formatDate value="${t.arrDate}" type="both"
-								timeStyle="short" dateStyle="long" /></td>
-						<td><fmt:formatDate value="${t.duration}" pattern="hh:mm" /></td>
-						<td><a
-							href="controller?command=getFreeSeats&routeId=${t.routeId}"><fmt:message
-									key="action.view_seats" /></a></td>
-					</tr>
-				</c:forEach>
-
-			</table>
-			<div class="well">	<fmt:message key="message.time_local" /></div>
+			<st4:displayTrainBeans trainBeans="${sessionScope.trainBeans}"
+				display="long" />
+			<div class="well">
+				<fmt:message key="message.time_local" />
+			</div>
 		</c:when>
 		<c:otherwise>
 			<div class="well well-lg">

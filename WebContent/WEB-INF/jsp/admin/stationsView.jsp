@@ -1,5 +1,5 @@
 <%@ include file="/WEB-INF/jspf/head.jspf"%>
-<script src="js/stationsView.js"></script>
+<script src="js/station.js"></script>
 <link
 	href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css"
 	rel="stylesheet" />
@@ -23,11 +23,11 @@
 			<h4>Add new</h4>
 		</a>
 		<div id="addStationDiv">
-			<form action="controller">
+			<form action="controller" method="post">
 				<input type="hidden" name="command" value="addStation" />
 				<div class="col-lg-6">
 					<div class="input-group">
-						<input class="form-control" name="stationName" type="text">
+						<input class="form-control" name="stationName" id="stationName" type="text">
 						<span class="input-group-btn">
 							<button class="btn btn-info" type="submit">
 								<span class="glyphicon glyphicon-ok"></span>

@@ -11,4 +11,6 @@ public interface RouteService {
 	List<Route> getAllByStationsAndDate(long stationFromId, long stationToId,
 			String date);
 
+	List<Route> getAllByDates(String from, String to);
+
 }

@@ -1,5 +1,7 @@
 package ua.nure.serdyuk.command.train;
 
+import java.util.Arrays;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,7 +17,6 @@ import ua.nure.serdyuk.entity.Ticket;
 import ua.nure.serdyuk.entity.User;
 import ua.nure.serdyuk.entity.bean.TicketOrderBean;
 import ua.nure.serdyuk.entity.bean.TrainBean;
-import ua.nure.serdyuk.exception.AppException;
 
 public class OrderTicketCommand implements Command {
 
@@ -29,9 +30,12 @@ public class OrderTicketCommand implements Command {
 
 		HttpSession session = req.getSession();
 		User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
-		// mock
+		// move to filter
 		if (currentUser == null) {
-			throw new AppException("Login first.");
+			// throw new AppException("Login first.");
+			req.setAttribute("loginErrors",
+					Arrays.asList("message.login_first"));
+			return Path.LOGIN_VIEW_COMMAND;
 		}
 
 		TicketOrderBean bean = (TicketOrderBean) session
@@ -45,7 +49,7 @@ public class OrderTicketCommand implements Command {
 				bean);
 		TicketService service = (TicketService) req.getServletContext()
 				.getAttribute(Const.TICKET_SERVICE);
-		
+
 		if (service.create(ticket)) {
 			LOG.info("Ticket successfully created");
 		} else {
@@ -75,7 +79,7 @@ public class OrderTicketCommand implements Command {
 		// ticket.setDiscountTypeId(0);
 		// ticket.setStatusId(0);
 		LOG.info(String.format("Creating ticket %s", ticket.toString()));
-		
+
 		return ticket;
 	}
 

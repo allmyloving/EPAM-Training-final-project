@@ -1,15 +1,16 @@
 package ua.nure.serdyuk.db.service;
 
 import java.util.List;
+import java.util.Map;
 
 import ua.nure.serdyuk.entity.Station;
 
 public interface StationService {
 
 	boolean create(Station station);
-	
+
 	boolean update(Station station);
-	
+
 	boolean delete(long id);
 
 	Station getByName(String name);
@@ -30,4 +31,6 @@ public interface StationService {
 	List<Station> getAll(String filter);
 
 	List<Station> getByRouteItems(long routeItemId1, long routeItemId2);
+
+	Map<String, Station> getStations(String stationFrom, String stationTo);
 }

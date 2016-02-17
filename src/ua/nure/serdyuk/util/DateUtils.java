@@ -9,16 +9,17 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 
-import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.exception.AppException;
 
 public final class DateUtils {
-	
+
 	private static final Logger LOG = Logger.getLogger(DateUtils.class);
-	
-	public static java.sql.Date extractDate(String date){
-		SimpleDateFormat format = new SimpleDateFormat(
-				Const.CLIENT_DATE_FORMAT);
+
+	public static java.sql.Date extractDate(String date, String formatString) {
+		if (date == null || date.isEmpty()) {
+			return null;
+		}
+		SimpleDateFormat format = new SimpleDateFormat(formatString);
 		java.util.Date parsed;
 		try {
 			parsed = format.parse(date);
@@ -26,16 +27,18 @@ public final class DateUtils {
 			LOG.error(e.getMessage());
 			throw new AppException(e.getMessage());
 		}
-		
+
 		return new java.sql.Date(parsed.getTime());
 	}
-	
+
 	public static java.util.Date extractDate(java.sql.Date date, Time time) {
-		java.util.Date d = new java.util.Date(date.getTime());
 		java.util.Date t = new java.util.Date(time.getTime());
 
 		Calendar dCal = Calendar.getInstance();
-		dCal.setTime(d);
+		if (date != null) {
+			java.util.Date d = new java.util.Date(date.getTime());
+			dCal.setTime(d);
+		}
 
 		Calendar tCal = Calendar.getInstance();
 		tCal.setTime(t);
@@ -46,7 +49,7 @@ public final class DateUtils {
 
 		return dCal.getTime();
 	}
-	
+
 	public static void increaseDays(Date date, int days) {
 		LOG.debug(String.format("Days increased by %d", days));
 

@@ -13,9 +13,9 @@ public class TrainBean implements Serializable {
 	private long trainId;
 
 	private long routeId;
-	
+
 	private long routeItemIdFrom;
-	
+
 	private long routeItemIdTo;
 
 	private String trainTag;
@@ -132,16 +132,20 @@ public class TrainBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "TrainInfoBean [trainId=" + trainId + ", trainTag=" + trainTag
-				+ ", stationFrom=" + stationFrom + ", stationTo=" + stationTo
-				+ ", depDate=" + depDate + ", arrDate=" + arrDate
-				+ ", duration=" + duration + ", routes=" + routes
-				+ ", carriages=" + carriages + "]";
+		return "TrainBean [trainId=" + trainId + ", routeId=" + routeId
+				+ ", routeItemIdFrom=" + routeItemIdFrom + ", routeItemIdTo="
+				+ routeItemIdTo + ", trainTag=" + trainTag + ", stationFrom="
+				+ stationFrom + ", stationTo=" + stationTo + ", depDate="
+				+ depDate + ", arrDate=" + arrDate + ", duration=" + duration
+				+ ", routes=" + routes + ", carriages=" + carriages + "]";
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		TrainBean other = (TrainBean) obj;
-		return this.routeId == other.routeId;
+		if (other.routeId != 0 && this.routeId != 0) {
+			return this.routeId == other.routeId;
+		}
+		return this.trainId == other.trainId;
 	}
 }

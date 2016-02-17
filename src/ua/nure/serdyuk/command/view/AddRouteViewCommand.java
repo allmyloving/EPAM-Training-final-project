@@ -1,4 +1,4 @@
-package ua.nure.serdyuk.command.admin;
+package ua.nure.serdyuk.command.view;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class AddRouteViewCommand implements Command {
 
 		LOG.info(String.format("Trains found ==> %s", beans));
 		
-		req.setAttribute("trainBeans", beans);
+		req.getSession().setAttribute("trainBeans", beans);
 
 		return Path.ADD_ROUTE_VIEW;
 	}

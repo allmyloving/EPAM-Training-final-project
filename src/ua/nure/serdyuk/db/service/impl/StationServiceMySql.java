@@ -1,6 +1,8 @@
 package ua.nure.serdyuk.db.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ua.nure.serdyuk.db.dao.StationDao;
 import ua.nure.serdyuk.db.service.StationService;
@@ -50,5 +52,16 @@ public class StationServiceMySql implements StationService {
 	@Override
 	public boolean delete(long id) {
 		return stationDao.delete(id);
+	}
+
+	@Override
+	public Map<String, Station> getStations(String stationFrom,
+			String stationTo) {
+		Map<String, Station> stations = new HashMap<>();
+
+		stations.put(stationFrom, getByName(stationFrom));
+		stations.put(stationTo, getByName(stationTo));
+
+		return stations;
 	}
 }

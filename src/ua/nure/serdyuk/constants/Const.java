@@ -3,7 +3,7 @@ package ua.nure.serdyuk.constants;
 public final class Const {
 	// attributes
 	public static final String ERRORS = "errors";
-	
+
 	public static final String EMAIL = "email";
 
 	public static final String PASSWORD = "password";
@@ -35,7 +35,7 @@ public final class Const {
 	public static final String STATION_SERVICE = "stationService";
 
 	public static final String TRAIN_SERVICE = "trainService";
-	
+
 	public static final String ROUTE_SERVICE = "routeService";
 
 	public static final String ROUTE_ITEM_SERVICE = "routeItemService";
@@ -98,29 +98,40 @@ public final class Const {
 	public static final String GET_PRICE_BY_TRAIN_ID_CAR_TYPE_AND_ORDINALS = "SQL_GET_PRICE_BY_TRAIN_ID_CAR_TYPE_AND_ORDINALS";
 
 	public static final String GET_CARRIAGE_TYPES = "SQL_GET_CARRIAGE_TYPES";
-	
+
 	public static final String SQL_CREATE_STATION = "SQL_INSERT_STATION";
-	
+
 	public static final String SQL_DELETE_STATION = "SQL_DELETE_STATION";
-	
+
 	public static final String SQL_UPDATE_STATION = "SQL_UPDATE_STATION";
-	
+
 	public static final String SQL_GET_ALL_TRAINS = "SQL_GET_ALL_TRAINS";
+
+	public static final String SQL_CREATE_TRAIN = "SQL_INSERT_TRAIN";
+
+	public static final String SQL_CREATE_ROUTE_ITEM = "SQL_INSERT_ROUTE_ITEM";
+
+	public static final String SQL_INSERT_ROUTE = "SQL_INSERT_ROUTE";
+
+	public static final String SQL_INSERT_TICKET = "SQL_INSERT_TICKET";
 	
-
-	public static final String INSERT_ROUTE = "SQL_INSERT_ROUTE";
-
-	public static final String INSERT_TICKET = "SQL_INSERT_TICKET";
+	public static final String SQL_GET_ALL_ROUTES_BY_DATES = "SQL_GET_ALL_ROUTES_BY_DATES";
+	
+	public static final String SQL_GET_TRAIN_BY_ID = "SQL_GET_TRAIN_BY_ID";
+	
 
 	// regex
 	public static final String REGEX_EMAIL = "^\\w+@\\w+\\.\\w+$";
 
 	public static final String REGEX_PASSWORD = "^\\w{4,}$";
 
-//	public static final String REGEX_NAME = "^(\\p{javaUpperCase}[a-zа-я]*\\s?)+$";
-	
+	// public static final String REGEX_NAME =
+	// "^(\\p{javaUpperCase}[a-zа-я]*\\s?)+$";
+
 	public static final String REGEX_NAME = "^\\p{javaUpperCase}[\\wА-Яа-я-]{1,30}$";
 
 	// stuff
 	public static final String CLIENT_DATE_FORMAT = "MM/dd/yyyy";
+
+	public static final String CLIENT_TIME_FORMAT = "h:mm a";
 }

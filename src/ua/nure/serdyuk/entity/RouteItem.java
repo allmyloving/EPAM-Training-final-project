@@ -17,7 +17,7 @@ public class RouteItem implements Serializable {
 	
 	private int trainId;
 	
-	private int stationId;
+	private long stationId;
 
 	public long getId() {
 		return id;
@@ -51,19 +51,19 @@ public class RouteItem implements Serializable {
 		this.ordinal = ordinal;
 	}
 
-	public int getRouteId() {
+	public int getTrainId() {
 		return trainId;
 	}
 
-	public void setRouteId(int routeId) {
-		this.trainId = routeId;
+	public void setTrainId(int trainId) {
+		this.trainId = trainId;
 	}
 
-	public int getStationId() {
+	public long getStationId() {
 		return stationId;
 	}
 
-	public void setStationId(int stationId) {
+	public void setStationId(long stationId) {
 		this.stationId = stationId;
 	}
 

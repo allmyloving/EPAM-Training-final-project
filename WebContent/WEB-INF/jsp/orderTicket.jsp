@@ -22,13 +22,13 @@
 						<div class="form-group">
 							<label class="control-label" for="firstName"><fmt:message
 									key="label.first_name" />:</label> <input class="form-control"
-								id="firstName" name="firstName" value="${requestScope.email}">
+								id="firstName" name="firstName" value="${currentUser.firstName}">
 							<p class="text-warning" id="firstNameError"></p>
 						</div>
 						<div class="form-group">
 							<label class="control-label" for="lastName"><fmt:message
 									key="label.last_name" />:</label> <input class="form-control"
-								id="lastName" name="lastName" value="${requestScope.email}">
+								id="lastName" name="lastName" value="${currentUser.lastName}">
 							<p class="text-warning" id="lastNameError"></p>
 						</div>
 
@@ -66,7 +66,7 @@
 										key="${ticketOrderBean.carriage.type.name}" /></span></a> <a
 								class="list-group-item"><b><fmt:message
 										key="label.price" /></b><span class="pull-right">&#8372;
-									${ticketOrderBean.carriage.type.price}</span></a>
+									${ticketOrderBean.carriage.price}</span></a>
 						</div>
 					</div>
 				</div>

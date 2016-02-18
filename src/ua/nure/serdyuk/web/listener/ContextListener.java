@@ -17,6 +17,7 @@ import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.constants.Message;
 import ua.nure.serdyuk.constants.Path;
 import ua.nure.serdyuk.db.dao.mysql.CarriageDaoMySql;
+import ua.nure.serdyuk.db.dao.mysql.CarriageTypeDaoMySql;
 import ua.nure.serdyuk.db.dao.mysql.RouteBeanDaoMySql;
 import ua.nure.serdyuk.db.dao.mysql.RouteDaoMySql;
 import ua.nure.serdyuk.db.dao.mysql.RouteItemDaoMySql;
@@ -26,6 +27,7 @@ import ua.nure.serdyuk.db.dao.mysql.TrainBeanDaoMySql;
 import ua.nure.serdyuk.db.dao.mysql.TrainDaoMySql;
 import ua.nure.serdyuk.db.dao.mysql.UserDaoMySql;
 import ua.nure.serdyuk.db.service.impl.CarriageServiceImpl;
+import ua.nure.serdyuk.db.service.impl.CarriageTypeServiceImpl;
 import ua.nure.serdyuk.db.service.impl.RouteBeanServiceImpl;
 import ua.nure.serdyuk.db.service.impl.RouteItemServiceMySql;
 import ua.nure.serdyuk.db.service.impl.RouteServiceMySql;
@@ -121,17 +123,21 @@ public class ContextListener implements ServletContextListener {
 				new RouteBeanServiceImpl(new RouteBeanDaoMySql()));
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "RouteInfo"));
 
-		context.setAttribute(Const.CARRIAGE_SERVICE,
-				new CarriageServiceImpl(new CarriageDaoMySql()));
+		context.setAttribute(Const.CARRIAGE_SERVICE, new CarriageServiceImpl(
+				new CarriageDaoMySql(), new CarriageTypeDaoMySql()));
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "Carriage"));
 
 		context.setAttribute(Const.TICKET_SERVICE,
 				new TicketServiceImpl(new TicketDaoMySql()));
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "Ticket"));
-		
+
 		context.setAttribute(Const.TRAIN_SERVICE,
 				new TrainServiceImpl(new TrainDaoMySql()));
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "Train"));
+
+		context.setAttribute(Const.CARRIAGE_TYPE_SERVICE,
+				new CarriageTypeServiceImpl(new CarriageTypeDaoMySql()));
+		LOG.info(String.format(Message.SERVICE_INITIALIZED, "CarriageType"));
 
 	}
 }

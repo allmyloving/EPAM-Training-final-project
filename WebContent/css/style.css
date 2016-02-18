@@ -7,3 +7,8 @@ body {
 .seat-container {
 	diplay: none;
 }
+
+.inner {
+    display: inline-block;
+    position: relative;
+}

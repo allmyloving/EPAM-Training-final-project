@@ -1,12 +1,14 @@
-package ua.nure.serdyuk.command.ajax;
+package ua.nure.serdyuk.command.admin;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
 import ua.nure.serdyuk.command.Command;
 import ua.nure.serdyuk.constants.Const;
+import ua.nure.serdyuk.constants.Path;
 import ua.nure.serdyuk.db.service.RouteService;
 import ua.nure.serdyuk.entity.Route;
 import ua.nure.serdyuk.util.DateUtils;
@@ -17,10 +19,12 @@ public class AddRouteCommand implements Command {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse res) {
-		String trainIdStr = req.getParameter("trainId");
+		String trainIdStr = req.getParameter("trainSelect");
 		String date = req.getParameter("date");
 
 		int trainId = Integer.valueOf(trainIdStr);
+
+		HttpSession session = req.getSession();
 
 		RouteService service = (RouteService) req.getServletContext()
 				.getAttribute(Const.ROUTE_SERVICE);
@@ -28,20 +32,17 @@ public class AddRouteCommand implements Command {
 		route.setTrainId(trainId);
 		route.setDate(DateUtils.extractDate(date, Const.CLIENT_DATE_FORMAT));
 
-		String message = "";
-		int status = 0;
 		if (service.create(route)) {
-			status = HttpServletResponse.SC_OK;
-			message = "New route added";
+			session.setAttribute(Const.ROUTE_ADD_MES, "message.route_added");
+			session.setAttribute(Const.ROUTE_ADD_ERR, null);
 			LOG.info(String.format("New route added ==> %s", route.toString()));
 		} else {
-			status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
-			message = "Failed to create route";
-			LOG.error(message);
+			session.setAttribute(Const.ROUTE_ADD_ERR,
+					"message.route_add_error");
+			session.setAttribute(Const.ROUTE_ADD_MES, null);
+			LOG.error("Failed to create route");
 		}
-
-		res.setStatus(status);
-		return message;
+		return Path.ROUTE_VIEW_COMMAND;
 	}
 
 }

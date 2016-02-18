@@ -29,20 +29,29 @@
 							<h3 class="panel-title">
 
 								<span class="glyphicon glyphicon-briefcase"> <fmt:message
-										key="${t.name}" /></span> <span class="pull-right">
-									&#8372;${t.price}</span>
+										key="${t.name}" /></span>
 							</h3>
 						</div>
 						<div class="panel-body">
 							<div class="list-group">
-								<a class="list-group-item"><fmt:message
-										key="label.carriage_tag" /><span class="pull-right"><fmt:message
-											key="label.available_seats" /></span></a>
+								<div class="row list-group-item">
+									<div class="col-md-4">
+										<fmt:message key="label.carriage_tag" />
+									</div>
+									<div class="col-md-4">
+										<fmt:message key="label.price" />
+									</div>
+									<div class="col-md-4">
+										<span class="pull-right"><fmt:message
+												key="label.available_seats" /></span>
+									</div>
+								</div>
 								<c:forEach items="${carriageList.carriages}" var="c">
 									<c:if test="${c.type==t}">
 										<c:set scope="page" value="${fn:length(c.seatsTaken)}"
 											var="seatsTaken" />
-										<a href="#" class="list-group-item carriage-item" id="${c.id}"><b>${c.tag}</b><span
+										<a href="#" class="list-group-item carriage-item row" id="${c.id}"><span
+											class="col-md-4"><b>${c.tag}</b></span><span class="col-md-4">&#8372;${c.price}</span><span
 											class="badge">${c.type.seatNum - seatsTaken}</span></a>
 										<div id="${c.id}" class="seat-container">
 											<c:forEach begin="1" end="${c.type.seatNum}" step="1"

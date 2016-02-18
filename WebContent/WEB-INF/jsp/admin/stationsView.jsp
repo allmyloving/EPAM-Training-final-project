@@ -44,7 +44,7 @@
 					<td><a class="station-popup" href="#" data-type="text"
 						data-pk="${s.id}" data-url="serv?command=updateStation"
 						data-title="Enter new name">${s.name}</a></td>
-					<td><form action="controller">
+					<td><form action="controller" method="post">
 							<input type="hidden" name="command" value="deleteStation" /> <input
 								type="hidden" name="stationId" value="${s.id}" />
 							<button class="btn btn-danger btn-sm">

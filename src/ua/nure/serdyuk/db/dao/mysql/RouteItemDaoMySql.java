@@ -120,7 +120,7 @@ public class RouteItemDaoMySql implements RouteItemDao {
 				ps.setLong(k++, ri.getStationId());
 				ps.addBatch();
 			}
-			result = isSuccessful(ps.executeBatch());
+			result = DbUtils.isBatchSuccessful(ps.executeBatch());
 
 			conn.commit();
 		} catch (SQLException e) {
@@ -138,12 +138,4 @@ public class RouteItemDaoMySql implements RouteItemDao {
 		return (date == null) ? null : new Time(date.getTime());
 	}
 
-	private boolean isSuccessful(int[] results) {
-		for (int r : results) {
-			if (r <= 0) {
-				return false;
-			}
-		}
-		return true;
-	}
 }

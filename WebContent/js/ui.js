@@ -52,7 +52,7 @@ $(document)
 						weekStart : 1
 					};
 
-					$('#date').datepicker({
+					$('.datepicker').datepicker({
 						startDate : '0',
 						language : lang
 					// ,todayBtn: "linked"
@@ -69,4 +69,10 @@ function addStationSelect(event) {
 	event.preventDefault();
 	var html = $('#selectStation').html();
 	$('#stationContainer').append(html);
+};
+
+function addCarriageSelect(event) {
+	event.preventDefault();
+	var html = $('#selectCarriage').html();
+	$('#carriageContainer').append(html);
 };

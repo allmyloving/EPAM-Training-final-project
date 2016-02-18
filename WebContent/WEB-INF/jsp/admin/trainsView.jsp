@@ -5,7 +5,7 @@
 <link rel="stylesheet" type="text/css" href="css/timepicker.css" />
 </head>
 <%@ include file="/WEB-INF/jspf/header.jspf"%>
-<body lang="ru">
+<body lang="${currentLocaleLocale}">
 	<div class="container">
 		<form role="form" action="controller">
 			<input type="hidden" name="command" value="addTrain" />
@@ -85,7 +85,7 @@
 			</div>
 		</form>
 		<c:if test="${not empty trainBeans}">
-			<st4:displayTrainBeans trainBeans="${trainBeans}" display="short" />
+			<st4:displayTrainBeans trainBeans="${trainBeans}" display="train" />
 		</c:if>
 	</div>
 

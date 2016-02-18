@@ -5,9 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -15,7 +13,6 @@ import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.db.DbUtils;
 import ua.nure.serdyuk.db.dao.CarriageDao;
 import ua.nure.serdyuk.entity.Carriage;
-import ua.nure.serdyuk.entity.Carriage.CarriageType;
 import ua.nure.serdyuk.exception.DbException;
 import ua.nure.serdyuk.util.PropertyContainer;
 
@@ -32,15 +29,17 @@ public class CarriageDaoMySql implements CarriageDao {
 		List<Carriage> carriages = null;
 
 		try {
-			String query = PropertyContainer
-					.get(Const.GET_CARRIAGE_INFO_BY_TRAIN_ID);
-			query = query.replace("?", String.valueOf(trainId));
-			ps = conn.prepareStatement(query);
-			// ps = conn.prepareStatement("select carriage.id, tag, name,
-			// seat_num from carriage join carriage_type on
-			// type_id=carriage_type.id where train_id=?");
-			LOG.debug(ps);
-			// ps.setLong(1, trainId);
+			// String query = PropertyContainer
+			// .get(Const.GET_CARRIAGE_INFO_BY_TRAIN_ID);
+			// query = query.replace("?", String.valueOf(trainId));
+			// ps = conn.prepareStatement(query);
+			ps = conn.prepareStatement(
+					PropertyContainer.get(Const.GET_CARRIAGE_INFO_BY_TRAIN_ID));
+			int k = 1;
+			ps.setLong(k++, routeItemFrom);
+			ps.setLong(k++, routeItemTo);
+			ps.setLong(k++, trainId);
+			LOG.debug("executing " + ps);
 
 			rs = ps.executeQuery();
 
@@ -71,6 +70,7 @@ public class CarriageDaoMySql implements CarriageDao {
 			c.setId(rs.getLong("id"));
 			c.setCarTypeId(rs.getInt("type_id"));
 			c.setTag(rs.getString("tag"));
+			c.setPrice(rs.getBigDecimal("full_price"));
 
 			ps = conn.prepareStatement(PropertyContainer
 					.get(Const.GET_TAKEN_SEATS_BY_CAR_ID_AND_ROUTE_ID));
@@ -83,7 +83,7 @@ public class CarriageDaoMySql implements CarriageDao {
 			ps.setLong(k++, routeItemFrom);
 
 			LOG.debug("seats taken ps " + ps);
-			
+
 			rsSeats = ps.executeQuery();
 
 			List<Integer> seats = new ArrayList<>();
@@ -101,73 +101,60 @@ public class CarriageDaoMySql implements CarriageDao {
 	}
 
 	@Override
-	public Map<Integer, CarriageType> getTypes(long routeItemFrom,
-			long routeItemTo, long trainId) {
+	public boolean create(Carriage item) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Carriage get(long id) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean update(Carriage item) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean delete(long id) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public List<Carriage> getAll() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean createAll(List<Carriage> carriages) {
 		Connection conn = DbUtils.getConnection();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-
-		Map<Integer, CarriageType> types = null;
+		boolean result = false;
 
 		try {
 			ps = conn.prepareStatement(
-					PropertyContainer.get(Const.GET_CARRIAGE_TYPES));
+					PropertyContainer.get(Const.SQL_CREATE_CARRIAGE));
 
-			int k = 1;
-			ps.setLong(k++, routeItemFrom);
-			ps.setLong(k++, routeItemTo);
-			ps.setLong(k++, trainId);
-
-			rs = ps.executeQuery();
-			types = new HashMap<>();
-
-			while (rs.next()) {
-				CarriageType type = extractType(rs);
-				types.put(type.getId(), type);
+			for (Carriage c : carriages) {
+				int k = 1;
+				ps.setString(k++, c.getTag());
+				ps.setInt(k++, c.getCarTypeId());
+				ps.setInt(k++, c.getTrainId());
+				LOG.debug("executing " + ps);
+				ps.addBatch();
 			}
-			LOG.debug(String.format("Types obtained for trainId=%d ==> %s",
-					trainId, types));
+			result = DbUtils.isBatchSuccessful(ps.executeBatch());
+
+			conn.commit();
 		} catch (SQLException e) {
+			DbUtils.rollback(conn);
 			LOG.error(e.getMessage());
 			throw new DbException(e.getMessage());
 		} finally {
 			DbUtils.close(conn, ps, rs);
 		}
-		return types;
-	}
 
-	private CarriageType extractType(ResultSet rs) throws SQLException {
-		CarriageType type = new CarriageType();
-		type.setId(rs.getInt("id"));
-		type.setName(rs.getString("name"));
-		type.setPrice(rs.getBigDecimal("full_price"));
-		type.setSeatNum(rs.getInt("seat_num"));
-
-		return type;
-	}
-	
-	@Override
-	public boolean create(Carriage item) {
-		throw new UnsupportedOperationException();
-	}
-	
-	@Override
-	public Carriage get(long id) {
-		throw new UnsupportedOperationException();
-	}
-	
-	@Override
-	public boolean update(Carriage item) {
-		throw new UnsupportedOperationException();
-	}
-	
-	@Override
-	public boolean delete(long id) {
-		throw new UnsupportedOperationException();
-	}
-	
-	@Override
-	public List<Carriage> getAll() {
-		throw new UnsupportedOperationException();
+		return result;
 	}
 }

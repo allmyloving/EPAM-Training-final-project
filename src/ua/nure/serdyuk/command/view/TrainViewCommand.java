@@ -1,4 +1,4 @@
-package ua.nure.serdyuk.command.admin;
+package ua.nure.serdyuk.command.view;
 
 import java.util.List;
 
@@ -11,23 +11,35 @@ import ua.nure.serdyuk.command.Command;
 import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.constants.Path;
 import ua.nure.serdyuk.db.service.StationService;
+import ua.nure.serdyuk.db.service.TrainBeanService;
 import ua.nure.serdyuk.entity.Station;
+import ua.nure.serdyuk.entity.bean.TrainBean;
 
-public class ViewStationsCommand implements Command {
+public class TrainViewCommand implements Command {
 
 	private static final Logger LOG = Logger
-			.getLogger(ViewStationsCommand.class);
+			.getLogger(TrainViewCommand.class);
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse res) {
 		StationService stationService = (StationService) req.getServletContext()
 				.getAttribute(Const.STATION_SERVICE);
-		
+
 		List<Station> stations = stationService.getAll();
-		LOG.info(String.format("Stations obtained ==> %s", stations.toString()));
-		
+		LOG.info(
+				String.format("Stations obtained ==> %s", stations.toString()));
+
 		req.setAttribute("stations", stations);
-		return Path.STATIONS_VIEW;
+
+		TrainBeanService service = (TrainBeanService) req.getServletContext()
+				.getAttribute(Const.TRAIN_BEAN_SERVICE);
+		List<TrainBean> beans = service.getAll();
+
+		LOG.info(String.format("Trains found ==> %s", beans));
+
+		req.setAttribute("trainBeans", beans);
+		
+		return Path.TRAIN_VIEW;
 	}
 
 }

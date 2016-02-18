@@ -38,4 +38,9 @@ public class RouteServiceMySql implements RouteService {
 				DateUtils.extractDate(from, Const.CLIENT_DATE_FORMAT),
 				DateUtils.extractDate(to, Const.CLIENT_DATE_FORMAT));
 	}
+
+	@Override
+	public boolean delete(long id) {
+		return routeDao.delete(id);
+	}
 }

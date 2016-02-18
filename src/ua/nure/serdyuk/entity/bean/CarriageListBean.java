@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import ua.nure.serdyuk.entity.Carriage;
-import ua.nure.serdyuk.entity.Carriage.CarriageType;
+import ua.nure.serdyuk.entity.CarriageType;
 
 public class CarriageListBean {
 

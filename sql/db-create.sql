@@ -168,33 +168,10 @@ insert into `carriage_type` values(3, 'db.suite1', 24);
 insert into `carriage_type` values(4, 'db.sitting2', 80);
 insert into `carriage_type` values(5, 'db.sitting1', 56);
 
-
-create table if not exists `car_price` (
-	`id` tinyint unsigned auto_increment not null unique,
-	`price` decimal (5,2) not null,
-	`train_id` bigint unsigned not null,
-	`car_type_id` tinyint unsigned not null,
-	
-	primary key(`id`),
-	unique key `car_type_train` (`car_type_id`, `train_id`),
-	constraint `fk_car_price_train` foreign key(`train_id`) references `train`(`id`) on update cascade on delete cascade,
-	constraint `fk_car_price_car_type` foreign key(`car_type_id`) references `carriage_type`(`id`) on update cascade
-);
-
-INSERT INTO `car_price` (`id`, `price`, `train_id`, `car_type_id`) VALUES (1, 12.00, 1, 4);
-INSERT INTO `car_price` (`id`, `price`, `train_id`, `car_type_id`) VALUES (2, 20.00, 1, 5);
-INSERT INTO `car_price` (`id`, `price`, `train_id`, `car_type_id`) VALUES (3, 15.00, 2, 1);
-INSERT INTO `car_price` (`id`, `price`, `train_id`, `car_type_id`) VALUES (4, 20.00, 2, 2);
-INSERT INTO `car_price` (`id`, `price`, `train_id`, `car_type_id`) VALUES (5, 28.00, 2, 3);
-INSERT INTO `car_price` (`id`, `price`, `train_id`, `car_type_id`) VALUES (6, 12.00, 3, 1);
-INSERT INTO `car_price` (`id`, `price`, `train_id`, `car_type_id`) VALUES (7, 20.00, 3, 2);
-INSERT INTO `car_price` (`id`, `price`, `train_id`, `car_type_id`) VALUES (8, 12.00, 4, 4);
-INSERT INTO `car_price` (`id`, `price`, `train_id`, `car_type_id`) VALUES (9, 20.00, 4, 5);
-
-
 create table if not exists `carriage` (
 	`id` serial,
 	`tag` varchar(10) not null,
+	`price` decimal (5,2) not null,
 	`type_id` tinyint unsigned not null,
 	`train_id` bigint unsigned not null,
 	
@@ -204,30 +181,30 @@ create table if not exists `carriage` (
 	constraint `fk_carriage_train` foreign key (`train_id`) references `train`(`id`) on delete cascade on update cascade
 ) charset=utf8;
 
-INSERT INTO `carriage` (`id`, `tag`, `type_id`, `train_id`) VALUES (1, '1', 5, 1);
-INSERT INTO `carriage` (`id`, `tag`, `type_id`, `train_id`) VALUES (2, '2', 5, 1);
-INSERT INTO `carriage` (`id`, `tag`, `type_id`, `train_id`) VALUES (3, '3', 5, 1);
-INSERT INTO `carriage` (`id`, `tag`, `type_id`, `train_id`) VALUES (4, '4a', 4, 1);
-INSERT INTO `carriage` (`id`, `tag`, `type_id`, `train_id`) VALUES (5, '4', 4, 1);
-INSERT INTO `carriage` (`id`, `tag`, `type_id`, `train_id`) VALUES (6, '5', 4, 1);
-INSERT INTO `carriage` (`id`, `tag`, `type_id`, `train_id`) VALUES (7, '1', 1, 2);
-INSERT INTO `carriage` (`id`, `tag`, `type_id`, `train_id`) VALUES (8, '2', 1, 2);
-INSERT INTO `carriage` (`id`, `tag`, `type_id`, `train_id`) VALUES (9, '12', 2, 2);
-INSERT INTO `carriage` (`id`, `tag`, `type_id`, `train_id`) VALUES (10, '4', 1, 2);
-INSERT INTO `carriage` (`id`, `tag`, `type_id`, `train_id`) VALUES (11, '10', 2, 2);
-INSERT INTO `carriage` (`id`, `tag`, `type_id`, `train_id`) VALUES (12, '3', 1, 2);
-INSERT INTO `carriage` (`id`, `tag`, `type_id`, `train_id`) VALUES (14, '2', 1, 3);
-INSERT INTO `carriage` (`id`, `tag`, `type_id`, `train_id`) VALUES (15, '3', 1, 3);
-INSERT INTO `carriage` (`id`, `tag`, `type_id`, `train_id`) VALUES (16, '7', 1, 3);
-INSERT INTO `carriage` (`id`, `tag`, `type_id`, `train_id`) VALUES (17, '4', 2, 3);
-INSERT INTO `carriage` (`id`, `tag`, `type_id`, `train_id`) VALUES (18, '5', 2, 3);
-INSERT INTO `carriage` (`id`, `tag`, `type_id`, `train_id`) VALUES (19, '6', 2, 3);
-INSERT INTO `carriage` (`id`, `tag`, `type_id`, `train_id`) VALUES (21, '3', 5, 4);
-INSERT INTO `carriage` (`id`, `tag`, `type_id`, `train_id`) VALUES (22, '5', 5, 4);
-INSERT INTO `carriage` (`id`, `tag`, `type_id`, `train_id`) VALUES (23, '6', 5, 4);
-INSERT INTO `carriage` (`id`, `tag`, `type_id`, `train_id`) VALUES (24, '1a', 4, 4);
-INSERT INTO `carriage` (`id`, `tag`, `type_id`, `train_id`) VALUES (25, '1', 4, 4);
-INSERT INTO `carriage` (`id`, `tag`, `type_id`, `train_id`) VALUES (26, '2', 4, 4);
+INSERT INTO `carriage` (`id`, `tag`, `price`, `type_id`, `train_id`) VALUES (1, '1', 25.00, 5, 1);
+INSERT INTO `carriage` (`id`, `tag`, `price`,  `type_id`, `train_id`) VALUES (2, '2',25.00, 5, 1);
+INSERT INTO `carriage` (`id`, `tag`,  `price`, `type_id`, `train_id`) VALUES (3, '3',25.00, 5, 1);
+INSERT INTO `carriage` (`id`, `tag`, `price`,  `type_id`, `train_id`) VALUES (4, '4a', 15.00, 4, 1);
+INSERT INTO `carriage` (`id`, `tag`, `price`,  `type_id`, `train_id`) VALUES (5, '4', 15.00, 4, 1);
+INSERT INTO `carriage` (`id`, `tag`, `price`,  `type_id`, `train_id`) VALUES (6, '5', 15.00, 4, 1);
+INSERT INTO `carriage` (`id`, `tag`, `price`,  `type_id`, `train_id`) VALUES (7, '1', 15.00, 1, 2);
+INSERT INTO `carriage` (`id`, `tag`, `price`,  `type_id`, `train_id`) VALUES (8, '2', 16.00, 1, 2);
+INSERT INTO `carriage` (`id`, `tag`, `price`,  `type_id`, `train_id`) VALUES (9, '12', 20.00, 2, 2);
+INSERT INTO `carriage` (`id`, `tag`, `price`,  `type_id`, `train_id`) VALUES (10, '4', 16.00, 1, 2);
+INSERT INTO `carriage` (`id`, `tag`, `price`,  `type_id`, `train_id`) VALUES (11, '10', 20.00, 2, 2);
+INSERT INTO `carriage` (`id`, `tag`, `price`, `type_id`, `train_id`) VALUES (12, '3', 15.00, 1, 2);
+INSERT INTO `carriage` (`id`, `tag`,  `price`, `type_id`, `train_id`) VALUES (14, '2', 13.00, 1, 3);
+INSERT INTO `carriage` (`id`, `tag`, `price`,  `type_id`, `train_id`) VALUES (15, '3', 13.00, 1, 3);
+INSERT INTO `carriage` (`id`, `tag`, `price`,  `type_id`, `train_id`) VALUES (16, '7', 13.00, 1, 3);
+INSERT INTO `carriage` (`id`, `tag`, `price`,  `type_id`, `train_id`) VALUES (17, '4', 25.00, 2, 3);
+INSERT INTO `carriage` (`id`, `tag`, `price`,  `type_id`, `train_id`) VALUES (18, '5', 25.00, 2, 3);
+INSERT INTO `carriage` (`id`, `tag`,  `price`, `type_id`, `train_id`) VALUES (19, '6', 30.00, 3, 3);
+INSERT INTO `carriage` (`id`, `tag`,  `price`, `type_id`, `train_id`) VALUES (21, '3', 23.00, 5, 4);
+INSERT INTO `carriage` (`id`, `tag`, `price`,  `type_id`, `train_id`) VALUES (22, '5', 23.00, 5, 4);
+INSERT INTO `carriage` (`id`, `tag`, `price`,  `type_id`, `train_id`) VALUES (23, '6', 23.00, 5, 4);
+INSERT INTO `carriage` (`id`, `tag`, `price`,  `type_id`, `train_id`) VALUES (24, '1a', 16.00, 4, 4);
+INSERT INTO `carriage` (`id`, `tag`,  `price`, `type_id`, `train_id`) VALUES (25, '1', 16.00, 4, 4);
+INSERT INTO `carriage` (`id`, `tag`, `price`,  `type_id`, `train_id`) VALUES (26, '2', 16.00, 4, 4);
 
 
 -- -----------------------------------------------------------------------

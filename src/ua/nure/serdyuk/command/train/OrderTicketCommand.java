@@ -68,7 +68,7 @@ public class OrderTicketCommand implements Command {
 		ticket.setFirstName(firstName);
 		ticket.setLastName(lastName);
 		ticket.setCarriageId(carriage.getId());
-		ticket.setPrice(carriage.getType().getPrice());
+		ticket.setPrice(carriage.getPrice());
 		ticket.setRouteItemDepId(trainBean.getRouteItemIdFrom());
 		ticket.setRouteItemArrId(trainBean.getRouteItemIdTo());
 		ticket.setRouteId(trainBean.getRouteId());

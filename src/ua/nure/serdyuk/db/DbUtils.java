@@ -69,4 +69,13 @@ public final class DbUtils {
 		}
 		return conn;
 	}
+	
+	public static boolean isBatchSuccessful(int[] results) {
+		for (int r : results) {
+			if (r <= 0) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

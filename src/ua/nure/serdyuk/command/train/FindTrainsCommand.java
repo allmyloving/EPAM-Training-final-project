@@ -25,6 +25,9 @@ import ua.nure.serdyuk.entity.bean.TrainBean;
 public class FindTrainsCommand implements Command {
 
 	private static final Logger LOG = Logger.getLogger(FindTrainsCommand.class);
+	
+
+	public static final String ERR_STATION_NOT_FOUND = "Station %s was not found.";
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse res) {
@@ -46,7 +49,7 @@ public class FindTrainsCommand implements Command {
 		// hmm it's checked on client side
 		// check for after today only
 		if (date == null || date.isEmpty()) {
-			req.setAttribute("dateError", "Date is incorrect");
+			req.setAttribute("dateError", Message.ERR_DATE_INCORRECT);
 			session.setAttribute(Const.TRAIN_INFO_BEANS, null);
 			return Path.INDEX_VIEW;
 		}
@@ -78,15 +81,15 @@ public class FindTrainsCommand implements Command {
 		if (from == null) {
 			error = true;
 			req.setAttribute("stationFromError",
-					"Station was not found, select from the drop-down list");
-			LOG.error(String.format(Message.ERR_STATION_NOT_FOUND, from));
+					Message.STATION_NOT_FOUND);
+			LOG.error(String.format(ERR_STATION_NOT_FOUND, from));
 		}
 
 		if (to == null) {
 			error = true;
 			req.setAttribute("stationToError",
-					"Station was not found, select from the drop-down list");
-			LOG.error(String.format(Message.ERR_STATION_NOT_FOUND, to));
+					Message.STATION_NOT_FOUND);
+			LOG.error(String.format(ERR_STATION_NOT_FOUND, to));
 		}
 
 		return error;

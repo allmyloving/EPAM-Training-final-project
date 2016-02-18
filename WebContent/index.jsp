@@ -10,7 +10,8 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">
-			<form action="controller" method="get" role="form">
+			<form action="controller" method="get" role="form"
+				class="input-not-empty">
 				<input type="hidden" name="command" value="findTrains" />
 				<legend>
 					<fmt:message key="label.find_tickets" />
@@ -20,7 +21,11 @@
 							key="label.from" />:
 					</label> <input class="form-control" id="stationFrom" name="stationFrom"
 						onkeyup="getStations(this)" value="${stationFrom}" />
-					<p class="text-warning" id="stationFromError">${stationFromError}</p>
+						<p class="text-warning" id="stationFromError">
+						<c:if test="${not empty stationFromError}">
+							<fmt:message key="${stationFromError}" />
+						</c:if>
+					</p>
 				</div>
 				<div class="text-center">
 					<a href="#" class="btn btn-default" id="swapStations"><span
@@ -31,14 +36,22 @@
 							key="label.to" />:
 					</label><input class="form-control" id="stationTo" name="stationTo"
 						onkeyup="getStations(this)" value="${stationTo}">
-					<p class="text-warning" id="stationToError">${stationToError}</p>
+						<p class="text-warning" id="stationToError">
+						<c:if test="${not empty stationToError}">
+							<fmt:message key="${stationToError}" />
+						</c:if>
+					</p>
 				</div>
 				<div class="form-group">
 					<label class="control-label" for="date"> <fmt:message
 							key="label.date" />:
 					</label> <input class="form-control datepicker" id="date" name="date"
 						value="${requestScope.date}" data-provide="datepicker-inline" />
-					<p class="text-warning" id="date">${dateError}</p>
+						<p class="text-warning" id="dateError">
+						<c:if test="${not empty dateError}">
+							<fmt:message key="${dateError}" />
+						</c:if>
+					</p>
 				</div>
 				<button type="submit" class="btn btn-default">
 					<fmt:message key="action.search" />
@@ -53,7 +66,7 @@
 		<%-- Make it a list --%>
 		<c:when test="${not empty sessionScope.trainBeans}">
 			<st4:displayTrainBeans trainBeans="${sessionScope.trainBeans}"
-				display="long" />
+				display="full" />
 			<div class="well">
 				<fmt:message key="message.time_local" />
 			</div>

@@ -16,7 +16,11 @@ public class Carriage implements Serializable{
 
 	private CarriageType type;
 
+	private BigDecimal price;
+
 	private String tag;
+	
+	private int trainId;
 
 	private List<Integer> seatsTaken;
 
@@ -74,6 +78,22 @@ public class Carriage implements Serializable{
 		this.type = type;
 	}
 
+	public int getTrainId() {
+		return trainId;
+	}
+
+	public void setTrainId(int trainId) {
+		this.trainId = trainId;
+	}
+	
+	public BigDecimal getPrice() {
+		return price;
+	}
+	
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		Carriage other = (Carriage) obj;
@@ -84,68 +104,5 @@ public class Carriage implements Serializable{
 	public String toString() {
 		return "Carriage [id=" + id + ", type=" + type + ", tag=" + tag
 				+ ", seatsTaken=" + seatsTaken + "]";
-	}
-
-	public static class CarriageType
-			implements Serializable, Comparable<CarriageType> {
-
-		private static final long serialVersionUID = 6944319122658319857L;
-
-		private int id;
-
-		private String name;
-
-		private int seatNum;
-
-		private BigDecimal price;
-
-		public int getId() {
-			return id;
-		}
-
-		public void setId(int id) {
-			this.id = id;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		public int getSeatNum() {
-			return seatNum;
-		}
-
-		public void setSeatNum(int seatNum) {
-			this.seatNum = seatNum;
-		}
-
-		public BigDecimal getPrice() {
-			return price;
-		}
-
-		public void setPrice(BigDecimal price) {
-			this.price = price;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			CarriageType other = (CarriageType) obj;
-			return other.id == this.id;
-		}
-
-		@Override
-		public String toString() {
-			return "CarriageType [id=" + id + ", name=" + name + ", seatNum="
-					+ seatNum + ", price=" + price + "]";
-		}
-
-		@Override
-		public int compareTo(CarriageType o) {
-			return o.getPrice().compareTo(getPrice());
-		}
 	}
 }

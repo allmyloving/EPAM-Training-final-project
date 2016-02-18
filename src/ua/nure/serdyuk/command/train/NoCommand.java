@@ -17,6 +17,6 @@ public class NoCommand implements Command {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse res) {
-		return Path.ERROR_404_VIEW;
+		return Path.ERROR_404_VIEW_COMMAND;
 	}
 }

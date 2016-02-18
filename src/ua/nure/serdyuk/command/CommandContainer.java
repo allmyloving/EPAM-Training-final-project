@@ -5,13 +5,15 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import ua.nure.serdyuk.command.admin.AddCarriagesCommand;
+import ua.nure.serdyuk.command.admin.AddRouteCommand;
 import ua.nure.serdyuk.command.admin.AddStationCommand;
 import ua.nure.serdyuk.command.admin.AddTrainCommand;
 import ua.nure.serdyuk.command.admin.AdminViewCommand;
+import ua.nure.serdyuk.command.admin.DeleteRouteCommand;
 import ua.nure.serdyuk.command.admin.DeleteStationCommand;
 import ua.nure.serdyuk.command.admin.GetRoutesCommand;
-import ua.nure.serdyuk.command.admin.ViewStationsCommand;
-import ua.nure.serdyuk.command.ajax.AddRouteCommand;
+import ua.nure.serdyuk.command.admin.StationViewCommand;
 import ua.nure.serdyuk.command.ajax.GetStationsCommand;
 import ua.nure.serdyuk.command.ajax.UpdateStationCommand;
 import ua.nure.serdyuk.command.train.FindTrainsCommand;
@@ -24,8 +26,10 @@ import ua.nure.serdyuk.command.train.ShowRouteInfoCommand;
 import ua.nure.serdyuk.command.user.LoginCommand;
 import ua.nure.serdyuk.command.user.LogoutCommand;
 import ua.nure.serdyuk.command.user.SignUpCommand;
-import ua.nure.serdyuk.command.view.AddRouteViewCommand;
-import ua.nure.serdyuk.command.view.AddTrainViewCommand;
+import ua.nure.serdyuk.command.view.RouteViewCommand;
+import ua.nure.serdyuk.command.view.TrainViewCommand;
+import ua.nure.serdyuk.command.view.CarriagesViewCommand;
+import ua.nure.serdyuk.command.view.Error404ViewCommand;
 import ua.nure.serdyuk.command.view.IndexViewCommand;
 import ua.nure.serdyuk.command.view.LoginViewCommand;
 import ua.nure.serdyuk.command.view.SignUpViewCommand;
@@ -57,15 +61,20 @@ public final class CommandContainer {
 		commands.put("signUpView", new SignUpViewCommand());
 		commands.put("indexView", new IndexViewCommand());
 		commands.put("paymentSuccessfulView", new PaymentSuccessView());
+		commands.put("error404View", new Error404ViewCommand());
 
 		commands.put("adminView", new AdminViewCommand());
-		commands.put("viewStations", new ViewStationsCommand());
-		commands.put("addRouteView", new AddRouteViewCommand());
-		commands.put("addTrainView", new AddTrainViewCommand());
+		commands.put("stationView", new StationViewCommand());
+		commands.put("routeView", new RouteViewCommand());
+		commands.put("trainView", new TrainViewCommand());
+		commands.put("carriagesView", new CarriagesViewCommand());
+		
 		commands.put("deleteStation", new DeleteStationCommand());
 		commands.put("addStation", new AddStationCommand());
 		commands.put("getRoutes", new GetRoutesCommand());
 		commands.put("addTrain", new AddTrainCommand());
+		commands.put("deleteRoute", new DeleteRouteCommand());
+		commands.put("addCarriages", new AddCarriagesCommand());
 
 		commands.put("getStations", new GetStationsCommand());
 		commands.put("updateStation", new UpdateStationCommand());

@@ -21,7 +21,6 @@ $(document).ready(function() {
 	console.log("ready!!");
 	var lang = $('body').attr('lang');
 	$('#errorDiv').hide();
-	$('#mesDiv').hide();
 	
 	$('#signUpForm').submit(function(event) {
 		event.preventDefault();

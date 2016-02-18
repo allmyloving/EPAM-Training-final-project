@@ -43,7 +43,7 @@ public class AddTrainCommand implements Command {
 
 		processRouteItems(req, train.getId());
 
-		return Path.ADD_TRAIN_VIEW_COMMAND;
+		return Path.TRAIN_VIEW_COMMAND;
 	}
 
 	private void processRouteItems(HttpServletRequest req, int trainId) {
@@ -51,13 +51,10 @@ public class AddTrainCommand implements Command {
 		String[] arrTime = req.getParameterValues("arrTime");
 		String[] depTime = req.getParameterValues("depTime");
 
-		StationService stationService = (StationService) req.getServletContext()
-				.getAttribute(Const.STATION_SERVICE);
-
 		List<RouteItem> routeItems = new ArrayList<>();
 		RouteItem item;
 		for (int i = 0; i < stations.length; i++) {
-			item = extractRouteItem(req.getServletContext(), arrTime[i], depTime[i], stations[i],i, trainId);
+			item = extractRouteItem(req.getServletContext(), arrTime[i], depTime[i], stations[i], i, trainId);
 			LOG.debug(item);
 
 			routeItems.add(item);

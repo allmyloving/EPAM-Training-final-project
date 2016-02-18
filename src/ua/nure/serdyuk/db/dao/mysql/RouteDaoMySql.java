@@ -107,7 +107,25 @@ public class RouteDaoMySql implements RouteDao {
 
 	@Override
 	public boolean delete(long id) {
-		throw new UnsupportedOperationException();
+		Connection conn = DbUtils.getConnection();
+		PreparedStatement ps = null;
+		int result = 0;
+
+		try {
+			ps = conn.prepareStatement(
+					PropertyContainer.get(Const.SQL_DELETE_ROUTE));
+			ps.setLong(1, id);
+
+			result = ps.executeUpdate();
+			conn.commit();
+		} catch (SQLException e) {
+			DbUtils.rollback(conn);
+			LOG.error(e.getMessage());
+			throw new DbException(e.getMessage());
+		} finally {
+			DbUtils.close(conn, ps, null);
+		}
+		return result != 0;
 	}
 
 	@Override

@@ -8,8 +8,10 @@
 		<th><fmt:message key="label.train_tag" /></th>
 		<th><fmt:message key="label.from" /></th>
 		<th><fmt:message key="label.to" /></th>
-		<th><fmt:message key="label.departure" /></th>
-		<c:if test="${display eq 'long'}">
+		<c:if test="${display ne 'train' }">
+			<th><fmt:message key="label.departure" /></th>
+		</c:if>
+		<c:if test="${display eq 'full'}">
 			<th><fmt:message key="label.arrival" /></th>
 			<th><fmt:message key="label.duration" /></th>
 		</c:if>
@@ -23,20 +25,39 @@
 				data-content="Some content inside the popover" class="btn btn-link">${t.trainTag}</a></td>
 			<td>${t.stationFrom}</td>
 			<td>${t.stationTo}</td>
-			<td><fmt:formatDate value="${t.depDate}" type="both"
-					timeStyle="short" dateStyle="long" /></td>
 			<c:choose>
-				<c:when test="${display eq 'long'}">
+				<c:when test="${display eq 'full'}">
+					<td><fmt:formatDate value="${t.depDate}" type="both"
+							timeStyle="short" dateStyle="long" /></td>
 					<td><fmt:formatDate value="${t.arrDate}" type="both"
 							timeStyle="short" dateStyle="long" /></td>
-					<td><fmt:formatDate value="${t.duration}" pattern="HH:mm" /></td>
+					<td><fmt:formatDate value="${t.duration}" pattern="hh:mm" /></td>
 					<td><a
 						href="controller?command=getFreeSeats&routeId=${t.routeId}"><fmt:message
 								key="action.view_seats" /></a></td>
 				</c:when>
 				<c:otherwise>
-					<c:if test="${display eq 'short'}">
+					<c:if test="${display eq 'route'}">
+						<td><fmt:formatDate value="${t.depDate}" type="date"
+								dateStyle="long" /></td>
 						<td><a href="#"><fmt:message key="action.edit" /></a></td>
+						<td><form action="controller" method="post">
+								<input type="hidden" name="command" value="deleteRoute" /> <input
+									type="hidden" name="routeId" value="${t.routeId}" />
+								<button class="btn btn-danger btn-sm">
+									<span class="glyphicon glyphicon-remove"></span>
+								</button>
+							</form></td>
+					</c:if>
+					<c:if test="${display eq 'train'}">
+						<td><a href="controller?command=carriagesView&trainId=${t.trainId}"><fmt:message key="action.edit" /></a></td>
+						<td><form action="controller" method="post">
+								<input type="hidden" name="command" value="deleteTrain" /> <input
+									type="hidden" name="trainId" value="${t.trainId}" />
+								<button class="btn btn-danger btn-sm">
+									<span class="glyphicon glyphicon-remove"></span>
+								</button>
+							</form></td>
 					</c:if>
 				</c:otherwise>
 			</c:choose>

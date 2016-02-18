@@ -7,9 +7,10 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import ua.nure.serdyuk.db.dao.CarriageDao;
+import ua.nure.serdyuk.db.dao.CarriageTypeDao;
 import ua.nure.serdyuk.db.service.CarriageService;
 import ua.nure.serdyuk.entity.Carriage;
-import ua.nure.serdyuk.entity.Carriage.CarriageType;
+import ua.nure.serdyuk.entity.CarriageType;
 
 public class CarriageServiceImpl implements CarriageService {
 
@@ -18,8 +19,12 @@ public class CarriageServiceImpl implements CarriageService {
 
 	private CarriageDao carriageDao;
 
-	public CarriageServiceImpl(CarriageDao carriageDao) {
+	private CarriageTypeDao carriageTypeDao;
+
+	public CarriageServiceImpl(CarriageDao carriageDao,
+			CarriageTypeDao carriageTypeDao) {
 		this.carriageDao = carriageDao;
+		this.carriageTypeDao = carriageTypeDao;
 	}
 
 	@Override
@@ -27,13 +32,17 @@ public class CarriageServiceImpl implements CarriageService {
 			long trainId, long routeId) {
 		List<Carriage> carriages = carriageDao.getAllByTrainId(trainId, routeId,
 				routeItemFrom, routeItemTo);
-		Map<Integer, CarriageType> types = carriageDao.getTypes(routeItemFrom,
-				routeItemTo, trainId);
+		List<CarriageType> types = carriageTypeDao.getAll();
 
 		List<Integer> list = null;
 		Map<Integer, Boolean> seats = null;
+		CarriageType tmp;
 		for (Carriage item : carriages) {
-			item.setType(types.get(item.getCarTypeId()));
+			tmp = new CarriageType();
+			tmp.setId(item.getCarTypeId());
+
+			item.setType(types.get(types.indexOf(tmp)));
+			
 			list = item.getSeatsTaken();
 			seats = new HashMap<Integer, Boolean>();
 			
@@ -43,5 +52,10 @@ public class CarriageServiceImpl implements CarriageService {
 			item.setSeats(seats);
 		}
 		return carriages;
+	}
+
+	@Override
+	public boolean createAll(List<Carriage> carriages) {
+		return carriageDao.createAll(carriages);
 	}
 }

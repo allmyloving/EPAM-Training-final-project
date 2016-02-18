@@ -136,8 +136,6 @@ public class TrainBeanDaoMySql implements TrainBeanDao {
 				Time depTime = rs.getTime("dep_time");
 				java.util.Date depDateUtil = DateUtils.extractDate(depDate,
 						depTime);
-				LOG.debug(String.format("departure date is %s",
-						depDateUtil.toString()));
 
 				bean.setDepDate(depDateUtil);
 				bean.setArrDate(

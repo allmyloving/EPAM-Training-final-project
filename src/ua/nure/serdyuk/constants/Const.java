@@ -17,6 +17,8 @@ public final class Const {
 	public static final String ROLE = "role";
 
 	public static final String ROUTE_ID = "routeId";
+	
+	public static final String TRAIN_ID = "trainId";
 
 	public static final String STATION_FROM = "stationFrom";
 
@@ -29,6 +31,10 @@ public final class Const {
 	public static final String CARRIAGE_LIST = "carriageList";
 
 	public static final String TICKET_ORDER_BEAN = "ticketOrderBean";
+	
+	public static final String ROUTE_ADD_MES = "routeAddMes";
+
+	public static final String ROUTE_ADD_ERR = "routeAddError";
 
 	public static final String USER_SERVICE = "userService";
 
@@ -45,6 +51,8 @@ public final class Const {
 	public static final String ROUTE_INFO_SERVICE = "routeInfoService";
 
 	public static final String CARRIAGE_SERVICE = "carriageService";
+	
+	public static final String CARRIAGE_TYPE_SERVICE = "carTypeService";
 
 	public static final String TICKET_SERVICE = "ticketService";
 
@@ -115,9 +123,15 @@ public final class Const {
 
 	public static final String SQL_INSERT_TICKET = "SQL_INSERT_TICKET";
 	
+	public static final String SQL_CREATE_CARRIAGE = "SQL_INSERT_CARRIAGE";
+	
+	public static final String SQL_DELETE_ROUTE = "SQL_DELETE_ROUTE";
+	
 	public static final String SQL_GET_ALL_ROUTES_BY_DATES = "SQL_GET_ALL_ROUTES_BY_DATES";
 	
 	public static final String SQL_GET_TRAIN_BY_ID = "SQL_GET_TRAIN_BY_ID";
+	
+	public static final String SQL_GET_ALL_CAR_TYPES = "SQL_GET_ALL_CAR_TYPES";
 	
 
 	// regex

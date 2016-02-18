@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -25,7 +26,11 @@ public class GetRoutesCommand implements Command {
 		String dateFrom = req.getParameter("dateFrom");
 		String dateTo = req.getParameter("dateTo");
 
+		HttpSession session = req.getSession();
 		ServletContext context = req.getServletContext();
+		
+		session.setAttribute("dateFrom", dateFrom);
+		session.setAttribute("dateTo", dateTo);
 
 		RouteService routeService = (RouteService) context
 				.getAttribute(Const.ROUTE_SERVICE);
@@ -43,6 +48,7 @@ public class GetRoutesCommand implements Command {
 			tmp = new TrainBean();
 			tmp.setTrainId(item.getTrainId());
 			TrainBean att = trainBeans.get(trainBeans.indexOf(tmp));
+			tmp.setRouteId(item.getId());
 			tmp.setDepDate(item.getDate());
 			tmp.setTrainTag(att.getTrainTag());
 			tmp.setStationFrom(att.getStationFrom());
@@ -51,9 +57,11 @@ public class GetRoutesCommand implements Command {
 			trainBeans2.add(tmp);
 		}
 
-		req.getSession().setAttribute("routes", trainBeans2);
+		session.setAttribute("routes", trainBeans2);
+		session.setAttribute(Const.ROUTE_ADD_MES, null);
+		session.setAttribute(Const.ROUTE_ADD_ERR, null);
 
-		return Path.ADD_ROUTE_VIEW_COMMAND;
+		return Path.ROUTE_VIEW_COMMAND;
 	}
 
 }

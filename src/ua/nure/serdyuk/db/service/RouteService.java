@@ -8,6 +8,8 @@ public interface RouteService {
 
 	boolean create(Route item);
 
+	boolean delete(long id);
+
 	List<Route> getAllByStationsAndDate(long stationFromId, long stationToId,
 			String date);
 

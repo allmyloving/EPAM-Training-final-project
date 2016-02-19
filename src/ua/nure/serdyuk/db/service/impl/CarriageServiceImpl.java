@@ -30,8 +30,8 @@ public class CarriageServiceImpl implements CarriageService {
 	@Override
 	public List<Carriage> getAll(long routeItemFrom, long routeItemTo,
 			long trainId, long routeId) {
-		List<Carriage> carriages = carriageDao.getAllByTrainId(trainId, routeId,
-				routeItemFrom, routeItemTo);
+		List<Carriage> carriages = carriageDao.getAllByTrainIdRouteItems(
+				trainId, routeId, routeItemFrom, routeItemTo);
 		List<CarriageType> types = carriageTypeDao.getAll();
 
 		List<Integer> list = null;
@@ -42,10 +42,10 @@ public class CarriageServiceImpl implements CarriageService {
 			tmp.setId(item.getCarTypeId());
 
 			item.setType(types.get(types.indexOf(tmp)));
-			
+
 			list = item.getSeatsTaken();
 			seats = new HashMap<Integer, Boolean>();
-			
+
 			for (int k : list) {
 				seats.put(k, true);
 			}
@@ -57,5 +57,20 @@ public class CarriageServiceImpl implements CarriageService {
 	@Override
 	public boolean createAll(List<Carriage> carriages) {
 		return carriageDao.createAll(carriages);
+	}
+
+	@Override
+	public List<Carriage> getAll(long trainId) {
+		List<Carriage> carriages = carriageDao.getAllByTrainId(trainId);
+		List<CarriageType> types = carriageTypeDao.getAll();
+
+		CarriageType tmp;
+		for (Carriage item : carriages) {
+			tmp = new CarriageType();
+			tmp.setId(item.getCarTypeId());
+
+			item.setType(types.get(types.indexOf(tmp)));
+		}
+		return carriages;
 	}
 }

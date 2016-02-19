@@ -10,21 +10,21 @@ import ua.nure.serdyuk.db.service.RouteService;
 import ua.nure.serdyuk.entity.Route;
 import ua.nure.serdyuk.util.DateUtils;
 
-public class RouteServiceMySql implements RouteService {
+public class RouteServiceImpl implements RouteService {
 
-	private static final Logger LOG = Logger.getLogger(RouteServiceMySql.class);
+	private static final Logger LOG = Logger.getLogger(RouteServiceImpl.class);
 
 	private RouteDao routeDao;
 
-	public RouteServiceMySql(RouteDao routeDao) {
+	public RouteServiceImpl(RouteDao routeDao) {
 		this.routeDao = routeDao;
 	}
 
 	@Override
 	public List<Route> getAllByStationsAndDate(long stationFromId,
-			long stationToId, String date) {
+			long stationToId, java.sql.Date date) {
 		return routeDao.getAllByStationsAndDate(stationFromId, stationToId,
-				DateUtils.extractDate(date, Const.CLIENT_DATE_FORMAT));
+				date);
 	}
 
 	@Override

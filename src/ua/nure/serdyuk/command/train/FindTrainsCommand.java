@@ -1,5 +1,6 @@
 package ua.nure.serdyuk.command.train;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,17 +16,18 @@ import ua.nure.serdyuk.command.Command;
 import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.constants.Message;
 import ua.nure.serdyuk.constants.Path;
+import ua.nure.serdyuk.db.DbUtils;
 import ua.nure.serdyuk.db.service.RouteService;
 import ua.nure.serdyuk.db.service.StationService;
 import ua.nure.serdyuk.db.service.TrainBeanService;
 import ua.nure.serdyuk.entity.Route;
 import ua.nure.serdyuk.entity.Station;
 import ua.nure.serdyuk.entity.bean.TrainBean;
+import ua.nure.serdyuk.util.DateUtils;
 
 public class FindTrainsCommand implements Command {
 
 	private static final Logger LOG = Logger.getLogger(FindTrainsCommand.class);
-	
 
 	public static final String ERR_STATION_NOT_FOUND = "Station %s was not found.";
 
@@ -53,9 +55,16 @@ public class FindTrainsCommand implements Command {
 			session.setAttribute(Const.TRAIN_INFO_BEANS, null);
 			return Path.INDEX_VIEW;
 		}
+
+		Date dateSql = DateUtils.extractDate(date, Const.CLIENT_DATE_FORMAT);
+		if (dateSql.before(DateUtils.today())) {
+			req.setAttribute("dateError", Message.ERR_DATE_INCORRECT);
+			return Path.INDEX_VIEW;
+		}
+		
 		LOG.debug(String.format("Looking for train from %s to %s, date: %s",
 				stationFrom, stationTo, date));
-		
+
 		StationService stationService = (StationService) context
 				.getAttribute(Const.STATION_SERVICE);
 
@@ -70,36 +79,37 @@ public class FindTrainsCommand implements Command {
 		}
 
 		// not session -- WRONG
-		session.setAttribute(Const.TRAIN_INFO_BEANS, getTrainBeans(context, from, to, date));
+		session.setAttribute(Const.TRAIN_INFO_BEANS,
+				getTrainBeans(context, from, to, dateSql));
 
 		return Path.INDEX_VIEW;
 	}
-	
+
 	private boolean hasErrors(HttpServletRequest req, Station from,
 			Station to) {
 		boolean error = false;
 		if (from == null) {
 			error = true;
-			req.setAttribute("stationFromError",
-					Message.STATION_NOT_FOUND);
+			req.setAttribute("stationFromError", Message.STATION_NOT_FOUND);
 			LOG.error(String.format(ERR_STATION_NOT_FOUND, from));
 		}
 
 		if (to == null) {
 			error = true;
-			req.setAttribute("stationToError",
-					Message.STATION_NOT_FOUND);
+			req.setAttribute("stationToError", Message.STATION_NOT_FOUND);
 			LOG.error(String.format(ERR_STATION_NOT_FOUND, to));
 		}
 
 		return error;
 	}
 
-	private List<TrainBean> getTrainBeans(ServletContext context, Station from, Station to,
-			String date) {
-		RouteService routeService = (RouteService) context.getAttribute(Const.ROUTE_SERVICE);
-		TrainBeanService trainBeanService = (TrainBeanService) context.getAttribute(Const.TRAIN_BEAN_SERVICE);
-		
+	private List<TrainBean> getTrainBeans(ServletContext context, Station from,
+			Station to, java.sql.Date date) {
+		RouteService routeService = (RouteService) context
+				.getAttribute(Const.ROUTE_SERVICE);
+		TrainBeanService trainBeanService = (TrainBeanService) context
+				.getAttribute(Const.TRAIN_BEAN_SERVICE);
+
 		List<Route> routes = routeService.getAllByStationsAndDate(from.getId(),
 				to.getId(), date);
 		LOG.info(String.format("Routes found ==> ", routes.toString()));

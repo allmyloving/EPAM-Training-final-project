@@ -1,5 +1,6 @@
 package ua.nure.serdyuk.db.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import ua.nure.serdyuk.entity.Route;
@@ -11,7 +12,7 @@ public interface RouteService {
 	boolean delete(long id);
 
 	List<Route> getAllByStationsAndDate(long stationFromId, long stationToId,
-			String date);
+			Date date);
 
 	List<Route> getAllByDates(String from, String to);
 

@@ -37,16 +37,17 @@ public class AddTrainCommand implements Command {
 		train.setTag(trainTag);
 		train.setPrice(BigDecimal.valueOf(Double.valueOf(price)));
 
+		train.setRouteItems(processRouteItems(req, train.getId()));
+		
 		TrainService trainService = (TrainService) context
 				.getAttribute(Const.TRAIN_SERVICE);
 		trainService.create(train);
 
-		processRouteItems(req, train.getId());
-
 		return Path.TRAIN_VIEW_COMMAND;
 	}
 
-	private void processRouteItems(HttpServletRequest req, int trainId) {
+	private List<RouteItem> processRouteItems(HttpServletRequest req,
+			int trainId) {
 		String[] stations = req.getParameterValues("stationSelect");
 		String[] arrTime = req.getParameterValues("arrTime");
 		String[] depTime = req.getParameterValues("depTime");
@@ -54,26 +55,22 @@ public class AddTrainCommand implements Command {
 		List<RouteItem> routeItems = new ArrayList<>();
 		RouteItem item;
 		for (int i = 0; i < stations.length; i++) {
-			item = extractRouteItem(req.getServletContext(), arrTime[i], depTime[i], stations[i], i, trainId);
+			item = extractRouteItem(req.getServletContext(), arrTime[i],
+					depTime[i], stations[i], i, trainId);
 			LOG.debug(item);
 
 			routeItems.add(item);
 		}
 
-		RouteItemService routeItemService = (RouteItemService) req
-				.getServletContext().getAttribute(Const.ROUTE_ITEM_SERVICE);
-		if (routeItemService.createAll(routeItems)) {
-			LOG.info("Route items succsessfully created");
-		}
+		return routeItems;
 	}
 
-	private RouteItem extractRouteItem(ServletContext context, String arrTime, String depTime,
-			String stationName, int ordinal, int trainId) {
+	private RouteItem extractRouteItem(ServletContext context, String arrTime,
+			String depTime, String stationName, int ordinal, int trainId) {
 		StationService stationService = (StationService) context
 				.getAttribute(Const.STATION_SERVICE);
 		RouteItem item = new RouteItem();
-		Date date = DateUtils.extractDate(arrTime,
-				Const.CLIENT_TIME_FORMAT);
+		Date date = DateUtils.extractDate(arrTime, Const.CLIENT_TIME_FORMAT);
 		LOG.debug("date ==> " + date);
 		item.setArrivalTime(date);
 		date = DateUtils.extractDate(depTime, Const.CLIENT_TIME_FORMAT);
@@ -83,7 +80,7 @@ public class AddTrainCommand implements Command {
 		item.setOrdinal(ordinal);
 		item.setStationId(station.getId());
 		item.setTrainId(trainId);
-		
+
 		return item;
 	}
 

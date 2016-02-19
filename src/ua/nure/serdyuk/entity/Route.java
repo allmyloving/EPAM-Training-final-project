@@ -2,6 +2,7 @@ package ua.nure.serdyuk.entity;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 public class Route implements Serializable{
 	
@@ -12,7 +13,7 @@ public class Route implements Serializable{
 	private Date date;
 	
 	private long trainId;
-
+	
 	public int getId() {
 		return id;
 	}

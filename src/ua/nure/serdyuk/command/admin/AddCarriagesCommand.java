@@ -1,5 +1,6 @@
 package ua.nure.serdyuk.command.admin;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,21 +23,9 @@ public class AddCarriagesCommand implements Command {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse res) {
 		int trainId = (int) req.getSession().getAttribute(Const.TRAIN_ID);
-
-		String[] carTags = req.getParameterValues("carTag");
-		String[] types = req.getParameterValues("carTypeSelect");
-		List<Carriage> carriages = new ArrayList<>();
-
-		Carriage c;
-		for (int i = 0; i < carTags.length; i++) {
-			c = new Carriage();
-			c.setTag(carTags[i]);
-			int typeId = Integer.valueOf(types[i]);
-			c.setCarTypeId(typeId);
-			c.setTrainId(trainId);
-
-			carriages.add(c);
-		}
+		
+		List<Carriage> carriages = extractCarriages(req, trainId);
+		LOG.info(String.format("Carriages found ==> %s", carriages.toString()));
 
 		CarriageService service = (CarriageService) req.getServletContext()
 				.getAttribute(Const.CARRIAGE_SERVICE);
@@ -47,6 +36,30 @@ public class AddCarriagesCommand implements Command {
 		}
 
 		return Path.CARRIAGES_VIEW_COMMAND;
+	}
+
+	private List<Carriage> extractCarriages(HttpServletRequest req, int trainId) {
+		String[] carTags = req.getParameterValues("carTag");
+		String[] types = req.getParameterValues("carTypeSelect");
+		String[] prices = req.getParameterValues("carPrice");
+		List<Carriage> carriages = new ArrayList<>();
+
+		Carriage c;
+		for (int i = 0; i < carTags.length; i++) {
+			c = new Carriage();
+			c.setTag(carTags[i]);
+			c.setTrainId(trainId);
+
+			int typeId = Integer.valueOf(types[i]);
+			c.setCarTypeId(typeId);
+
+			BigDecimal price = BigDecimal.valueOf(Double.valueOf(prices[i]));
+			c.setPrice(price);
+
+			carriages.add(c);
+		}
+		
+		return carriages;
 	}
 
 }

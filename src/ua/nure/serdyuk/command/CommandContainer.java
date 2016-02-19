@@ -15,6 +15,7 @@ import ua.nure.serdyuk.command.admin.DeleteStationCommand;
 import ua.nure.serdyuk.command.admin.GetRoutesCommand;
 import ua.nure.serdyuk.command.admin.StationViewCommand;
 import ua.nure.serdyuk.command.ajax.GetStationsCommand;
+import ua.nure.serdyuk.command.ajax.UpdateCarriageCommand;
 import ua.nure.serdyuk.command.ajax.UpdateStationCommand;
 import ua.nure.serdyuk.command.train.FindTrainsCommand;
 import ua.nure.serdyuk.command.train.GetFreeSeatsCommand;
@@ -75,10 +76,11 @@ public final class CommandContainer {
 		commands.put("addTrain", new AddTrainCommand());
 		commands.put("deleteRoute", new DeleteRouteCommand());
 		commands.put("addCarriages", new AddCarriagesCommand());
+		commands.put("addRoute", new AddRouteCommand());
 
 		commands.put("getStations", new GetStationsCommand());
 		commands.put("updateStation", new UpdateStationCommand());
-		commands.put("addRoute", new AddRouteCommand());
+		commands.put("updateCarriage", new UpdateCarriageCommand());
 
 		commands.put("noCommand", new NoCommand());
 

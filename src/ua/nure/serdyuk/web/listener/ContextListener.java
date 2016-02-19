@@ -30,7 +30,7 @@ import ua.nure.serdyuk.db.service.impl.CarriageServiceImpl;
 import ua.nure.serdyuk.db.service.impl.CarriageTypeServiceImpl;
 import ua.nure.serdyuk.db.service.impl.RouteBeanServiceImpl;
 import ua.nure.serdyuk.db.service.impl.RouteItemServiceMySql;
-import ua.nure.serdyuk.db.service.impl.RouteServiceMySql;
+import ua.nure.serdyuk.db.service.impl.RouteServiceImpl;
 import ua.nure.serdyuk.db.service.impl.StationServiceMySql;
 import ua.nure.serdyuk.db.service.impl.TicketServiceImpl;
 import ua.nure.serdyuk.db.service.impl.TrainBeanServiceImpl;
@@ -108,7 +108,7 @@ public class ContextListener implements ServletContextListener {
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "Station"));
 
 		context.setAttribute(Const.ROUTE_SERVICE,
-				new RouteServiceMySql(new RouteDaoMySql()));
+				new RouteServiceImpl(new RouteDaoMySql()));
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "Route"));
 
 		context.setAttribute(Const.ROUTE_ITEM_SERVICE,

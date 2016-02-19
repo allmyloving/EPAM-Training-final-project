@@ -21,7 +21,7 @@ $(document).ready(function() {
 	console.log("ready!!");
 	var lang = $('body').attr('lang');
 	$('#errorDiv').hide();
-	
+
 	$('#signUpForm').submit(function(event) {
 		event.preventDefault();
 		var map = {
@@ -106,6 +106,32 @@ function addRoute() {
 	$.ajax({
 		url : "serv?command=addRoute&trainId=" + $('#trainSelect').val()
 				+ "&date=" + $('#date').val(),
+		type : "post",
+		async : true,
+		error : function(data) {
+			$('#mesDiv').hide();
+			$('#errorDiv').show();
+			$('#errorDiv p').html(data.statusText);
+		},
+		success : function(data) {
+			$('#errorDiv').hide();
+			$('#mesDiv').show();
+			$('#mesDiv p').html(data);
+		}
+	});
+}
+
+function updateStation(select) {
+	var optName = $(select).find(":selected").text();
+	console.log(optName);
+	var carTypeId = $(select).find(":selected").val();
+	console.log(carTypeId);
+	var id = $(select).attr('accesskey');
+	console.log(id);
+
+	$.ajax({
+		url : "serv?command=updateCarriage&typeId=" + carTypeId + "&id=" + id
+				+ "&name=carType",
 		type : "post",
 		async : true,
 		error : function(data) {

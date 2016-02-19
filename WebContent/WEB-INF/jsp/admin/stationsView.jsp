@@ -1,5 +1,5 @@
 <%@ include file="/WEB-INF/jspf/head.jspf"%>
-<script src="js/station.js"></script>
+<script src="js/editable.js"></script>
 <link
 	href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css"
 	rel="stylesheet" />
@@ -41,7 +41,7 @@
 		<table class="table table-hover">
 			<c:forEach items="${stations}" var="s">
 				<tr>
-					<td><a class="station-popup" href="#" data-type="text"
+					<td><a class="my-popup" href="#" data-type="text"
 						data-pk="${s.id}" data-url="serv?command=updateStation"
 						data-title="Enter new name">${s.name}</a></td>
 					<td><form action="controller" method="post">

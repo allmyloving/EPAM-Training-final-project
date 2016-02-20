@@ -3,23 +3,25 @@
 <%@ include file="/WEB-INF/jspf/header.jspf"%>
 <body>
 	<c:set var="routeId" scope="session" value="${routeId}"></c:set>
-	<div class="container" id="proceedContainer">
-		<div class="row">
-			<form role="form" action="controller">
-				<input type="hidden" name="command" value="orderTicketView" /> <input
-					type="hidden" name="carriageId" id="carriageId" /> <input
-					type="hidden" name="seatNum" id="seatNum" />
-				<div class="form-group">
-					<span class="pull-right">
-						<button class="btn btn-success">
-							<fmt:message key="action.proceed" />
-							<span class="glyphicon glyphicon-arrow-right" />
-						</button>
-					</span>
-				</div>
-			</form>
+	<c:if test="${not empty carriageList.types}">
+		<div class="container" id="proceedContainer">
+			<div class="row">
+				<form role="form" action="controller">
+					<input type="hidden" name="command" value="orderTicketView" /> <input
+						type="hidden" name="carriageId" id="carriageId" /> <input
+						type="hidden" name="seatNum" id="seatNum" />
+					<div class="form-group">
+						<span class="pull-right">
+							<button class="btn btn-success">
+								<fmt:message key="action.proceed" />
+								<span class="glyphicon glyphicon-arrow-right" />
+							</button>
+						</span>
+					</div>
+				</form>
+			</div>
 		</div>
-	</div>
+	</c:if>
 	<div class="container">
 		<div class="row">
 			<c:forEach items="${carriageList.types}" var="t">
@@ -50,9 +52,9 @@
 									<c:if test="${c.type==t}">
 										<c:set scope="page" value="${fn:length(c.seatsTaken)}"
 											var="seatsTaken" />
-										<a href="#" class="list-group-item carriage-item row" id="${c.id}"><span
-											class="col-md-4"><b>${c.tag}</b></span><span class="col-md-4">&#8372;${c.price}</span><span
-											class="badge">${c.type.seatNum - seatsTaken}</span></a>
+										<a href="#" class="list-group-item carriage-item row"
+											id="${c.id}"><span class="col-md-4"><b>${c.tag}</b></span><span
+											class="col-md-4">&#8372;${c.price}</span><span class="badge">${c.type.seatNum - seatsTaken}</span></a>
 										<div id="${c.id}" class="seat-container">
 											<c:forEach begin="1" end="${c.type.seatNum}" step="1"
 												var="seat">

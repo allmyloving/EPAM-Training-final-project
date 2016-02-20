@@ -4,16 +4,16 @@
 <body>
 	<div class="container">
 		<p>
-		<h2>Welcome to admin page!</h2>
+		<h2><fmt:message key="label.admin_welcome"/>!</h2>
 		</p>
 		<br />
 		<div class="btn-group-justified btn-group-lg">
 			<a class="btn btn-default"
-				href="controller?command=stationView">Manage stations</a> <a
+				href="controller?command=stationView"><fmt:message key="action.manage_stations"/></a> <a
 				class="btn btn-default"
-				href="controller?command=routeView">Manage routes</a> <a
+				href="controller?command=routeView"><fmt:message key="action.manage_routes"/></a> <a
 				class="btn btn-default"
-				href="controller?command=trainView">Manage trains</a>
+				href="controller?command=trainView"><fmt:message key="action.manage_trains"/></a>
 		</div>
 	</div>
 </body>

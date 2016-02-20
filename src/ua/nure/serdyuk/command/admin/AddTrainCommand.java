@@ -14,7 +14,6 @@ import org.apache.log4j.Logger;
 import ua.nure.serdyuk.command.Command;
 import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.constants.Path;
-import ua.nure.serdyuk.db.service.RouteItemService;
 import ua.nure.serdyuk.db.service.StationService;
 import ua.nure.serdyuk.db.service.TrainService;
 import ua.nure.serdyuk.entity.RouteItem;
@@ -74,6 +73,7 @@ public class AddTrainCommand implements Command {
 		LOG.debug("date ==> " + date);
 		item.setArrivalTime(date);
 		date = DateUtils.extractDate(depTime, Const.CLIENT_TIME_FORMAT);
+		item.setDepartureTime(date);
 
 		Station station = stationService.getByName(stationName);
 

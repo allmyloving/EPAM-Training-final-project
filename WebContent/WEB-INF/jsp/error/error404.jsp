@@ -6,17 +6,15 @@
 <div class="jumbotron">
 	<div class="container">
 		<h1>
-			<fmt:message key="label.oops" />!
+			<fmt:message key="label.oops" />
+			!
 		</h1>
 		<br />
 		<h2>404 Not Found</h2>
 		<p>
 			<fmt:message key="message.not_available" />
 		</p>
-		<p>
-			<a class="btn btn-success btn-lg" href="index.jsp"><fmt:message
-					key="label.go_home" /></a>
-		</p>
+		<st4:goBack />
 	</div>
 </div>
 </body>

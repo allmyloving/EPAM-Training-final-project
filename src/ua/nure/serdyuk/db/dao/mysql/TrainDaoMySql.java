@@ -14,8 +14,10 @@ import com.mysql.jdbc.Statement;
 import ua.nure.serdyuk.constants.Const;
 import ua.nure.serdyuk.db.DbUtils;
 import ua.nure.serdyuk.db.dao.TrainDao;
+import ua.nure.serdyuk.entity.RouteItem;
 import ua.nure.serdyuk.entity.Train;
 import ua.nure.serdyuk.exception.DbException;
+import ua.nure.serdyuk.util.DateUtils;
 import ua.nure.serdyuk.util.PropertyContainer;
 
 public class TrainDaoMySql implements TrainDao {
@@ -46,6 +48,10 @@ public class TrainDaoMySql implements TrainDao {
 			}
 			item.setId(rs.getInt(1));
 
+			if (!createRouteItems(conn, item.getRouteItems(), item.getId())) {
+				throw new DbException("Error while creating RouteItems");
+			}
+
 			conn.commit();
 		} catch (SQLException e) {
 			DbUtils.rollback(conn);
@@ -55,6 +61,35 @@ public class TrainDaoMySql implements TrainDao {
 			DbUtils.close(conn, ps, null);
 		}
 		return result != 0;
+	}
+
+	private boolean createRouteItems(Connection conn, List<RouteItem> items, int trainId)
+			throws SQLException {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		boolean result = false;
+
+		try {
+			ps = conn.prepareStatement(
+					PropertyContainer.get(Const.SQL_CREATE_ROUTE_ITEM));
+
+			for (RouteItem ri : items) {
+				int k = 1;
+				ps.setObject(k++, DateUtils.getTime(ri.getArrivalTime()),
+						Types.TIME);
+				ps.setObject(k++, DateUtils.getTime(ri.getDepartureTime()),
+						Types.TIME);
+				ps.setInt(k++, ri.getOrdinal());
+				ps.setLong(k++, trainId);
+				ps.setLong(k++, ri.getStationId());
+				ps.addBatch();
+			}
+			result = DbUtils.isBatchSuccessful(ps.executeBatch());
+		} finally {
+			DbUtils.close(null, ps, rs);
+		}
+
+		return result;
 	}
 
 	@Override

@@ -20,7 +20,7 @@ var errors = {
 $(document).ready(function() {
 	console.log("ready!!");
 	var lang = $('body').attr('lang');
-	$('#errorDiv').hide();
+	//$('#errorDiv').hide();
 
 	$('#signUpForm').submit(function(event) {
 		event.preventDefault();

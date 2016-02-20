@@ -25,10 +25,8 @@
 		<p>
 			<fmt:message key="message.not_able_to_fix" />
 		</p>
-		<p>
-			<a class="btn btn-success btn-lg" href="javascript: history.go(-1)"><fmt:message
-					key="label.go_back" /></a>
-		</p>
+
+		<st4:goBack />
 	</div>
 </div>
 </body>

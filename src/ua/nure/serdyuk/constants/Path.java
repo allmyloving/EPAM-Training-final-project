@@ -49,5 +49,7 @@ public final class Path {
 	public static final String ERROR_404_VIEW = "/WEB-INF/jsp/error/error_404.jsp";
 	
 	public static final String ERROR_404_VIEW_COMMAND = "/controller?command=error404View";
+	
+	public static final String ORDER_TICKET_VIEW_COMMAND = "/controller?command=orderTicketView";
 
 }

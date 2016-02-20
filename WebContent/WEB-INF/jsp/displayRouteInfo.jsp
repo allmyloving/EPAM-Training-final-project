@@ -35,12 +35,7 @@
 			</c:otherwise>
 		</c:choose>
 	</div>
-	<div class="container">
-		<ul class="pager">
-			<li><a href="javascript:history.go(-1)"><fmt:message
-						key="label.go_back" /></a></li>
-		</ul>
-	</div>
+	<st4:goBack />
 
 </body>
 </html>

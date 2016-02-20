@@ -25,6 +25,8 @@ public final class Const {
 	public static final String STATION_TO = "stationTo";
 
 	public static final String DATE = "date";
+	
+	public static final String REDIRECT = "redirect";
 
 	public static final String CURRENT_USER = "currentUser";
 

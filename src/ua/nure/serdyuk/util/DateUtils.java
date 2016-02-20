@@ -72,6 +72,10 @@ public final class DateUtils {
 	public static Date today() {
 		return Calendar.getInstance().getTime();
 	}
+	
+	public static Time getTime(Date date) {
+		return (date == null) ? null : new Time(date.getTime());
+	}
 
 	private static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
 		long diffInMillies = date1.getTime() - date2.getTime();

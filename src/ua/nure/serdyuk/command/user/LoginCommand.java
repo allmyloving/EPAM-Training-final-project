@@ -2,6 +2,7 @@ package ua.nure.serdyuk.command.user;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -23,18 +24,22 @@ public class LoginCommand implements Command {
 		String email = req.getParameter(Const.EMAIL);
 		String password = req.getParameter(Const.PASSWORD);
 
+		HttpSession session = req.getSession();
+
 		User user = service.auth(email, password);
 		if (user != null) {
-			req.getSession().setAttribute(Const.CURRENT_USER, user);
+			session.setAttribute(Const.CURRENT_USER, user);
 			LOG.info("Login successful");
-			return Path.INDEX_VIEW;
+			String redirect = (String) session.getAttribute(Const.REDIRECT);
+			return redirect == null ? Path.INDEX_VIEW : redirect;
 		}
 
 		LOG.info(String.format("Login failed for email %s", email));
 
 		req.setAttribute(Const.EMAIL, email);
-		req.getSession().setAttribute("loginError", Message.INVALID_USER_NAME_OR_PASSWORD);
-		
+		session.setAttribute("loginError",
+				Message.INVALID_USER_NAME_OR_PASSWORD);
+
 		return Path.LOGIN_VIEW_COMMAND;
 	}
 

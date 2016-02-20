@@ -1,7 +1,5 @@
 package ua.nure.serdyuk.command.train;
 
-import java.util.Arrays;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -33,8 +31,8 @@ public class OrderTicketCommand implements Command {
 		// move to filter
 		if (currentUser == null) {
 			// throw new AppException("Login first.");
-			req.setAttribute("loginErrors",
-					Arrays.asList("message.login_first"));
+			session.setAttribute("loginError", "message.login_first");
+
 			return Path.LOGIN_VIEW_COMMAND;
 		}
 

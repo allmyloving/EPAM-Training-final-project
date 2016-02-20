@@ -33,6 +33,11 @@ public class OrderTicketViewCommand implements Command {
 
 		HttpSession session = req.getSession();
 
+		String redirect = String.format("%s?%s", req.getServletPath(),
+				req.getQueryString());
+		LOG.info("redirect ==> " + redirect);
+		session.setAttribute(Const.REDIRECT, redirect);
+
 		TrainBean trainBean = getTrainBean(session, routeId);
 		Carriage carriage = getCarriage(trainBean, carriageId);
 

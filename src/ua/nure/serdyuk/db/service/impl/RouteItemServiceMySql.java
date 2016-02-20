@@ -13,14 +13,9 @@ public class RouteItemServiceMySql implements RouteItemService {
 	public RouteItemServiceMySql(RouteItemDao routeItemDao) {
 		this.routeItemDao = routeItemDao;
 	}
-	
+
 	@Override
 	public List<RouteItem> getAll() {
 		return routeItemDao.getAll();
-	}
-
-	@Override
-	public boolean createAll(List<RouteItem> items) {
-		return routeItemDao.createAll(items);
 	}
 }

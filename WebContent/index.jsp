@@ -1,6 +1,4 @@
 <%@ include file="/WEB-INF/jspf/head.jspf"%>
-<%@ taglib prefix="st4" uri="/WEB-INF/myTags.tld"%>
-
 <script src="js/date.js"></script>
 <script src="js/bootstrap-datepicker.min.js"></script>
 <link rel="stylesheet" type="text/css"
@@ -21,7 +19,7 @@
 							key="label.from" />:
 					</label> <input class="form-control" id="stationFrom" name="stationFrom"
 						onkeyup="getStations(this)" value="${stationFrom}" />
-						<p class="text-warning" id="stationFromError">
+					<p class="text-warning" id="stationFromError">
 						<c:if test="${not empty stationFromError}">
 							<fmt:message key="${stationFromError}" />
 						</c:if>
@@ -36,7 +34,7 @@
 							key="label.to" />:
 					</label><input class="form-control" id="stationTo" name="stationTo"
 						onkeyup="getStations(this)" value="${stationTo}">
-						<p class="text-warning" id="stationToError">
+					<p class="text-warning" id="stationToError">
 						<c:if test="${not empty stationToError}">
 							<fmt:message key="${stationToError}" />
 						</c:if>
@@ -47,7 +45,7 @@
 							key="label.date" />:
 					</label> <input class="form-control datepicker" id="date" name="date"
 						value="${requestScope.date}" data-provide="datepicker-inline" />
-						<p class="text-warning" id="dateError">
+					<p class="text-warning" id="dateError">
 						<c:if test="${not empty dateError}">
 							<fmt:message key="${dateError}" />
 						</c:if>

@@ -18,9 +18,9 @@
 				</ul>
 			</div>
 		</c:if>
-		<h2>Stations</h2>
+		<h2><fmt:message key="label.stations"/></h2>
 		<a href="#" class="text-muted" id="addNewStation">
-			<h4>Add new</h4>
+			<h4><fmt:message key="action.add_new_station"/></h4>
 		</a>
 		<div id="addStationDiv">
 			<form action="controller" method="post">

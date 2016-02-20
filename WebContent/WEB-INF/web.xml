@@ -8,18 +8,22 @@
 		<!-- Servlets -->
 		<servlet>
 				<servlet-name>Controller</servlet-name>
-				<servlet-class>ua.nure.serdyuk.web.Controller</servlet-class>
+				<servlet-class>ua.nure.serdyuk.SummaryTask4.web.Controller</servlet-class>
 		</servlet>
 		<servlet>
 				<servlet-name>MyServlet</servlet-name>
-				<servlet-class>ua.nure.serdyuk.web.MyServlet</servlet-class>
+				<servlet-class>ua.nure.serdyuk.SummaryTask4.web.MyServlet</servlet-class>
+		</servlet>
+		<servlet>
+				<servlet-name>PrintTicketServlet</servlet-name>
+				<servlet-class>ua.nure.serdyuk.SummaryTask4.web.PrintTicketServlet</servlet-class>
 		</servlet>
 		
 		<!-- Filters -->
 		
 		<filter>
 				<filter-name>AccessFilter</filter-name>
-				<filter-class>ua.nure.serdyuk.web.filter.AccessFilter</filter-class>
+				<filter-class>ua.nure.serdyuk.SummaryTask4.web.filter.AccessFilter</filter-class>
 				<init-param>
 						<param-name>admin</param-name>
 						<param-value>adminView stationView trainView routeView carriagesView addRoute 
@@ -36,7 +40,7 @@
 		</filter-mapping>
 		<filter>
 				<filter-name>CleanSessionFilter</filter-name>
-				<filter-class>ua.nure.serdyuk.web.filter.CleanSessionFilter</filter-class>
+				<filter-class>ua.nure.serdyuk.SummaryTask4.web.filter.CleanSessionFilter</filter-class>
 				<init-param>
 						<param-name>commands</param-name>
 						<param-value>indexView adminView logout</param-value>
@@ -48,7 +52,7 @@
 		</filter-mapping>
 		<filter>
 				<filter-name>CharsetFilter</filter-name>
-				<filter-class>ua.nure.serdyuk.web.filter.CharsetFilter</filter-class>
+				<filter-class>ua.nure.serdyuk.SummaryTask4.web.filter.CharsetFilter</filter-class>
 		</filter>
 		<filter-mapping>
 				<filter-name>CharsetFilter</filter-name>
@@ -57,7 +61,7 @@
 		
 		<filter>
 				<filter-name>LocaleFilter</filter-name>
-				<filter-class>ua.nure.serdyuk.web.filter.LocaleFilter</filter-class>
+				<filter-class>ua.nure.serdyuk.SummaryTask4.web.filter.LocaleFilter</filter-class>
 				<init-param>
 						<param-name>defaultLocale</param-name>
 						<param-value>en</param-value>
@@ -75,7 +79,7 @@
 		</context-param>
 		<context-param>
 				<param-name>bundleBasename</param-name>
-				<param-value>ua.nure.serdyuk.resources.strings</param-value>
+				<param-value>ua.nure.serdyuk.SummaryTask4.resources.strings</param-value>
 		</context-param>
 		<error-page>
 				<error-code>404</error-code>

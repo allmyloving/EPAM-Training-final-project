@@ -4,6 +4,7 @@ var errors = {
 		"password" : "Password should contain at least 4 symbols",
 		"repPassword" : "Passwords should match",
 		"notEmpty" : "Cannot be empty",
+		"chooseSeat" : "Choose a seat, please",
 		'message.name_not_valid' : "Name should start with upper-case letter",
 		'message.try_again' : "Try again later"
 	},
@@ -12,6 +13,7 @@ var errors = {
 		"password" : "Пароль должен содержать не менее 4 символов",
 		"repPassword" : "Пароли должны совпадать",
 		"notEmpty" : "Заполните поле",
+		"chooseSeat" : "Пожалуйста, выберите место",
 		'message.name_not_valid' : 'Имя не может быть пустым и должно начинаться с заглавной буквы',
 		'message.try_again' : "Попробуйте позже"
 	}
@@ -20,7 +22,7 @@ var errors = {
 $(document).ready(function() {
 	console.log("ready!!");
 	var lang = $('body').attr('lang');
-	//$('#errorDiv').hide();
+	// $('#errorDiv').hide();
 
 	$('#signUpForm').submit(function(event) {
 		event.preventDefault();
@@ -76,6 +78,17 @@ $(document).ready(function() {
 		if (proceed) {
 			$(this).off("submit");
 			this.submit();
+		}
+	});
+	$('#orderTicketButton').click(function(event) {
+		event.preventDefault();
+		var proceed = false;
+		var seatNum = $('#seatNum').val();
+		if (seatNum == '') {
+			alert(errors[lang]['chooseSeat']);
+		} else {
+			$(this).off("click");
+			this.click();
 		}
 	});
 

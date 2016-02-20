@@ -9,7 +9,7 @@ web-jsptaglibrary_2_0.xsd"
 		
 		<tag>
 				<name>goBack</name>
-				<tag-class>ua.nure.serdyuk.web.tag.GoBackTag</tag-class>
+				<tag-class>ua.nure.serdyuk.SummaryTask4.web.tag.GoBackTag</tag-class>
 				<body-content>empty</body-content>
 				
 		</tag>

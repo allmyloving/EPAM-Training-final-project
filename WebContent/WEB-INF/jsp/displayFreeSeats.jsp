@@ -12,7 +12,7 @@
 						type="hidden" name="seatNum" id="seatNum" />
 					<div class="form-group">
 						<span class="pull-right">
-							<button class="btn btn-success">
+							<button class="btn btn-success" type="submit" id="orderTicketButton">
 								<fmt:message key="action.proceed" />
 								<span class="glyphicon glyphicon-arrow-right" />
 							</button>

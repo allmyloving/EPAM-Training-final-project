@@ -43,7 +43,7 @@
 				<div class="form-group">
 					<label class="control-label" for="date"> <fmt:message
 							key="label.date" />:
-					</label> <input class="form-control datepicker" id="date" name="date"
+					</label> <input class="form-control date" id="date" name="date"
 						value="${requestScope.date}" data-provide="datepicker-inline" />
 					<p class="text-warning" id="dateError">
 						<c:if test="${not empty dateError}">

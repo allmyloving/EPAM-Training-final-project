@@ -26,7 +26,7 @@ $(document)
 						weekStart : 1
 					};
 
-					$('#date').datepicker({
+					$('.date').datepicker({
 						startDate : '0',
 						language : lang
 						// ,todayBtn: "linked"

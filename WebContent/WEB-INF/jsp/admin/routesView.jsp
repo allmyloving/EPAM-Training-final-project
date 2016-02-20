@@ -44,7 +44,7 @@
 				<div class='col-sm-6'>
 					<div class='form-group'>
 						<label for="date"><fmt:message key="label.date" /></label> <input
-							class="form-control datepicker" id="date" name="date"
+							class="form-control date" id="date" name="date"
 							data-provide="datepicker-inline" />
 						<p class="text-warning" id="date">${dateError}</p>
 					</div>
@@ -59,8 +59,8 @@
 			</div>
 		</form>
 		<hr />
-		<form role="form" action="controller" method="post" class="input-not-empty">
-			<input type="hidden" value="getRoutes" name="command" />
+		<form role="form" action="controller" method="get" class="input-not-empty">
+			<input type="hidden" value="routeView" name="command" />
 			<fieldset>
 				<legend>
 					<fmt:message key="label.show_routes_by_date" />
@@ -80,8 +80,8 @@
 						<div class="form-group">
 							<label class="control-label" for="dateFrom"> <fmt:message
 									key="label.date_from" />
-							</label> <input class="form-control datepicker" id="dateFrom"
-								name="dateFrom" value="${dateTo}"
+							</label> <input class="form-control date" id="dateFrom"
+								name="dateFrom" value="${dateFrom}"
 								data-provide="datepicker-inline" />
 							<p class="text-warning" id="dateFromError">${dateError}</p>
 						</div>
@@ -90,8 +90,8 @@
 						<div class="form-group">
 							<label class="control-label" for="dateTo"> <fmt:message
 									key="label.date_to" />
-							</label> <input class="form-control datepicker" id="dateTo" name="dateTo"
-								value="${dateFrom}" data-provide="datepicker-inline" />
+							</label> <input class="form-control date" id="dateTo" name="dateTo"
+								value="${dateTo}" data-provide="datepicker-inline" />
 							<p class="text-warning" id="dateToError">${dateError}</p>
 						</div>
 					</div>

@@ -134,7 +134,7 @@ function addRoute() {
 	});
 }
 
-function updateStation(select) {
+function updateCarriage(select) {
 	var optName = $(select).find(":selected").text();
 	console.log(optName);
 	var carTypeId = $(select).find(":selected").val();
@@ -143,7 +143,7 @@ function updateStation(select) {
 	console.log(id);
 
 	$.ajax({
-		url : "serv?command=updateCarriage&typeId=" + carTypeId + "&id=" + id
+		url : "serv?command=updateCarriage&typeId=" + carTypeId + "&pk=" + id
 				+ "&name=carType",
 		type : "post",
 		async : true,

@@ -45,6 +45,8 @@ public class OrderTicketCommand implements Command {
 		bean.setFirstName(firstName);
 		bean.setLastName(lastName);
 		
+		LOG.info(String.format("firstName=%s, lastName=%s", firstName, lastName));
+		
 		Ticket ticket = prepareTicket(firstName, lastName, currentUser.getId(),
 				bean);
 		TicketService service = (TicketService) req.getServletContext()
@@ -69,6 +71,8 @@ public class OrderTicketCommand implements Command {
 		ticket.setLastName(lastName);
 		ticket.setCarriageId(carriage.getId());
 		ticket.setPrice(carriage.getPrice());
+		ticket.setDepDate(trainBean.getDepDate());
+		ticket.setArrDate(trainBean.getArrDate());
 		ticket.setRouteItemDepId(trainBean.getRouteItemIdFrom());
 		ticket.setRouteItemArrId(trainBean.getRouteItemIdTo());
 		ticket.setRouteId(trainBean.getRouteId());

@@ -101,25 +101,27 @@ public class TrainBeanDaoMySql implements TrainBeanDao {
 			ps.setLong(k++, stFromId);
 			ps.setLong(k++, stToId);
 
+			LOG.debug("executing ==> " + ps);
+
 			rs = ps.executeQuery();
 
 			bean = new TrainBean();
 
-			java.sql.Date depDate = null;
-			// throw ex?
 			if (rs.next()) {
 				bean.setTrainTag(rs.getString("tag"));
 				bean.setStationFrom(rs.getString(NAME));
 				bean.setRouteItemIdFrom(rs.getLong("id"));
-				bean.setDepDate(rs.getDate("date"));
 
 				Time depTime = rs.getTime("dep_time");
+				java.sql.Date depDate = rs.getDate("date");
 				java.util.Date depDateUtil = DateUtils.extractDate(depDate,
 						depTime);
+				LOG.debug(String.format("dep date=%s; dep date util=%s",
+						depDate.toString(), depDateUtil.toString()));
 
 				bean.setDepDate(depDateUtil);
 				bean.setArrDate(
-						new java.util.Date(rs.getTime("arr_time").getTime()));
+						DateUtils.extractDate(depDate, rs.getTime("arr_time")));
 
 				if (rs.next()) {
 					bean.setStationTo(rs.getString(NAME));

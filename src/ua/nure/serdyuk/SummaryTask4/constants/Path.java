@@ -14,6 +14,8 @@ public final class Path {
 
 	public static final String SIGN_UP_VIEW = "/WEB-INF/jsp/user/signUp.jsp";
 	
+	public static final String PROFILE_VIEW = "/WEB-INF/jsp/user/profile.jsp";
+	
 	public static final String ROUTE_INFO_VIEW = "/WEB-INF/jsp/displayRouteInfo.jsp";
 	
 	public static final String FREE_SEATS_VIEW = "/WEB-INF/jsp/displayFreeSeats.jsp";

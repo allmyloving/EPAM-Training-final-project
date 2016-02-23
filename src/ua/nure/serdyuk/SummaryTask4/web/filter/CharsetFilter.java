@@ -11,6 +11,7 @@ import javax.servlet.ServletResponse;
 
 import org.apache.log4j.Logger;
 
+import ua.nure.serdyuk.SummaryTask4.constants.Const;
 import ua.nure.serdyuk.SummaryTask4.constants.Message;
 
 /**
@@ -24,16 +25,14 @@ public class CharsetFilter implements Filter {
 
 	private static final Logger LOG = Logger.getLogger(CharsetFilter.class);
 
-	private static final String ENCODING = "utf-8";
-
 	public void destroy() {
 		// TODO Auto-generated method stub
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
-		request.setCharacterEncoding(ENCODING);
-		LOG.info(String.format(Message.ENCODING_IS_SET, ENCODING));
+		request.setCharacterEncoding(Const.ENCODING);
+		LOG.info(String.format(Message.ENCODING_IS_SET, Const.ENCODING));
 
 		chain.doFilter(request, response);
 	}

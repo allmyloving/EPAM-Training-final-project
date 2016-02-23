@@ -26,7 +26,7 @@ public class RouteBean implements Serializable {
 	}
 
 	public Date getDepTime() {
-		return (Date) depTime.clone();
+		return depTime == null ? null : (Date) depTime.clone();
 	}
 
 	public void setDepTime(Date depDate) {
@@ -34,7 +34,7 @@ public class RouteBean implements Serializable {
 	}
 
 	public Date getArrTime() {
-		return (Date) arrTime.clone();
+		return arrTime == null ? null : (Date) arrTime.clone();
 	}
 
 	public void setArrTime(Date arrDate) {

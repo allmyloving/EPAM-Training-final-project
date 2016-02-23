@@ -33,7 +33,8 @@ public class GetStationsCommand implements Command {
 
 		String json = convertToJSON(stations);
 		LOG.trace("JSON ==> " + json);
-
+		
+		res.setCharacterEncoding(Const.ENCODING);
 		return json;
 	}
 	

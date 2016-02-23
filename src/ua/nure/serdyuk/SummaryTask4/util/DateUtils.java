@@ -5,10 +5,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 
+import ua.nure.serdyuk.SummaryTask4.entity.RouteItem;
 import ua.nure.serdyuk.SummaryTask4.exception.AppException;
 
 public final class DateUtils {
@@ -69,10 +71,42 @@ public final class DateUtils {
 		return cal.getTime();
 	}
 
+	public static Date getArrivalDate(Date arrTime, Date depDate,
+			List<RouteItem> routeItems) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(arrTime);
+		Calendar calFrom = Calendar.getInstance();
+		calFrom.setTime(depDate);
+
+		cal.set(Calendar.DATE, calFrom.get(Calendar.DATE));
+		cal.set(Calendar.MONTH, calFrom.get(Calendar.MONTH));
+		cal.set(Calendar.YEAR, calFrom.get(Calendar.YEAR));
+
+		Date arrDate = cal.getTime();
+		int days = 0;
+
+		for (int i = 0; i < routeItems.size() - 1; i++) {
+			Date dTime = routeItems.get(i).getDepartureTime();
+			Date aTime = routeItems.get(i + 1).getArrivalTime();
+
+			if (dTime.after(aTime)) {
+				LOG.debug(String.format("%s is after %s", dTime.toString(),
+						aTime.toString()));
+				days++;
+			}
+		}
+
+		if (days > 0) {
+			DateUtils.increaseDays(arrDate, days);
+		}
+
+		return arrDate;
+	}
+
 	public static Date today() {
 		return Calendar.getInstance().getTime();
 	}
-	
+
 	public static Time getTime(Date date) {
 		return (date == null) ? null : new Time(date.getTime());
 	}

@@ -37,6 +37,7 @@ public final class CommandContainer {
 
 		commands.put("loginView", new LoginViewCommand());
 		commands.put("signUpView", new SignUpViewCommand());
+		commands.put("userProfileView", new UserProfileViewCommand());
 		commands.put("indexView", new IndexViewCommand());
 		commands.put("paymentSuccessfulView", new PaymentSuccessView());
 		commands.put("error404View", new Error404ViewCommand());
@@ -46,7 +47,7 @@ public final class CommandContainer {
 		commands.put("routeView", new RouteViewCommand());
 		commands.put("trainView", new TrainViewCommand());
 		commands.put("carriagesView", new CarriagesViewCommand());
-		
+
 		commands.put("deleteStation", new DeleteStationCommand());
 		commands.put("addStation", new AddStationCommand());
 		commands.put("getRoutes", new GetRoutesCommand());

@@ -11,9 +11,9 @@ public class TicketOrderBean implements Serializable {
 	private String firstName;
 
 	private String lastName;
-	
+
 	private String stationFrom;
-	
+
 	private String stationTo;
 
 	private TrainBean trainBean;
@@ -21,11 +21,13 @@ public class TicketOrderBean implements Serializable {
 	private int seatNum;
 
 	private Carriage carriage;
-	
+
+	private long ticketId;
+
 	public TrainBean getTrainBean() {
 		return trainBean;
 	}
-	
+
 	public void setTrainBean(TrainBean trainBean) {
 		this.trainBean = trainBean;
 	}
@@ -76,6 +78,40 @@ public class TicketOrderBean implements Serializable {
 
 	public void setCarriage(Carriage carriage) {
 		this.carriage = carriage;
+	}
+
+	public long getTicketId() {
+		return ticketId;
+	}
+
+	public void setTicketId(long ticketId) {
+		this.ticketId = ticketId;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (ticketId ^ (ticketId >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		TicketOrderBean other = (TicketOrderBean) obj;
+		if (ticketId != other.ticketId) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override

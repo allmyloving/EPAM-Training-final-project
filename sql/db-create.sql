@@ -246,6 +246,8 @@ create table if not exists `ticket` (
 	`l_name` varchar(40) not null,
 	`seat_num` tinyint not null,
 	`price` decimal(5,2) not null,
+	`dep_date` timestamp not null,
+	`arr_date` timestamp not null,
 	
 	`user_id` bigint unsigned not null,
 	`discount_type_id` tinyint unsigned,
@@ -266,16 +268,6 @@ create table if not exists `ticket` (
 	constraint `fk_ticket_dep_station` foreign key(`route_item_dep_id`) references `route_item`(`id`) on update cascade,
 	constraint `fk_ticket_arr_station` foreign key(`route_item_arr_id`) references `route_item`(`id`) on update cascade
 ) charset=utf8;
-
-INSERT INTO `ticket` (`id`, `f_name`, `l_name`, `seat_num`, `price`, `user_id`, `discount_type_id`, `status_id`, `carriage_id`, `route_id`, `route_item_dep_id`, `route_item_arr_id`) VALUES (1, 'Дарья', 'Сердюк', 10, 112.00, 3, NULL, NULL, 10, 10, 3, 2);
-INSERT INTO `ticket` (`id`, `f_name`, `l_name`, `seat_num`, `price`, `user_id`, `discount_type_id`, `status_id`, `carriage_id`, `route_id`, `route_item_dep_id`, `route_item_arr_id`) VALUES (2, 'Дарья', 'Сердюк', 11, 112.00, 3, NULL, NULL, 10, 10, 1, 3);
-INSERT INTO `ticket` (`id`, `f_name`, `l_name`, `seat_num`, `price`, `user_id`, `discount_type_id`, `status_id`, `carriage_id`, `route_id`, `route_item_dep_id`, `route_item_arr_id`) VALUES (3, 'Дарья', 'Сердюк', 13, 112.00, 3, NULL, NULL, 10, 10, 3, 2);
-INSERT INTO `ticket` (`id`, `f_name`, `l_name`, `seat_num`, `price`, `user_id`, `discount_type_id`, `status_id`, `carriage_id`, `route_id`, `route_item_dep_id`, `route_item_arr_id`) VALUES (4, 'Дарья', 'Сердюк', 1, 112.00, 3, NULL, NULL, 10, 10, 3, 2);
-INSERT INTO `ticket` (`id`, `f_name`, `l_name`, `seat_num`, `price`, `user_id`, `discount_type_id`, `status_id`, `carriage_id`, `route_id`, `route_item_dep_id`, `route_item_arr_id`) VALUES (7, 'asdf', 'asf', 5, 110.00, 3, NULL, NULL, 2, 3, 1, 5);
-INSERT INTO `ticket` (`id`, `f_name`, `l_name`, `seat_num`, `price`, `user_id`, `discount_type_id`, `status_id`, `carriage_id`, `route_id`, `route_item_dep_id`, `route_item_arr_id`) VALUES (8, 'Дарья', 'Сердюк', 24, 110.00, 3, NULL, NULL, 2, 3, 1, 5);
-INSERT INTO `ticket` (`id`, `f_name`, `l_name`, `seat_num`, `price`, `user_id`, `discount_type_id`, `status_id`, `carriage_id`, `route_id`, `route_item_dep_id`, `route_item_arr_id`) VALUES (9, 'Ольга', 'Красникова', 1, 110.00, 3, NULL, NULL, 1, 2, 1, 5);
-INSERT INTO `ticket` (`id`, `f_name`, `l_name`, `seat_num`, `price`, `user_id`, `discount_type_id`, `status_id`, `carriage_id`, `route_id`, `route_item_dep_id`, `route_item_arr_id`) VALUES (10, 'Иван', 'Иванов', 3, 110.00, 3, NULL, NULL, 1, 2, 1, 5);
-INSERT INTO `ticket` (`id`, `f_name`, `l_name`, `seat_num`, `price`, `user_id`, `discount_type_id`, `status_id`, `carriage_id`, `route_id`, `route_item_dep_id`, `route_item_arr_id`) VALUES (11, 'Андрей', 'Кумпан', 13, 78.00, 3, NULL, NULL, 5, 2, 1, 5);
 
 
 

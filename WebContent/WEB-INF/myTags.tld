@@ -39,4 +39,17 @@ web-jsptaglibrary_2_0.xsd"
 				<path>/WEB-INF/tags/datePickers.tag</path>
 				<body-content>empty</body-content>
 		</tag-file>
+		<tag-file>
+				<name>ticket</name>
+				<path>/WEB-INF/tags/ticketInfo.tag</path>
+				<body-content>empty</body-content>
+				<attribute>
+						<name>bean</name>
+						<required>true</required>
+				</attribute>
+				<attribute>
+						<name>display</name>
+						<required>true</required>
+				</attribute>
+		</tag-file>
 </taglib>

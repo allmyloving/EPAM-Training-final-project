@@ -22,6 +22,14 @@
 		<!-- Filters -->
 		
 		<filter>
+				<filter-name>CharsetFilter</filter-name>
+				<filter-class>ua.nure.serdyuk.SummaryTask4.web.filter.CharsetFilter</filter-class>
+		</filter>
+		<filter-mapping>
+				<filter-name>CharsetFilter</filter-name>
+				<url-pattern>/*</url-pattern>
+		</filter-mapping>
+		<filter>
 				<filter-name>AccessFilter</filter-name>
 				<filter-class>ua.nure.serdyuk.SummaryTask4.web.filter.AccessFilter</filter-class>
 				<init-param>
@@ -49,14 +57,6 @@
 		<filter-mapping>
 				<filter-name>CleanSessionFilter</filter-name>
 				<url-pattern>/controller</url-pattern>
-		</filter-mapping>
-		<filter>
-				<filter-name>CharsetFilter</filter-name>
-				<filter-class>ua.nure.serdyuk.SummaryTask4.web.filter.CharsetFilter</filter-class>
-		</filter>
-		<filter-mapping>
-				<filter-name>CharsetFilter</filter-name>
-				<url-pattern>/*</url-pattern>
 		</filter-mapping>
 		
 		<filter>

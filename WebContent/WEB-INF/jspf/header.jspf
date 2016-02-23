@@ -18,7 +18,7 @@
 				<ul class="nav navbar-nav navbar-right">
 					<c:choose>
 						<c:when test="${not empty sessionScope.currentUser}">
-							<li><a href="#"><span class="glyphicon glyphicon-star" />
+							<li><a href="controller?command=userProfileView"><span class="glyphicon glyphicon-star" />
 									<fmt:message key="label.my_profile" /></a></li>
 							<li><a href="controller?command=logout"><span
 									class="glyphicon glyphicon-log-out" /> <fmt:message

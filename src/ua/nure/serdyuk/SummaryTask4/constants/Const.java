@@ -1,6 +1,9 @@
 package ua.nure.serdyuk.SummaryTask4.constants;
 
 public final class Const {
+	
+	public static final String ENCODING = "utf-8";
+	
 	// attributes
 	public static final String ERRORS = "errors";
 
@@ -37,6 +40,8 @@ public final class Const {
 	public static final String CARRIAGE_LIST = "carriageList";
 
 	public static final String TICKET_ORDER_BEAN = "ticketOrderBean";
+	
+	public static final String TICKETS = "tickets";
 	
 	public static final String ROUTE_ADD_MES = "routeAddMes";
 
@@ -138,6 +143,8 @@ public final class Const {
 	public static final String SQL_GET_TRAIN_BY_ID = "SQL_GET_TRAIN_BY_ID";
 	
 	public static final String SQL_GET_ALL_CAR_TYPES = "SQL_GET_ALL_CAR_TYPES";
+	
+	public static final String SQL_GET_ALL_TICKETS_BY_USER_ID = "SQL_GET_ALL_TICKETS_BY_USER";
 	
 
 	// regex

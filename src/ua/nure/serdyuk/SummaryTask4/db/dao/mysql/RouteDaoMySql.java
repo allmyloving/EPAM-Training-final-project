@@ -38,6 +38,8 @@ public class RouteDaoMySql implements RouteDao {
 			ps.setLong(k++, stationFromId);
 			ps.setLong(k++, stationToId);
 			ps.setDate(k++, date);
+			
+			LOG.debug("executing ==> " + ps);
 
 			rs = ps.executeQuery();
 

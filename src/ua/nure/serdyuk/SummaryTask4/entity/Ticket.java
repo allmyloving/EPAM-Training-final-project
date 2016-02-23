@@ -2,6 +2,7 @@ package ua.nure.serdyuk.SummaryTask4.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class Ticket implements Serializable {
 
@@ -31,6 +32,10 @@ public class Ticket implements Serializable {
 	private long routeItemDepId;
 	
 	private long routeItemArrId;
+	
+	private Date depDate;
+	
+	private Date arrDate;
 
 	public long getId() {
 		return id;
@@ -102,6 +107,22 @@ public class Ticket implements Serializable {
 
 	public long getRouteId() {
 		return routeId;
+	}
+
+	public Date getDepDate() {
+		return depDate;
+	}
+
+	public void setDepDate(Date depDate) {
+		this.depDate = depDate;
+	}
+
+	public Date getArrDate() {
+		return arrDate;
+	}
+
+	public void setArrDate(Date arrDate) {
+		this.arrDate = arrDate;
 	}
 
 	public void setRouteId(long routeId) {

@@ -45,29 +45,7 @@
 						<fmt:message key="label.train_info" />
 					</div>
 					<div class="panel-body">
-						<div class="list-group">
-
-							<a class="list-group-item"><b><fmt:message
-										key="label.train_tag" /></b><span class="pull-right">${ticketOrderBean.trainBean.trainTag}</span></a>
-							<a class="list-group-item"><b><fmt:message
-										key="label.departure" /></b><span class="pull-right"> <fmt:formatDate
-										value="${ticketOrderBean.trainBean.depDate}" type="both"
-										timeStyle="short" dateStyle="long" /> <b>${ticketOrderBean.stationFrom}</b></span></a>
-							<a class="list-group-item"><b><fmt:message
-										key="label.arrival" /> </b> <span class="pull-right"><fmt:formatDate
-										value="${ticketOrderBean.trainBean.arrDate}" type="both"
-										timeStyle="short" dateStyle="long" /> <b>${ticketOrderBean.stationTo}</b></span></a>
-							<a class="list-group-item"><b><fmt:message
-										key="label.carriage_tag" /></b><span class="pull-right">${ticketOrderBean.carriage.tag}</span></a>
-							<a class="list-group-item"><b><fmt:message
-										key="label.seat_num" /></b><span class="pull-right">
-									${ticketOrderBean.seatNum}</span></a> <a class="list-group-item"><b><fmt:message
-										key="label.carriage_type" /></b> <span class="pull-right"><fmt:message
-										key="${ticketOrderBean.carriage.type.name}" /></span></a> <a
-								class="list-group-item"><b><fmt:message
-										key="label.price" /></b><span class="pull-right">&#8372;
-									${ticketOrderBean.carriage.price}</span></a>
-						</div>
+						<st4:ticket bean="${ticketOrderBean}" display="full" />
 					</div>
 				</div>
 

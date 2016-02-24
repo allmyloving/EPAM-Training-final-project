@@ -26,4 +26,9 @@ public class TicketServiceImpl implements TicketService {
 		return tickets;
 	}
 
+	@Override
+	public boolean exists(TicketOrderBean bean) {
+		return ticketDao.exists(bean);
+	}
+
 }

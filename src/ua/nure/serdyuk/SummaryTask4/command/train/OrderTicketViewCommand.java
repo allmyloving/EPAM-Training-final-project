@@ -41,17 +41,15 @@ public class OrderTicketViewCommand implements Command {
 		TrainBean trainBean = getTrainBean(session, routeId);
 		Carriage carriage = getCarriage(trainBean, carriageId);
 
-		StationService stationService = (StationService) req.getServletContext()
-				.getAttribute(Const.STATION_SERVICE);
-		List<Station> stations = stationService.getByRouteItems(
-				trainBean.getRouteItemIdFrom(), trainBean.getRouteItemIdTo());
+		Station from = (Station) session.getAttribute(Const.STATION_FROM);
+		Station to = (Station) session.getAttribute(Const.STATION_TO);
 
 		TicketOrderBean ticketBean = new TicketOrderBean();
 		ticketBean.setSeatNum(seatNum);
 		ticketBean.setCarriage(carriage);
 		ticketBean.setTrainBean(trainBean);
-		ticketBean.setStationFrom(stations.get(0).getName());
-		ticketBean.setStationTo(stations.get(1).getName());
+		ticketBean.setStationFrom(from);
+		ticketBean.setStationTo(to);
 
 		session.setAttribute(Const.TICKET_ORDER_BEAN, ticketBean);
 

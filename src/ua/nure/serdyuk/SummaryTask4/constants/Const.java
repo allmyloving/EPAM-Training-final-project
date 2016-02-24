@@ -146,9 +146,11 @@ public final class Const {
 	
 	public static final String SQL_GET_ALL_TICKETS_BY_USER_ID = "SQL_GET_ALL_TICKETS_BY_USER";
 	
+	public static final String SQL_GET_ROUTE_ITEM_BY_TRAIN_AND_STATION = "SQL_GET_ROUTE_ITEM_BY_TRAIN_AND_STATION";
+	
 
 	// regex
-	public static final String REGEX_EMAIL = "^\\w+@\\w+\\.\\w+$";
+	public static final String REGEX_EMAIL = "^[\\w\\.]+@\\w+\\.\\w+$";
 
 	public static final String REGEX_PASSWORD = "^\\w{4,}$";
 

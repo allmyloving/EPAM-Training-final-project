@@ -31,7 +31,7 @@
 							timeStyle="short" dateStyle="long" /></td>
 					<td><fmt:formatDate value="${t.arrDate}" type="both"
 							timeStyle="short" dateStyle="long" /></td>
-					<td><fmt:formatDate value="${t.duration}" pattern="hh:mm" /></td>
+					<td><fmt:formatDate value="${t.duration}" pattern="HH:mm" /></td>
 					<td><a
 						href="controller?command=getFreeSeats&routeId=${t.routeId}"><fmt:message
 								key="action.view_seats" /></a></td>

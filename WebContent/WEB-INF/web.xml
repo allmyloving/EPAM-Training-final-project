@@ -20,7 +20,6 @@
 		</servlet>
 		
 		<!-- Filters -->
-		
 		<filter>
 				<filter-name>CharsetFilter</filter-name>
 				<filter-class>ua.nure.serdyuk.SummaryTask4.web.filter.CharsetFilter</filter-class>
@@ -58,7 +57,6 @@
 				<filter-name>CleanSessionFilter</filter-name>
 				<url-pattern>/controller</url-pattern>
 		</filter-mapping>
-		
 		<filter>
 				<filter-name>LocaleFilter</filter-name>
 				<filter-class>ua.nure.serdyuk.SummaryTask4.web.filter.LocaleFilter</filter-class>
@@ -73,6 +71,10 @@
 		</filter-mapping>
 		
 		<!-- Context -->
+		<context-param>
+				<param-name>dbms</param-name>
+				<param-value>mysql</param-value>
+		</context-param>
 		<context-param>
 				<param-name>localeList</param-name>
 				<param-value>en ru</param-value>

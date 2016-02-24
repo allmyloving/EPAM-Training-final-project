@@ -18,4 +18,9 @@ public class RouteItemServiceMySql implements RouteItemService {
 	public List<RouteItem> getAll() {
 		return routeItemDao.getAll();
 	}
+
+	@Override
+	public RouteItem getByTrainAndStation(long trainId, long stationId) {
+		return routeItemDao.getByTrainAndStation(trainId, stationId);
+	}
 }

@@ -18,7 +18,7 @@
 					<label class="control-label" for="stationFrom"> <fmt:message
 							key="label.from" />:
 					</label> <input class="form-control" id="stationFrom" name="stationFrom"
-						onkeyup="getStations(this)" value="${stationFrom}" />
+						onkeyup="getStations(this)" value="${requestScope.stationFrom}" />
 					<p class="text-warning" id="stationFromError">
 						<c:if test="${not empty stationFromError}">
 							<fmt:message key="${stationFromError}" />
@@ -33,7 +33,7 @@
 					<label class="control-label" for="stationTo"> <fmt:message
 							key="label.to" />:
 					</label><input class="form-control" id="stationTo" name="stationTo"
-						onkeyup="getStations(this)" value="${stationTo}">
+						onkeyup="getStations(this)" value="${requestScope.stationTo}">
 					<p class="text-warning" id="stationToError">
 						<c:if test="${not empty stationToError}">
 							<fmt:message key="${stationToError}" />

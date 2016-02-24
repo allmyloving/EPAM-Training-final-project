@@ -7,4 +7,6 @@ import ua.nure.serdyuk.SummaryTask4.entity.RouteItem;
 public interface RouteItemService {
 
 	List<RouteItem> getAll();
+
+	RouteItem getByTrainAndStation(long trainId, long stationId);
 }

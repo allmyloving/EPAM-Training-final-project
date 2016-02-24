@@ -16,16 +16,8 @@ import org.apache.log4j.PropertyConfigurator;
 import ua.nure.serdyuk.SummaryTask4.constants.Const;
 import ua.nure.serdyuk.SummaryTask4.constants.Message;
 import ua.nure.serdyuk.SummaryTask4.constants.Path;
-import ua.nure.serdyuk.SummaryTask4.db.dao.mysql.CarriageDaoMySql;
-import ua.nure.serdyuk.SummaryTask4.db.dao.mysql.CarriageTypeDaoMySql;
-import ua.nure.serdyuk.SummaryTask4.db.dao.mysql.RouteBeanDaoMySql;
-import ua.nure.serdyuk.SummaryTask4.db.dao.mysql.RouteDaoMySql;
-import ua.nure.serdyuk.SummaryTask4.db.dao.mysql.RouteItemDaoMySql;
-import ua.nure.serdyuk.SummaryTask4.db.dao.mysql.StationDaoMySql;
-import ua.nure.serdyuk.SummaryTask4.db.dao.mysql.TicketDaoMySql;
-import ua.nure.serdyuk.SummaryTask4.db.dao.mysql.TrainBeanDaoMySql;
-import ua.nure.serdyuk.SummaryTask4.db.dao.mysql.TrainDaoMySql;
-import ua.nure.serdyuk.SummaryTask4.db.dao.mysql.UserDaoMySql;
+import ua.nure.serdyuk.SummaryTask4.db.factory.AbstractFactory;
+import ua.nure.serdyuk.SummaryTask4.db.factory.DaoFactory;
 import ua.nure.serdyuk.SummaryTask4.db.service.impl.CarriageServiceImpl;
 import ua.nure.serdyuk.SummaryTask4.db.service.impl.CarriageTypeServiceImpl;
 import ua.nure.serdyuk.SummaryTask4.db.service.impl.RouteBeanServiceImpl;
@@ -42,6 +34,8 @@ public class ContextListener implements ServletContextListener {
 
 	private static final Logger LOG = Logger.getLogger(ContextListener.class);
 
+	private String dbms;
+
 	public void contextDestroyed(ServletContextEvent arg0) {
 		// TODO Auto-generated method stub
 	}
@@ -57,8 +51,10 @@ public class ContextListener implements ServletContextListener {
 
 	private void loadClasses() {
 		try {
-			Class.forName("ua.nure.serdyuk.SummaryTask4.command.CommandContainer");
-			Class.forName("ua.nure.serdyuk.SummaryTask4.util.PropertyContainer");
+			Class.forName(
+					"ua.nure.serdyuk.SummaryTask4.command.CommandContainer");
+			Class.forName(
+					"ua.nure.serdyuk.SummaryTask4.util.PropertyContainer");
 			Class.forName("ua.nure.serdyuk.SummaryTask4.db.DbUtils");
 		} catch (ClassNotFoundException e) {
 			LOG.error(Message.ERR_CONTAINERS_NOT_INITIALIZED);
@@ -88,52 +84,58 @@ public class ContextListener implements ServletContextListener {
 		for (String l : locales) {
 			localesL.add(new Locale(l));
 		}
-		LOG.debug("Locale list (of Locale's) ==> " + localesL);
+		LOG.info(
+				String.format("Locales supported ==> %s", localesL.toString()));
 		context.setAttribute(Const.LOCALE_LIST_LOCALE, localesL);
+
+		dbms = context.getInitParameter("dbms");
+		LOG.info(String.format("Application is using %s DBMS", dbms));
 
 		LOG.info("Init params loaded");
 	}
 
 	private void configureServices(ServletContext context) {
-		// use factory here?
+		DaoFactory daoFactory = AbstractFactory.getDaoFactory(dbms);
+		LOG.debug(String.format("dao factory ==> %s", daoFactory));
+
 		context.setAttribute(Const.USER_SERVICE,
-				new UserServiceImpl(new UserDaoMySql()));
+				new UserServiceImpl(daoFactory.getUserDao()));
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "User"));
 
 		context.setAttribute(Const.STATION_SERVICE,
-				new StationServiceMySql(new StationDaoMySql()));
+				new StationServiceMySql(daoFactory.getStationDao()));
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "Station"));
 
 		context.setAttribute(Const.ROUTE_SERVICE,
-				new RouteServiceImpl(new RouteDaoMySql()));
+				new RouteServiceImpl(daoFactory.getRouteDao()));
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "Route"));
 
 		context.setAttribute(Const.ROUTE_ITEM_SERVICE,
-				new RouteItemServiceMySql(new RouteItemDaoMySql()));
+				new RouteItemServiceMySql(daoFactory.getRouteItemDao()));
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "RouteItem"));
 
 		context.setAttribute(Const.TRAIN_BEAN_SERVICE, new TrainBeanServiceImpl(
-				new TrainBeanDaoMySql(), new RouteItemDaoMySql()));
+				daoFactory.getTrainBeanDao(), daoFactory.getRouteItemDao()));
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "TrainInfo"));
 
 		context.setAttribute(Const.ROUTE_INFO_SERVICE,
-				new RouteBeanServiceImpl(new RouteBeanDaoMySql()));
+				new RouteBeanServiceImpl(daoFactory.getRouteBeanDao()));
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "RouteInfo"));
 
-		context.setAttribute(Const.CARRIAGE_SERVICE, new CarriageServiceImpl(
-				new CarriageDaoMySql(), new CarriageTypeDaoMySql()));
+		context.setAttribute(Const.CARRIAGE_SERVICE,
+				new CarriageServiceImpl(daoFactory.getCarriageDao()));
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "Carriage"));
 
 		context.setAttribute(Const.TICKET_SERVICE,
-				new TicketServiceImpl(new TicketDaoMySql()));
+				new TicketServiceImpl(daoFactory.getTicketDao()));
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "Ticket"));
 
 		context.setAttribute(Const.TRAIN_SERVICE,
-				new TrainServiceImpl(new TrainDaoMySql()));
+				new TrainServiceImpl(daoFactory.getTrainDao()));
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "Train"));
 
 		context.setAttribute(Const.CARRIAGE_TYPE_SERVICE,
-				new CarriageTypeServiceImpl(new CarriageTypeDaoMySql()));
+				new CarriageTypeServiceImpl(daoFactory.getCarriageTypeDao()));
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "CarriageType"));
 
 	}

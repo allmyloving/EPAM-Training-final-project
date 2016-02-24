@@ -74,6 +74,9 @@ public class FindTrainsCommand implements Command {
 			session.setAttribute(Const.TRAIN_INFO_BEANS, null);
 			return Path.INDEX_VIEW;
 		}
+		
+		session.setAttribute(Const.STATION_FROM, from);
+		session.setAttribute(Const.STATION_TO, to);
 
 		// not session -- WRONG
 		session.setAttribute(Const.TRAIN_INFO_BEANS,

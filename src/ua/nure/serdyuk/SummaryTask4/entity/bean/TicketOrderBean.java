@@ -3,6 +3,8 @@ package ua.nure.serdyuk.SummaryTask4.entity.bean;
 import java.io.Serializable;
 
 import ua.nure.serdyuk.SummaryTask4.entity.Carriage;
+import ua.nure.serdyuk.SummaryTask4.entity.RouteItem;
+import ua.nure.serdyuk.SummaryTask4.entity.Station;
 
 public class TicketOrderBean implements Serializable {
 
@@ -12,9 +14,13 @@ public class TicketOrderBean implements Serializable {
 
 	private String lastName;
 
-	private String stationFrom;
+	private Station stationFrom;
 
-	private String stationTo;
+	private Station stationTo;
+	
+	private RouteItem routeItemFrom;
+	
+	private RouteItem routeItemTo;
 
 	private TrainBean trainBean;
 
@@ -56,24 +62,40 @@ public class TicketOrderBean implements Serializable {
 		this.seatNum = seatNum;
 	}
 
-	public String getStationFrom() {
+	public Carriage getCarriage() {
+		return carriage;
+	}
+
+	public Station getStationFrom() {
 		return stationFrom;
 	}
 
-	public void setStationFrom(String stationFrom) {
+	public void setStationFrom(Station stationFrom) {
 		this.stationFrom = stationFrom;
 	}
 
-	public String getStationTo() {
+	public Station getStationTo() {
 		return stationTo;
 	}
 
-	public void setStationTo(String stationTo) {
+	public void setStationTo(Station stationTo) {
 		this.stationTo = stationTo;
 	}
 
-	public Carriage getCarriage() {
-		return carriage;
+	public RouteItem getRouteItemFrom() {
+		return routeItemFrom;
+	}
+
+	public void setRouteItemFrom(RouteItem routeItemFrom) {
+		this.routeItemFrom = routeItemFrom;
+	}
+
+	public RouteItem getRouteItemTo() {
+		return routeItemTo;
+	}
+
+	public void setRouteItemTo(RouteItem routeItemTo) {
+		this.routeItemTo = routeItemTo;
 	}
 
 	public void setCarriage(Carriage carriage) {

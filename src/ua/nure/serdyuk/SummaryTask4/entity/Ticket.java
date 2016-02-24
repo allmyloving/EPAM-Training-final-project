@@ -29,9 +29,9 @@ public class Ticket implements Serializable {
 	
 	private long routeId;
 	
-	private long routeItemDepId;
+	private long routeDepId;
 	
-	private long routeItemArrId;
+	private long routeArrId;
 	
 	private Date depDate;
 	
@@ -129,20 +129,20 @@ public class Ticket implements Serializable {
 		this.routeId = routeId;
 	}
 
-	public long getRouteItemDepId() {
-		return routeItemDepId;
+	public long getRouteDepId() {
+		return routeDepId;
 	}
 
-	public void setRouteItemDepId(long routeItemDepId) {
-		this.routeItemDepId = routeItemDepId;
+	public void setRouteDepId(long routeDepId) {
+		this.routeDepId = routeDepId;
 	}
 
-	public long getRouteItemArrId() {
-		return routeItemArrId;
+	public long getRouteArrId() {
+		return routeArrId;
 	}
 
-	public void setRouteItemArrId(long routeItemArrId) {
-		this.routeItemArrId = routeItemArrId;
+	public void setRouteArrId(long routeArrId) {
+		this.routeArrId = routeArrId;
 	}
 
 	public void setDiscountTypeId(int discountTypeId) {
@@ -156,6 +156,6 @@ public class Ticket implements Serializable {
 				+ ", statusId=" + statusId + ", discountTypeId="
 				+ discountTypeId + ", price=" + price + ", carriageId="
 				+ carriageId + ", routeId=" + routeId + ", routeItemDepId="
-				+ routeItemDepId + ", routeItemArrId=" + routeItemArrId + "]";
+				+ routeDepId + ", routeItemArrId=" + routeArrId + "]";
 	}
 }

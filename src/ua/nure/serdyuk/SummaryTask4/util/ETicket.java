@@ -4,10 +4,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.DateFormat;
+import java.io.OutputStream;
 
 import org.apache.log4j.Logger;
-import org.apache.poi.ss.usermodel.Cell;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -40,8 +39,10 @@ public class ETicket {
 		try {
 
 			File file = new File(path);
-			// file.createNewFile();
+			file.createNewFile();
 			baos = new ByteArrayOutputStream();
+			OutputStream fileOut = new FileOutputStream(path);
+			
 			PdfWriter.getInstance(document, baos);
 
 			document.open();
@@ -73,12 +74,12 @@ public class ETicket {
 			table.addCell(cell);
 
 			table.addCell(new Paragraph("Отправление: ", font));
-			table.addCell(new Paragraph(bean.getStationFrom(), font));
+			table.addCell(new Paragraph(bean.getStationFrom().getName(), font));
 			table.addCell(new Paragraph(
 					bean.getTrainBean().getDepDate().toLocaleString(), font));
 
 			table.addCell(new Paragraph("Прибытие: ", font));
-			table.addCell(new Paragraph(bean.getStationTo(), font));
+			table.addCell(new Paragraph(bean.getStationTo().getName(), font));
 			table.addCell(new Paragraph(
 					bean.getTrainBean().getArrDate().toLocaleString(), font));
 
@@ -90,10 +91,14 @@ public class ETicket {
 
 			document.add(table);
 			document.close();
+			
+			baos.writeTo(fileOut);
 
 		} catch (DocumentException e) {
 			LOG.error(String.format("Error while creating pdf: %s",
 					e.getMessage()));
+		} catch (IOException e) {
+			LOG.error(e.getMessage(), e);
 		}
 
 		return baos;

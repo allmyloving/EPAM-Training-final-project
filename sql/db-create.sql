@@ -270,7 +270,6 @@ create table if not exists `ticket` (
 ) charset=utf8;
 
 
-
 -- ---------------------------------------------------
 
 create table if not exists `facility_type` (

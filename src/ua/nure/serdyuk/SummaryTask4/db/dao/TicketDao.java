@@ -9,4 +9,6 @@ public interface TicketDao extends GenericDao<Ticket> {
 
 	List<TicketOrderBean> getAllByUserId(long userId);
 
+	boolean exists(TicketOrderBean bean);
+
 }

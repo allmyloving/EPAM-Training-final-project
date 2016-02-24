@@ -11,11 +11,11 @@
 	<a class="list-group-item"><b><fmt:message
 				key="label.departure" /></b><span class="pull-right"> <fmt:formatDate
 				value="${bean.trainBean.depDate}" type="both" timeStyle="short"
-				dateStyle="long" /> <b>${bean.stationFrom}</b></span></a> <a
+				dateStyle="long" /> <b>${bean.stationFrom.name}</b></span></a> <a
 		class="list-group-item"><b><fmt:message key="label.arrival" />
 	</b> <span class="pull-right"><fmt:formatDate
 				value="${bean.trainBean.arrDate}" type="both" timeStyle="short"
-				dateStyle="long" /> <b>${bean.stationTo}</b></span></a> <a
+				dateStyle="long" /> <b>${bean.stationTo.name}</b></span></a> <a
 		class="list-group-item"><b><fmt:message
 				key="label.carriage_tag" /></b><span class="pull-right">${bean.carriage.tag}</span></a>
 	<a class="list-group-item"><b><fmt:message key="label.seat_num" /></b><span

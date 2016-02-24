@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -13,6 +15,7 @@ import ua.nure.serdyuk.SummaryTask4.constants.Const;
 import ua.nure.serdyuk.SummaryTask4.db.DbUtils;
 import ua.nure.serdyuk.SummaryTask4.db.dao.CarriageDao;
 import ua.nure.serdyuk.SummaryTask4.entity.Carriage;
+import ua.nure.serdyuk.SummaryTask4.entity.CarriageType;
 import ua.nure.serdyuk.SummaryTask4.exception.DbException;
 import ua.nure.serdyuk.SummaryTask4.util.PropertyContainer;
 
@@ -78,11 +81,8 @@ public class CarriageDaoMySql implements CarriageDao {
 
 			rsSeats = ps.executeQuery();
 
-			List<Integer> seats = new ArrayList<>();
-			while (rsSeats.next()) {
-				seats.add(rsSeats.getInt(1));
-			}
-			c.setSeatsTaken(seats);
+			c.setSeats(getFreeSeats(rsSeats));
+
 		} catch (SQLException e) {
 			LOG.error(e.getMessage());
 			throw new SQLException(e.getMessage(), e);
@@ -180,12 +180,31 @@ public class CarriageDaoMySql implements CarriageDao {
 		return carriages;
 	}
 
+	private Map<Integer, Boolean> getFreeSeats(ResultSet rs) throws SQLException {
+		List<Integer> seats = new ArrayList<>();
+		while (rs.next()) {
+			seats.add(rs.getInt(1));
+		}
+		Map<Integer, Boolean> seatsMap = new HashMap<>();
+		for (int s : seats) {
+			seatsMap.put(s, true);
+		}
+		return seatsMap;
+	}
+
 	private Carriage extract(ResultSet rs) throws SQLException {
 		Carriage c = new Carriage();
 		c.setId(rs.getInt("id"));
 		c.setCarTypeId(rs.getInt("type_id"));
 		c.setPrice(rs.getBigDecimal("price"));
 		c.setTag(rs.getString("tag"));
+
+		CarriageType ct = new CarriageType();
+		ct.setId(rs.getInt("type_id"));
+		ct.setName(rs.getString("name"));
+		ct.setSeatNum(rs.getInt("seat_num"));
+
+		c.setType(ct);
 
 		return c;
 	}

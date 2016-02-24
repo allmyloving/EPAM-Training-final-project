@@ -21,7 +21,7 @@
 			data-name="price" data-title="Enter new price">${c.price}</a></td>
 		<td><form action="controller" method="post">
 				<input type="hidden" name="command" value="deleteCarriage" /> <input
-					type="hidden" name="carraigeId" value="${c.id}" />
+					type="hidden" name="carriageId" value="${c.id}" />
 				<button class="btn btn-danger btn-sm">
 					<span class="glyphicon glyphicon-remove"></span>
 				</button>

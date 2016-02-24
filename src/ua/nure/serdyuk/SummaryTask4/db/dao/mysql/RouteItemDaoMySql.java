@@ -45,7 +45,6 @@ public class RouteItemDaoMySql implements RouteItemDao {
 				items.add(extract(rs));
 			}
 		} catch (SQLException ex) {
-			DbUtils.rollback(conn);
 			LOG.error(ex.getMessage());
 			throw new DbException(ex.getMessage(), ex);
 		} finally {
@@ -94,5 +93,33 @@ public class RouteItemDaoMySql implements RouteItemDao {
 	@Override
 	public List<RouteItem> getAll(long routeId) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public RouteItem getByTrainAndStation(long trainId, long stationId) {
+		Connection conn = DbUtils.getConnection();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		RouteItem ri = null;
+
+		try {
+			ps = conn.prepareStatement(PropertyContainer
+					.get(Const.SQL_GET_ROUTE_ITEM_BY_TRAIN_AND_STATION));
+			int k = 1;
+			ps.setLong(k++, stationId);
+			ps.setLong(k++, trainId);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				ri = extract(rs);
+			}
+		} catch (SQLException ex) {
+			LOG.error(ex.getMessage());
+			throw new DbException(ex.getMessage(), ex);
+		} finally {
+			DbUtils.close(conn, ps, rs);
+		}
+		return ri;
 	}
 }

@@ -10,5 +10,6 @@ public interface TicketService {
 	boolean create(Ticket ticket);
 
 	List<TicketOrderBean> getAllByUserId(long userId);
-
+	
+	boolean exists(TicketOrderBean bean);
 }

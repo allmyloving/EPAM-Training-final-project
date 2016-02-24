@@ -11,10 +11,13 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.mysql.jdbc.Statement;
+
 import ua.nure.serdyuk.SummaryTask4.constants.Const;
 import ua.nure.serdyuk.SummaryTask4.db.DbUtils;
 import ua.nure.serdyuk.SummaryTask4.db.dao.TicketDao;
 import ua.nure.serdyuk.SummaryTask4.entity.Carriage;
+import ua.nure.serdyuk.SummaryTask4.entity.Station;
 import ua.nure.serdyuk.SummaryTask4.entity.Ticket;
 import ua.nure.serdyuk.SummaryTask4.entity.bean.TicketOrderBean;
 import ua.nure.serdyuk.SummaryTask4.entity.bean.TrainBean;
@@ -29,11 +32,13 @@ public class TicketDaoMySql implements TicketDao {
 	public boolean create(Ticket ticket) {
 		Connection conn = DbUtils.getConnection();
 		PreparedStatement ps = null;
+		ResultSet rs = null;
 		int res = 0;
 
 		try {
 			ps = conn.prepareStatement(
-					PropertyContainer.get(Const.SQL_INSERT_TICKET));
+					PropertyContainer.get(Const.SQL_INSERT_TICKET),
+					Statement.RETURN_GENERATED_KEYS);
 			int k = 1;
 			ps.setString(k++, ticket.getFirstName());
 			ps.setString(k++, ticket.getLastName());
@@ -46,12 +51,17 @@ public class TicketDaoMySql implements TicketDao {
 			ps.setObject(k++, ticket.getStatusId(), Types.TINYINT);
 			ps.setLong(k++, ticket.getCarriageId());
 			ps.setLong(k++, ticket.getRouteId());
-			ps.setLong(k++, ticket.getRouteItemDepId());
-			ps.setLong(k++, ticket.getRouteItemArrId());
+			ps.setLong(k++, ticket.getRouteDepId());
+			ps.setLong(k++, ticket.getRouteArrId());
 
 			LOG.debug("Ticket statement ==> " + ps);
 
 			res = ps.executeUpdate();
+
+			rs = ps.getGeneratedKeys();
+			if (rs.next()) {
+				ticket.setId(rs.getLong(1));
+			}
 			conn.commit();
 		} catch (SQLException e) {
 			DbUtils.rollback(conn);
@@ -59,7 +69,7 @@ public class TicketDaoMySql implements TicketDao {
 			LOG.error(e.getMessage());
 			throw new DbException(e.getMessage(), e);
 		} finally {
-			DbUtils.close(conn, ps, null);
+			DbUtils.close(conn, ps, rs);
 		}
 		return res != 0;
 	}
@@ -119,8 +129,13 @@ public class TicketDaoMySql implements TicketDao {
 		bean.setFirstName(rs.getString("f_name"));
 		bean.setLastName(rs.getString("l_name"));
 		bean.setSeatNum(rs.getInt("seat_num"));
-		bean.setStationFrom(rs.getString("st_from"));
-		bean.setStationTo(rs.getString("st_to"));
+
+		Station s = new Station();
+		s.setName(rs.getString("st_from"));
+		bean.setStationFrom(s);
+		s = new Station();
+		s.setName(rs.getString("st_to"));
+		bean.setStationTo(s);
 
 		Carriage c = new Carriage();
 		c.setPrice(rs.getBigDecimal("price"));
@@ -135,5 +150,42 @@ public class TicketDaoMySql implements TicketDao {
 		bean.setTrainBean(trainBean);
 
 		return bean;
+	}
+
+	@Override
+	public boolean exists(TicketOrderBean bean) {
+		Connection conn = DbUtils.getConnection();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		List<Integer> seatsTaken = null;
+		try {
+
+			ps = conn.prepareStatement(PropertyContainer
+					.get(Const.GET_TAKEN_SEATS_BY_CAR_ID_AND_ROUTE_ID));
+			int k = 1;
+			ps.setLong(k++, bean.getCarriage().getId());
+			ps.setLong(k++, bean.getTrainBean().getRouteId());
+			ps.setLong(k++, bean.getTrainBean().getTrainId());
+			ps.setLong(k++, bean.getTrainBean().getRouteItemIdTo());
+			ps.setLong(k++, bean.getTrainBean().getTrainId());
+			ps.setLong(k++, bean.getTrainBean().getRouteItemIdFrom());
+
+			rs = ps.executeQuery();
+
+			seatsTaken = new ArrayList<>();
+			while (rs.next()) {
+				seatsTaken.add(rs.getInt(1));
+			}
+
+			LOG.debug(
+					String.format("Seats found ==> %s", seatsTaken.toString()));
+
+		} catch (SQLException e) {
+			LOG.error(e.getMessage());
+			throw new DbException(e.getMessage(), e);
+		} finally {
+			DbUtils.close(conn, ps, null);
+		}
+		return seatsTaken.contains(bean.getSeatNum());
 	}
 }

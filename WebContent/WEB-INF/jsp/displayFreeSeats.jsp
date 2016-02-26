@@ -12,7 +12,8 @@
 						type="hidden" name="seatNum" id="seatNum" />
 					<div class="form-group">
 						<span class="pull-right">
-							<button class="btn btn-success" type="submit" id="orderTicketButton">
+							<button class="btn btn-success" type="submit"
+								id="orderTicketButton">
 								<fmt:message key="action.proceed" />
 								<span class="glyphicon glyphicon-arrow-right" />
 							</button>
@@ -50,11 +51,9 @@
 								</div>
 								<c:forEach items="${carriageList.carriages}" var="c">
 									<c:if test="${c.type==t}">
-										<c:set scope="page" value="${fn:length(c.seatsTaken)}"
-											var="seatsTaken" />
 										<a href="#" class="list-group-item carriage-item row"
 											id="${c.id}"><span class="col-md-4"><b>${c.tag}</b></span><span
-											class="col-md-4">&#8372;${c.price}</span><span class="badge">${c.type.seatNum - seatsTaken}</span></a>
+											class="col-md-4">&#8372;${c.price}</span><span class="badge">${c.type.seatNum - c.seatsTaken}</span></a>
 										<div id="${c.id}" class="seat-container">
 											<c:forEach begin="1" end="${c.type.seatNum}" step="1"
 												var="seat">

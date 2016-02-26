@@ -52,4 +52,13 @@ web-jsptaglibrary_2_0.xsd"
 						<required>true</required>
 				</attribute>
 		</tag-file>
+		<tag-file>
+				<name>sort</name>
+				<path>/WEB-INF/tags/sort.tag</path>
+				<body-content>empty</body-content>
+				<attribute>
+						<name>orderBy</name>
+						<required>true</required>
+				</attribute>
+		</tag-file>
 </taglib>

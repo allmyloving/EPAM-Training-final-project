@@ -21,7 +21,7 @@ import ua.nure.serdyuk.SummaryTask4.db.factory.DaoFactory;
 import ua.nure.serdyuk.SummaryTask4.db.service.impl.CarriageServiceImpl;
 import ua.nure.serdyuk.SummaryTask4.db.service.impl.CarriageTypeServiceImpl;
 import ua.nure.serdyuk.SummaryTask4.db.service.impl.RouteBeanServiceImpl;
-import ua.nure.serdyuk.SummaryTask4.db.service.impl.RouteItemServiceMySql;
+import ua.nure.serdyuk.SummaryTask4.db.service.impl.RouteItemServiceImpl;
 import ua.nure.serdyuk.SummaryTask4.db.service.impl.RouteServiceImpl;
 import ua.nure.serdyuk.SummaryTask4.db.service.impl.StationServiceMySql;
 import ua.nure.serdyuk.SummaryTask4.db.service.impl.TicketServiceImpl;
@@ -111,7 +111,7 @@ public class ContextListener implements ServletContextListener {
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "Route"));
 
 		context.setAttribute(Const.ROUTE_ITEM_SERVICE,
-				new RouteItemServiceMySql(daoFactory.getRouteItemDao()));
+				new RouteItemServiceImpl(daoFactory.getRouteItemDao()));
 		LOG.info(String.format(Message.SERVICE_INITIALIZED, "RouteItem"));
 
 		context.setAttribute(Const.TRAIN_BEAN_SERVICE, new TrainBeanServiceImpl(

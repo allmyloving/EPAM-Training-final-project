@@ -5,7 +5,8 @@
 <%@ attribute name="display" required="true" type="java.lang.String"%>
 <table class="table table-bordered">
 	<tr>
-		<th><fmt:message key="label.train_tag" /></th>
+		<th><st4:sort orderBy="trainTag" />
+			<fmt:message key="label.train_tag" /></a></th>
 		<th><fmt:message key="label.from" /></th>
 		<th><fmt:message key="label.to" /></th>
 		<c:if test="${display ne 'train' }">
@@ -13,7 +14,9 @@
 		</c:if>
 		<c:if test="${display eq 'full'}">
 			<th><fmt:message key="label.arrival" /></th>
-			<th><fmt:message key="label.duration" /></th>
+
+			<th><st4:sort orderBy="duration" />
+				<fmt:message key="label.duration" /></a></th>
 		</c:if>
 	</tr>
 	<c:forEach items="${trainBeans}" var="t">
@@ -31,7 +34,7 @@
 							timeStyle="short" dateStyle="long" /></td>
 					<td><fmt:formatDate value="${t.arrDate}" type="both"
 							timeStyle="short" dateStyle="long" /></td>
-					<td><fmt:formatDate value="${t.duration}" pattern="HH:mm" /></td>
+					<td>${t.duration}</td>
 					<td><a
 						href="controller?command=getFreeSeats&routeId=${t.routeId}"><fmt:message
 								key="action.view_seats" /></a></td>
@@ -50,7 +53,9 @@
 							</form></td>
 					</c:if>
 					<c:if test="${display eq 'train'}">
-						<td><a href="controller?command=carriagesView&trainId=${t.trainId}"><fmt:message key="action.edit" /></a></td>
+						<td><a
+							href="controller?command=carriagesView&trainId=${t.trainId}"><fmt:message
+									key="action.edit" /></a></td>
 						<td><form action="controller" method="post">
 								<input type="hidden" name="command" value="deleteTrain" /> <input
 									type="hidden" name="trainId" value="${t.trainId}" />

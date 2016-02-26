@@ -61,14 +61,12 @@ public final class DateUtils {
 		date.setTime(cal.getTime().getTime());
 	}
 
-	public static Date getDuration(Date depDate, Date arrDate) {
-		Calendar cal = Calendar.getInstance();
+	public static String getDuration(Date depDate, Date arrDate) {
 		int h = (int) getDateDiff(arrDate, depDate, TimeUnit.HOURS);
 		int m = (int) getDateDiff(arrDate, depDate, TimeUnit.MINUTES) - 60 * h;
-		cal.set(Calendar.HOUR, h);
-		cal.set(Calendar.MINUTE, m);
 
-		return cal.getTime();
+		LOG.debug(String.format("h=%d, m=%d", h, m));
+		return String.format("%d:%d", h, m);
 	}
 
 	public static Date getArrivalDate(Date arrTime, Date depDate,

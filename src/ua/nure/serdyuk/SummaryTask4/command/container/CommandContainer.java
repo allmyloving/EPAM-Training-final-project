@@ -30,6 +30,7 @@ public final class CommandContainer {
 		commands.put("signUp", new SignUpCommand());
 
 		commands.put("findTrains", new FindTrainsCommand());
+		commands.put("findTrainsNotDirect", new FindTrainsNotDirectCommand());
 		commands.put("showRouteInfo", new ShowRouteInfoCommand());
 		commands.put("getFreeSeats", new GetFreeSeatsCommand());
 		commands.put("orderTicketView", new OrderTicketViewCommand());

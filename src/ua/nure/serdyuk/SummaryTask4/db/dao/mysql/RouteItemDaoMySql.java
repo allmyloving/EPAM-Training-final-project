@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,7 +88,28 @@ public class RouteItemDaoMySql implements RouteItemDao {
 
 	@Override
 	public List<RouteItem> getAll() {
-		throw new UnsupportedOperationException();
+		Connection conn = DbUtils.getConnection();
+		Statement s = null;
+		ResultSet rs = null;
+		List<RouteItem> routeItems = null;
+
+		try {
+			s = conn.createStatement();
+			rs = s.executeQuery(
+					PropertyContainer.get(Const.SQL_GET_ALL_ROUTE_ITEMS));
+
+			routeItems = new ArrayList<>();
+			while (rs.next()) {
+				routeItems.add(extract(rs));
+			}
+		} catch (SQLException ex) {
+			LOG.error(ex.getMessage());
+			throw new DbException(ex.getMessage(), ex);
+		} finally {
+			DbUtils.close(conn, s, rs);
+		}
+
+		return routeItems;
 	}
 
 	@Override

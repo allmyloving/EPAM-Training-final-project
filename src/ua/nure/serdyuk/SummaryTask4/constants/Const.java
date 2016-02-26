@@ -4,6 +4,8 @@ public final class Const {
 	
 	public static final String ENCODING = "utf-8";
 	
+	public static final String DESC = "desc";
+	
 	// attributes
 	public static final String ERRORS = "errors";
 
@@ -103,6 +105,8 @@ public final class Const {
 	public static final String GET_ROUTE_INFO_BY_TRAIN_ID = "SQL_GET_ROUTE_INFO_BY_TRAIN_ID";
 
 	public static final String GET_ALL_ROUTE_ITEMS_BY_TRAIN_ID_FROM_TO = "SQL_GET_ALL_ROUTE_ITEMS_BY_TRAIN_ID_FROM_TO";
+	
+	public static final String SQL_GET_ALL_ROUTE_ITEMS= "SQL_GET_ALL_ROUTE_ITEMS";
 
 	public static final String GET_ROUTE_BY_STATIONS_AND_DATE = "SQL_SELECT_ROUTE_BY_STATIONS_AND_DATE";
 

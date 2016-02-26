@@ -82,6 +82,7 @@ public class CarriageDaoMySql implements CarriageDao {
 			rsSeats = ps.executeQuery();
 
 			c.setSeats(getFreeSeats(rsSeats));
+			c.setSeatsTaken(c.getSeats().size());
 
 		} catch (SQLException e) {
 			LOG.error(e.getMessage());
@@ -180,14 +181,11 @@ public class CarriageDaoMySql implements CarriageDao {
 		return carriages;
 	}
 
-	private Map<Integer, Boolean> getFreeSeats(ResultSet rs) throws SQLException {
-		List<Integer> seats = new ArrayList<>();
-		while (rs.next()) {
-			seats.add(rs.getInt(1));
-		}
+	private Map<Integer, Boolean> getFreeSeats(ResultSet rs)
+			throws SQLException {
 		Map<Integer, Boolean> seatsMap = new HashMap<>();
-		for (int s : seats) {
-			seatsMap.put(s, true);
+		while (rs.next()) {
+			seatsMap.put(rs.getInt(1), true);
 		}
 		return seatsMap;
 	}

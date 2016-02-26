@@ -6,11 +6,11 @@ import ua.nure.serdyuk.SummaryTask4.db.dao.RouteItemDao;
 import ua.nure.serdyuk.SummaryTask4.db.service.RouteItemService;
 import ua.nure.serdyuk.SummaryTask4.entity.RouteItem;
 
-public class RouteItemServiceMySql implements RouteItemService {
+public class RouteItemServiceImpl implements RouteItemService {
 
 	private RouteItemDao routeItemDao;
 
-	public RouteItemServiceMySql(RouteItemDao routeItemDao) {
+	public RouteItemServiceImpl(RouteItemDao routeItemDao) {
 		this.routeItemDao = routeItemDao;
 	}
 

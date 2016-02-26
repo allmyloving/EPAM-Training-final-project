@@ -28,7 +28,7 @@ public class TrainBean implements Serializable {
 
 	private Date arrDate;
 
-	private Date duration;
+	private String duration;
 
 	private List<RouteBean> routes;
 
@@ -90,12 +90,12 @@ public class TrainBean implements Serializable {
 		this.arrDate = (Date) arrDate.clone();
 	}
 
-	public Date getDuration() {
-		return (Date) duration.clone();
+	public String getDuration() {
+		return duration;
 	}
 
-	public void setDuration(Date duration) {
-		this.duration = (Date) duration.clone();
+	public void setDuration(String duration) {
+		this.duration = duration;
 	}
 
 	public long getTrainId() {

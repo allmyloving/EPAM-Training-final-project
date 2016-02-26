@@ -17,7 +17,7 @@ public class RouteItem implements Serializable {
 
 	private int trainId;
 
-	private long stationId;
+	private int stationId;
 
 	public long getId() {
 		return id;
@@ -28,7 +28,7 @@ public class RouteItem implements Serializable {
 	}
 
 	public Date getArrivalTime() {
-		return (Date) arrivalTime.clone();
+		return arrivalTime != null ? (Date) arrivalTime.clone() : null;
 	}
 
 	public void setArrivalTime(Date arrivalTime) {
@@ -37,7 +37,7 @@ public class RouteItem implements Serializable {
 	}
 
 	public Date getDepartureTime() {
-		return (Date) departureTime.clone();
+		return departureTime != null ? (Date) departureTime.clone() : null;
 	}
 
 	public void setDepartureTime(Date departureTime) {
@@ -61,11 +61,11 @@ public class RouteItem implements Serializable {
 		this.trainId = trainId;
 	}
 
-	public long getStationId() {
+	public int getStationId() {
 		return stationId;
 	}
 
-	public void setStationId(long stationId) {
+	public void setStationId(int stationId) {
 		this.stationId = stationId;
 	}
 

@@ -2,6 +2,7 @@ package ua.nure.serdyuk.SummaryTask4.command.train;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,7 @@ import ua.nure.serdyuk.SummaryTask4.db.service.TrainBeanService;
 import ua.nure.serdyuk.SummaryTask4.entity.Route;
 import ua.nure.serdyuk.SummaryTask4.entity.Station;
 import ua.nure.serdyuk.SummaryTask4.entity.bean.TrainBean;
+import ua.nure.serdyuk.SummaryTask4.entity.bean.TrainBeanComparator;
 import ua.nure.serdyuk.SummaryTask4.util.DateUtils;
 
 public class FindTrainsCommand implements Command {
@@ -74,15 +76,27 @@ public class FindTrainsCommand implements Command {
 			session.setAttribute(Const.TRAIN_INFO_BEANS, null);
 			return Path.INDEX_VIEW;
 		}
-		
+
 		session.setAttribute(Const.STATION_FROM, from);
 		session.setAttribute(Const.STATION_TO, to);
 
-		// not session -- WRONG
-		session.setAttribute(Const.TRAIN_INFO_BEANS,
-				getTrainBeans(context, from, to, dateSql));
+		List<TrainBean> trainBeans = getTrainBeans(context, from, to, dateSql);
+		LOG.info(String.format("Train beans found ==> %s", trainBeans));
+
+		sortBeans(req, trainBeans);
+
+		session.setAttribute(Const.TRAIN_INFO_BEANS, trainBeans);
 
 		return Path.INDEX_VIEW;
+	}
+
+	private void sortBeans(HttpServletRequest req, List<TrainBean> beans) {
+		String orderby = req.getParameter("orderby");
+		String order = req.getParameter("o");
+
+		LOG.info(String.format("Sort by %s %s", orderby, order));
+		Collections.sort(beans,
+				TrainBeanComparator.getByName(orderby).getComparator(order));
 	}
 
 	private boolean hasErrors(HttpServletRequest req, Station from,

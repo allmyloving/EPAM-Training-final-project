@@ -10,6 +10,8 @@
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="controller?command=indexView"><fmt:message
 								key="label.home" /></a></li>
+					<li><a
+						href="controller?command=findTrainsNotDirect">Click here</a></li>
 					<c:if test="${currentUser.role.id==1}">
 						<li><a href="controller?command=adminView"><fmt:message
 									key="label.admin_page" /></a></li>
@@ -18,8 +20,9 @@
 				<ul class="nav navbar-nav navbar-right">
 					<c:choose>
 						<c:when test="${not empty sessionScope.currentUser}">
-							<li><a href="controller?command=userProfileView"><span class="glyphicon glyphicon-star" />
-									<fmt:message key="label.my_profile" /></a></li>
+							<li><a href="controller?command=userProfileView"><span
+									class="glyphicon glyphicon-star" /> <fmt:message
+										key="label.my_profile" /></a></li>
 							<li><a href="controller?command=logout"><span
 									class="glyphicon glyphicon-log-out" /> <fmt:message
 										key="action.log_out" /></a></li>

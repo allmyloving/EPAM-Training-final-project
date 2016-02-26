@@ -22,7 +22,7 @@ public class Carriage implements Serializable {
 
 	private int trainId;
 
-	private List<Integer> seatsTaken;
+	private int seatsTaken;
 
 	private Map<Integer, Boolean> seats;
 
@@ -62,11 +62,11 @@ public class Carriage implements Serializable {
 		this.seats = seats;
 	}
 
-	public List<Integer> getSeatsTaken() {
+	public int getSeatsTaken() {
 		return seatsTaken;
 	}
 
-	public void setSeatsTaken(List<Integer> seatsTaken) {
+	public void setSeatsTaken(int seatsTaken) {
 		this.seatsTaken = seatsTaken;
 	}
 
@@ -122,7 +122,8 @@ public class Carriage implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Carriage [id=" + id + ", type=" + type + ", tag=" + tag
-				+ ", seatsTaken=" + seatsTaken + "]";
+		return "Carriage [id=" + id + ", type=" + type + ", price=" + price
+				+ ", tag=" + tag + ", trainId=" + trainId + ", seats=" + seats
+				+ "]";
 	}
 }

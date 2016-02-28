@@ -9,26 +9,22 @@
 <%@ include file="/WEB-INF/jspf/header.jspf"%>
 <body lang="${currentLocaleLocale.language}">
 	<div class="container">
-		<c:if test="${not empty errors}">
-			<div class="alert alert-dismissible alert-warning" id="errorDiv">
-				<ul>
-					<c:forEach items="${errors}" var="e">
-						<li>${e}</li>
-					</c:forEach>
-				</ul>
-			</div>
-		</c:if>
-		<h2><fmt:message key="label.stations"/></h2>
+		<%@include file="/WEB-INF/jspf/errors.jspf"%>
+		<h2>
+			<fmt:message key="label.stations" />
+		</h2>
 		<a href="#" class="text-muted" id="addNewStation">
-			<h4><fmt:message key="action.add_new_station"/></h4>
+			<h4>
+				<fmt:message key="action.add_new_station" />
+			</h4>
 		</a>
 		<div id="addStationDiv">
 			<form action="controller" method="post">
 				<input type="hidden" name="command" value="addStation" />
 				<div class="col-lg-6">
 					<div class="input-group">
-						<input class="form-control" name="stationName" id="stationName" type="text">
-						<span class="input-group-btn">
+						<input class="form-control" name="stationName" id="stationName"
+							type="text"> <span class="input-group-btn">
 							<button class="btn btn-info" type="submit">
 								<span class="glyphicon glyphicon-ok"></span>
 							</button>

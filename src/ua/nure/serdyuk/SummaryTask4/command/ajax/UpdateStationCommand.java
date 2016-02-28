@@ -23,7 +23,7 @@ public class UpdateStationCommand implements Command {
 		String key = req.getParameter("pk");
 		String value = req.getParameter("value");
 
-		long id = Long.valueOf(key);
+		int id = Integer.valueOf(key);
 
 		Station s = new Station();
 		s.setId(id);

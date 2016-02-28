@@ -4,14 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-
-import com.mysql.jdbc.Statement;
 
 import ua.nure.serdyuk.SummaryTask4.constants.Const;
 import ua.nure.serdyuk.SummaryTask4.db.DbUtils;
@@ -187,5 +186,60 @@ public class TicketDaoMySql implements TicketDao {
 			DbUtils.close(conn, ps, null);
 		}
 		return seatsTaken.contains(bean.getSeatNum());
+	}
+
+	@Override
+	public List<TicketOrderBean> getAllForTomorrow() {
+		Connection conn = DbUtils.getConnection();
+		Statement s = null;
+		ResultSet rs = null;
+		List<TicketOrderBean> beans = null;
+
+		try {
+			s = conn.createStatement();
+			rs = s.executeQuery(
+					PropertyContainer.get(Const.SQL_GET_ALL_TOMORROW_TICKETS));
+
+			beans = new ArrayList<>();
+
+			TicketOrderBean bean;
+			while (rs.next()) {
+				bean = new TicketOrderBean();
+				bean.setTicketId(rs.getLong("id"));
+				bean.setUserId(rs.getLong("user_id"));
+				// dep date bean.set
+				beans.add(bean);
+			}
+		} catch (SQLException e) {
+			LOG.error(e.getMessage());
+			throw new DbException(e.getMessage(), e);
+		} finally {
+			DbUtils.close(conn, s, rs);
+		}
+		return beans;
+	}
+
+	@Override
+	public boolean setNotified(long id) {
+		Connection conn = DbUtils.getConnection();
+		PreparedStatement ps = null;
+		int res = 0;
+
+		try {
+			ps = conn.prepareStatement(
+					PropertyContainer.get(Const.SQL_SET_TICKET_NOTIFIED));
+			ps.setLong(1, id);
+
+			res = ps.executeUpdate();
+
+			conn.commit();
+		} catch (SQLException e) {
+			DbUtils.rollback(conn);
+			LOG.error(e.getMessage());
+			throw new DbException(e.getMessage(), e);
+		} finally {
+			DbUtils.close(conn, ps, null);
+		}
+		return res != 0;
 	}
 }

@@ -11,5 +11,9 @@ public interface TicketService {
 
 	List<TicketOrderBean> getAllByUserId(long userId);
 	
+	List<TicketOrderBean> getAllForTomorrow();
+	
 	boolean exists(TicketOrderBean bean);
+	
+	boolean setNotified(long id);
 }

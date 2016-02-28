@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import javax.management.loading.PrivateClassLoader;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -18,6 +19,8 @@ import ua.nure.serdyuk.SummaryTask4.constants.Message;
 import ua.nure.serdyuk.SummaryTask4.constants.Path;
 import ua.nure.serdyuk.SummaryTask4.db.factory.AbstractFactory;
 import ua.nure.serdyuk.SummaryTask4.db.factory.DaoFactory;
+import ua.nure.serdyuk.SummaryTask4.db.service.TicketService;
+import ua.nure.serdyuk.SummaryTask4.db.service.UserService;
 import ua.nure.serdyuk.SummaryTask4.db.service.impl.CarriageServiceImpl;
 import ua.nure.serdyuk.SummaryTask4.db.service.impl.CarriageTypeServiceImpl;
 import ua.nure.serdyuk.SummaryTask4.db.service.impl.RouteBeanServiceImpl;
@@ -28,16 +31,19 @@ import ua.nure.serdyuk.SummaryTask4.db.service.impl.TicketServiceImpl;
 import ua.nure.serdyuk.SummaryTask4.db.service.impl.TrainBeanServiceImpl;
 import ua.nure.serdyuk.SummaryTask4.db.service.impl.TrainServiceImpl;
 import ua.nure.serdyuk.SummaryTask4.db.service.impl.UserServiceImpl;
+import ua.nure.serdyuk.SummaryTask4.util.NotifyThread;
 
 @WebListener
 public class ContextListener implements ServletContextListener {
 
 	private static final Logger LOG = Logger.getLogger(ContextListener.class);
 
+	private Thread notifier;
+
 	private String dbms;
 
 	public void contextDestroyed(ServletContextEvent arg0) {
-		// TODO Auto-generated method stub
+		notifier.interrupt();
 	}
 
 	public void contextInitialized(ServletContextEvent sce) {
@@ -47,6 +53,7 @@ public class ContextListener implements ServletContextListener {
 		initParams(context);
 		loadClasses();
 		configureServices(context);
+		startThread(context);
 	}
 
 	private void loadClasses() {
@@ -71,6 +78,16 @@ public class ContextListener implements ServletContextListener {
 		} catch (Exception ex) {
 			System.out.println(Message.ERR_CANNOT_CONFIGURE_LOG4J);
 		}
+	}
+
+	private void startThread(ServletContext context) {
+		notifier = new NotifyThread(
+				(TicketService) context.getAttribute(Const.TICKET_SERVICE),
+				(UserService) context.getAttribute(Const.USER_SERVICE));
+		notifier.setDaemon(true);
+		notifier.start();
+
+		LOG.info("Thread started");
 	}
 
 	private void initParams(ServletContext context) {

@@ -3,8 +3,10 @@ package ua.nure.serdyuk.SummaryTask4.command.train;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -24,9 +26,21 @@ public class FindTrainsNotDirectCommand implements Command {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse res)
 			throws IOException {
+//		String stationFrom = req.getParameter(Const.STATION_FROM);
+//		String stationTo = req.getParameter(Const.STATION_TO);
+////		String date = req.getParameter(Const.DATE);
+//
+//		HttpSession session = req.getSession();
+//		ServletContext context = req.getServletContext();
+//
+//		req.setAttribute(Const.STATION_FROM, stationFrom);
+//		req.setAttribute(Const.STATION_TO, stationTo);
+////		req.setAttribute(Const.DATE, date);
+
+	
 		String from = req.getParameter("f");
 		String to = req.getParameter("t");
-		
+
 		RouteItemService routeItemService = (RouteItemService) req
 				.getServletContext().getAttribute(Const.ROUTE_ITEM_SERVICE);
 		List<RouteItem> routeItems = routeItemService.getAll();
@@ -44,7 +58,7 @@ public class FindTrainsNotDirectCommand implements Command {
 					new Edge(ri.getTrainId(), graph.get(next.getStationId())));
 		}
 		LOG.info(graph);
-		
+
 		int f = Integer.valueOf(from);
 		int t = Integer.valueOf(to);
 		graph.findPath(f, t);

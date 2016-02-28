@@ -17,9 +17,9 @@ public class TicketOrderBean implements Serializable {
 	private Station stationFrom;
 
 	private Station stationTo;
-	
+
 	private RouteItem routeItemFrom;
-	
+
 	private RouteItem routeItemTo;
 
 	private TrainBean trainBean;
@@ -29,6 +29,16 @@ public class TicketOrderBean implements Serializable {
 	private Carriage carriage;
 
 	private long ticketId;
+
+	private long userId;
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
 
 	public TrainBean getTrainBean() {
 		return trainBean;

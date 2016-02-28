@@ -41,7 +41,7 @@ public class StationDaoMySql implements StationDao {
 			if (!rs.next()) {
 				throw new DbException("A key for station was not generated");
 			}
-			item.setId(rs.getLong(1));
+			item.setId(rs.getInt(1));
 
 			conn.commit();
 		} catch (SQLException e) {
@@ -205,7 +205,7 @@ public class StationDaoMySql implements StationDao {
 
 	private Station extractStation(ResultSet rs) throws SQLException {
 		Station s = new Station();
-		s.setId(rs.getLong("id"));
+		s.setId(rs.getInt("id"));
 		s.setName(rs.getString("name"));
 
 		return s;

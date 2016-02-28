@@ -9,16 +9,16 @@ public class Station implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private long id;
+	private int id;
 
 	@Validation(regex = Const.REGEX_NAME, message = "message.name_not_valid")
 	private String name;
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

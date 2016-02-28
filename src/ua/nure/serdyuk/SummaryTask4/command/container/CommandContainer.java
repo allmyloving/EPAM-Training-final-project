@@ -38,6 +38,7 @@ public final class CommandContainer {
 
 		commands.put("loginView", new LoginViewCommand());
 		commands.put("signUpView", new SignUpViewCommand());
+		commands.put("signUpConfirm", new SignUpConfirmCommand());
 		commands.put("userProfileView", new UserProfileViewCommand());
 		commands.put("indexView", new IndexViewCommand());
 		commands.put("paymentSuccessfulView", new PaymentSuccessView());

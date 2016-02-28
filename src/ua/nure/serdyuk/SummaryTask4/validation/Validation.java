@@ -8,14 +8,16 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Validation {
-	
+
 	String message() default "Field is not valid";
-	
+
 	String regex() default "";
-	
+
+	int length() default 0;
+
 	boolean required() default true;
-	
-	long lowerBound() default Long.MIN_VALUE;
-	
-	long upperBound() default Long.MAX_VALUE;
+
+	int lowerBound() default Integer.MIN_VALUE;
+
+	int upperBound() default Integer.MAX_VALUE;
 }

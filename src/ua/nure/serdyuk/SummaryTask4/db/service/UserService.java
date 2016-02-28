@@ -6,6 +6,8 @@ public interface UserService {
 
 	boolean create(User user);
 
+	User get(long id);
+
 	User auth(String login, String password);
 
 }

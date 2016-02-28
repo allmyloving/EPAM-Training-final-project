@@ -7,7 +7,7 @@
 <%@ include file="/WEB-INF/jspf/header.jspf"%>
 <body lang="${currentLocaleLocale}">
 	<div class="container">
-		<form role="form" action="controller">
+		<form role="form" action="controller" method="post" class="input-not-empty">
 			<input type="hidden" name="command" value="addTrain" />
 			<div class="row">
 				<div class='col-sm-6'>

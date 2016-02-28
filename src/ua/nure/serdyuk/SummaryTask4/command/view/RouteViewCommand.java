@@ -43,46 +43,53 @@ public class RouteViewCommand implements Command {
 		}
 
 		if (dateFrom != null && dateTo != null) {
-			getRoute(req.getServletContext(), session, dateFrom, dateTo);
+			session.setAttribute(Const.DATE_FROM, dateFrom);
+			session.setAttribute(Const.DATE_TO, dateTo);
+			getRoute(req.getServletContext(), session, beans, dateFrom, dateTo);
 		}
 
 		return Path.ROUTE_VIEW;
 	}
 
 	private void getRoute(ServletContext context, HttpSession session,
-			String dateFrom, String dateTo) {
-		session.setAttribute(Const.DATE_FROM, dateFrom);
-		session.setAttribute(Const.DATE_TO, dateTo);
-
+			List<TrainBean> trainBeans, String dateFrom, String dateTo) {
 		RouteService routeService = (RouteService) context
 				.getAttribute(Const.ROUTE_SERVICE);
 		List<Route> routes = routeService.getAllByDates(dateFrom, dateTo);
 
 		LOG.info("Routes obtained ==> " + routes);
 
-		@SuppressWarnings("unchecked")
-		List<TrainBean> trainBeans = (List<TrainBean>) session
-				.getAttribute("trainBeans");
 		List<TrainBean> trainBeans2 = new ArrayList<>();
-
-		TrainBean tmp;
 		for (Route item : routes) {
-			tmp = new TrainBean();
-			tmp.setTrainId(item.getTrainId());
-			TrainBean att = trainBeans.get(trainBeans.indexOf(tmp));
-			tmp.setRouteId(item.getId());
-			tmp.setDepDate(item.getDate());
-			tmp.setTrainTag(att.getTrainTag());
-			tmp.setStationFrom(att.getStationFrom());
-			tmp.setStationTo(att.getStationTo());
-
-			trainBeans2.add(tmp);
+			trainBeans2.add(extract(trainBeans, item));
 		}
 
 		session.setAttribute("routes", trainBeans2);
 		session.setAttribute(Const.ROUTE_ADD_MES, null);
 		session.setAttribute(Const.ROUTE_ADD_ERR, null);
+	}
 
+	private TrainBean extract(List<TrainBean> beans, Route route) {
+		TrainBean bean = new TrainBean();
+		bean.setTrainId(route.getTrainId());
+		bean.setRouteId(route.getId());
+		bean.setDepDate(route.getDate());
+
+		TrainBean att = getByTrainId(beans, route.getTrainId());
+		bean.setTrainTag(att.getTrainTag());
+		bean.setStationFrom(att.getStationFrom());
+		bean.setStationTo(att.getStationTo());
+		
+		return bean;
+	}
+
+	private TrainBean getByTrainId(List<TrainBean> beans, long trainId) {
+		for (TrainBean bean : beans) {
+			if (bean.getTrainId() == trainId) {
+				return bean;
+			}
+		}
+		return null;
 	}
 
 }

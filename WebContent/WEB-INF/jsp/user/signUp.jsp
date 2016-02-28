@@ -12,19 +12,13 @@
 					<legend>
 						<fmt:message key="label.sign_up" />
 					</legend>
-					<c:if test="${not empty errors}">
-						<div class="alert alert-dismissible alert-warning" id="errorDiv">
-							<ul>
-								<c:forEach items="${errors}" var="e">
-									<li>${e}</li>
-								</c:forEach>
-							</ul>
-						</div>
-					</c:if>
+					
+					<%@include file="/WEB-INF/jspf/errors.jspf"%>
+					
 					<div class="form-group">
 						<label class="control-label" for="email"><fmt:message
 								key="label.email" />:</label> <input class="form-control" id="email"
-							name="email" value="${requestScope.email}">
+							name="email" value="${sessionScope.email}">
 						<p class="text-warning" id="emailError"></p>
 					</div>
 					<div class="form-group">
@@ -32,7 +26,8 @@
 								key="label.password" />:</label> <input type="password"
 							class="form-control" id="password" name="password">
 						<p class="text-warning" id="passwordError"></p>
-						<span class="help-block"><fmt:message key="label.password_advice"/></span>
+						<span class="help-block"><fmt:message
+								key="label.password_advice" /></span>
 					</div>
 					<div class="form-group">
 						<label class="control-label" for="repPassword"> <fmt:message
@@ -40,6 +35,18 @@
 						</label> <input type="password" class="form-control" id="repPassword"
 							name="repPassword">
 						<p class="text-warning" id="repPasswordError"></p>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="firstName"><fmt:message
+								key="label.first_name" />:</label> <input class="form-control"
+							id="firstName" name="firstName" value="${sessionScope.firstName}">
+						<p class="text-warning" id="firstNameError"></p>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="lastName"><fmt:message
+								key="label.last_name" />:</label> <input class="form-control"
+							id="lastName" name="lastName" value="${sessionScope.lastName}">
+						<p class="text-warning" id="lastNameError"></p>
 					</div>
 					<button type="submit" class="btn btn-default btn-block"
 						id="signUpSubmit">

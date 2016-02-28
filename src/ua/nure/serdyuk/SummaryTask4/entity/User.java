@@ -11,7 +11,7 @@ public class User implements Serializable {
 
 	private long id;
 
-	@Validation(regex = Const.REGEX_EMAIL, message = "message.email_not_valid")
+	@Validation(regex = Const.REGEX_EMAIL, length = 60, message = "message.email_not_valid")
 	private String email;
 
 	@Validation(regex = Const.REGEX_PASSWORD, message = "message.password_not_valid")
@@ -22,7 +22,7 @@ public class User implements Serializable {
 
 	@Validation(regex = Const.REGEX_NAME, required = false, message = "message.name_not_valid")
 	private String lastName;
-	
+
 	private String documentTag;
 
 	private Role role;

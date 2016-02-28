@@ -10,6 +10,7 @@ import ua.nure.serdyuk.SummaryTask4.db.dao.UserDao;
 import ua.nure.serdyuk.SummaryTask4.db.service.UserService;
 import ua.nure.serdyuk.SummaryTask4.entity.User;
 import ua.nure.serdyuk.SummaryTask4.exception.AppException;
+import ua.nure.serdyuk.SummaryTask4.util.Util;
 
 public class UserServiceImpl implements UserService {
 
@@ -45,25 +46,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private String generateHash(String email, String password) {
-		StringBuilder hash = new StringBuilder(password).append(email);
-		String modified = hash.toString();
-		hash.setLength(0);
+		StringBuilder input = new StringBuilder(password).append(email);
 
-		try {
-			MessageDigest digest = MessageDigest.getInstance("SHA-1");
-			byte[] bytes = digest.digest(modified.getBytes("utf-8"));
+		return Util.hash(input.toString());
+	}
 
-			// convert to hex
-			for (int i = 0; i < bytes.length; i++) {
-				hash.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16)
-						.substring(1));
-			}
-		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-			LOG.error(String.format("Error while creating hash -- %s",
-					e.getMessage()));
-			throw new AppException(e.getMessage(), e);
-		}
-		return hash.toString();
+	@Override
+	public User get(long id) {
+		return userDao.get(id);
 	}
 
 }

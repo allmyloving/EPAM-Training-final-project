@@ -37,7 +37,7 @@ public class AddTrainCommand implements Command {
 		train.setPrice(BigDecimal.valueOf(Double.valueOf(price)));
 
 		train.setRouteItems(processRouteItems(req, train.getId()));
-		
+
 		TrainService trainService = (TrainService) context
 				.getAttribute(Const.TRAIN_SERVICE);
 		trainService.create(train);
@@ -52,8 +52,12 @@ public class AddTrainCommand implements Command {
 		String[] depTime = req.getParameterValues("depTime");
 
 		List<RouteItem> routeItems = new ArrayList<>();
-		RouteItem item;
-		for (int i = 0; i < stations.length; i++) {
+
+		RouteItem item = extractRouteItem(req.getServletContext(), null,
+				depTime[0], stations[0], 0, trainId);
+		routeItems.add(item);
+		
+		for (int i = 1; i < stations.length - 1; i++) {
 			item = extractRouteItem(req.getServletContext(), arrTime[i],
 					depTime[i], stations[i], i, trainId);
 			LOG.debug(item);
@@ -61,6 +65,11 @@ public class AddTrainCommand implements Command {
 			routeItems.add(item);
 		}
 
+		item = extractRouteItem(req.getServletContext(),
+				arrTime[stations.length - 1], null,
+				stations[stations.length - 1], stations.length - 1, trainId);
+		routeItems.add(item);
+		
 		return routeItems;
 	}
 

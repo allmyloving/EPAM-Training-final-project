@@ -22,6 +22,8 @@ public class Validator {
 
 	private static final long UPPER_BOUND = getDefault("upperBound");
 
+	private static final long LENGTH = getDefault("length");
+
 	/**
 	 * Validates an entity using @Validation annotation.
 	 * 
@@ -73,6 +75,13 @@ public class Validator {
 			}
 		}
 
+		if (v.length() != LENGTH) {
+			String strValue = (String) value;
+			if (strValue.length() > v.length()) {
+				errors.add(v.message());
+			}
+		}
+
 		if (v.required() && value == null) {
 			errors.add(Message.FIELD_REQUIRED);
 		}
@@ -82,7 +91,7 @@ public class Validator {
 	private static long getDefault(String fieldName) {
 		Class<?> clazz = Validation.class;
 		try {
-			return (Long) clazz.getMethod(fieldName).getDefaultValue();
+			return (Integer) clazz.getMethod(fieldName).getDefaultValue();
 		} catch (NoSuchMethodException | SecurityException e) {
 			throw new AssertionError(
 					"Shouldn't happen unless an entity has changed", e);

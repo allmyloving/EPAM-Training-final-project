@@ -5,7 +5,7 @@ var errors = {
 		"repPassword" : "Passwords should match",
 		"notEmpty" : "Cannot be empty",
 		"chooseSeat" : "Choose a seat, please",
-		'message.name_not_valid' : "Name should start with upper-case letter",
+		'message.name_not_valid' : "Name is not valid",
 		'message.try_again' : "Try again later"
 	},
 	'ru' : {
@@ -14,7 +14,7 @@ var errors = {
 		"repPassword" : "Пароли должны совпадать",
 		"notEmpty" : "Заполните поле",
 		"chooseSeat" : "Пожалуйста, выберите место",
-		'message.name_not_valid' : 'Имя не может быть пустым и должно начинаться с заглавной буквы',
+		'message.name_not_valid' : 'Имя некорректно',
 		'message.try_again' : "Попробуйте позже"
 	}
 }
@@ -23,6 +23,12 @@ $(document).ready(function() {
 	console.log("ready!!");
 	var lang = $('body').attr('lang');
 	// $('#errorDiv').hide();
+//	
+//	$('.my-popup').editable({
+//		error : function(response, newValue) {
+//			return errors[lang][response.responseText];
+//		}
+//	});
 
 	$('#signUpForm').submit(function(event) {
 		event.preventDefault();

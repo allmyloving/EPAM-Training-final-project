@@ -44,7 +44,7 @@ public class TrainDaoMySql implements TrainDao {
 
 			rs = ps.getGeneratedKeys();
 			if (!rs.next()) {
-				throw new DbException("A key for station was not generated");
+				throw new DbException("A key for train was not generated");
 			}
 			item.setId(rs.getInt(1));
 

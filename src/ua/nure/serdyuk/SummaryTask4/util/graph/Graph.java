@@ -52,13 +52,14 @@ public class Graph {
 		}
 		for (Edge e : current.getEdges()) {
 			LOG.debug(e);
+//			LOG.debug(trainId);
 			if (e.getTrainId() == trainId) {
 				LOG.debug(String.format("Adding %d from %s",
 						e.getVerticle().getStationId(), e.toString()));
 				verticles.add(e.getVerticle());
 				return get(verticles, e.getVerticle(), trainId, to);
 			}
-			return get(verticles, e.getVerticle(), e.getTrainId(), to);
+			//return get(verticles, e.getVerticle(), e.getTrainId(), to);
 		}
 		return null;
 	}

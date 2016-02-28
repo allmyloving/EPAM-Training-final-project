@@ -69,7 +69,6 @@ public class UserDaoMySql implements UserDao {
 				user = extractUser(rs);
 			}
 		} catch (SQLException e) {
-			DbUtils.rollback(conn);
 			LOG.error(e.getMessage());
 			throw new DbException(e.getMessage(), e);
 		} finally {
@@ -110,7 +109,6 @@ public class UserDaoMySql implements UserDao {
 				user = extractUser(rs);
 			}
 		} catch (SQLException e) {
-			DbUtils.rollback(conn);
 			LOG.error(e.getMessage());
 			throw new DbException(e.getMessage(), e);
 		} finally {

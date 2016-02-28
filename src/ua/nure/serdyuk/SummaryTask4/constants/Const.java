@@ -1,28 +1,26 @@
 package ua.nure.serdyuk.SummaryTask4.constants;
 
 public final class Const {
-	
+
 	public static final String ENCODING = "utf-8";
-	
+
 	public static final String DESC = "desc";
 	
+	public static final String SESSION_MAX_INTERVAL = "SESSION_INTERVAL";
+
 	// attributes
 	public static final String ERRORS = "errors";
 
+	public static final String KEY = "key";
+	
 	public static final String EMAIL = "email";
 
 	public static final String PASSWORD = "password";
 
-	public static final String PASSWORD_REPEAT = "repPassword";
-
-	public static final String FIRST_NAME = "firstName";
-
-	public static final String LAST_NAME = "lastName";
-
 	public static final String ROLE = "role";
 
 	public static final String ROUTE_ID = "routeId";
-	
+
 	public static final String TRAIN_ID = "trainId";
 
 	public static final String STATION_FROM = "stationFrom";
@@ -30,21 +28,23 @@ public final class Const {
 	public static final String STATION_TO = "stationTo";
 
 	public static final String DATE = "date";
-	
+
 	public static final String DATE_FROM = "dateFrom";
-	
+
 	public static final String DATE_TO = "dateTo";
-	
+
 	public static final String REDIRECT = "redirect";
 
+	public static final String USER_BEAN = "userBean";
+	
 	public static final String CURRENT_USER = "currentUser";
 
 	public static final String CARRIAGE_LIST = "carriageList";
 
 	public static final String TICKET_ORDER_BEAN = "ticketOrderBean";
-	
+
 	public static final String TICKETS = "tickets";
-	
+
 	public static final String ROUTE_ADD_MES = "routeAddMes";
 
 	public static final String ROUTE_ADD_ERR = "routeAddError";
@@ -64,7 +64,7 @@ public final class Const {
 	public static final String ROUTE_INFO_SERVICE = "routeInfoService";
 
 	public static final String CARRIAGE_SERVICE = "carriageService";
-	
+
 	public static final String CARRIAGE_TYPE_SERVICE = "carTypeService";
 
 	public static final String TICKET_SERVICE = "ticketService";
@@ -105,15 +105,15 @@ public final class Const {
 	public static final String GET_ROUTE_INFO_BY_TRAIN_ID = "SQL_GET_ROUTE_INFO_BY_TRAIN_ID";
 
 	public static final String GET_ALL_ROUTE_ITEMS_BY_TRAIN_ID_FROM_TO = "SQL_GET_ALL_ROUTE_ITEMS_BY_TRAIN_ID_FROM_TO";
-	
-	public static final String SQL_GET_ALL_ROUTE_ITEMS= "SQL_GET_ALL_ROUTE_ITEMS";
+
+	public static final String SQL_GET_ALL_ROUTE_ITEMS = "SQL_GET_ALL_ROUTE_ITEMS";
 
 	public static final String GET_ROUTE_BY_STATIONS_AND_DATE = "SQL_SELECT_ROUTE_BY_STATIONS_AND_DATE";
 
 	public static final String GET_TRAIN_INFO_BY_TRAIN_ID_ROUTE_STATIONS = "SQL_GET_TRAIN_INFO_BY_TRAIN_ID_ROUTE_STATIONS";
 
 	public static final String GET_CARRIAGE_INFO_BY_TRAIN_ID_ROUTE_ITEMS = "SQL_GET_CARRIAGE_INFO_BY_TRAIN_ID_ROUTE_ITEMS";
-	
+
 	public static final String GET_CARRIAGE_INFO_BY_TRAIN_ID = "SQL_GET_CARRIAGE_INFO_BY_TRAIN_ID";
 
 	public static final String GET_TAKEN_SEATS_BY_CAR_ID_AND_ROUTE_ID = "SQL_GET_TAKEN_SEATS_BY_CAR_ID_AND_ROUTE_ID";
@@ -137,24 +137,27 @@ public final class Const {
 	public static final String SQL_INSERT_ROUTE = "SQL_INSERT_ROUTE";
 
 	public static final String SQL_INSERT_TICKET = "SQL_INSERT_TICKET";
-	
+
 	public static final String SQL_CREATE_CARRIAGE = "SQL_INSERT_CARRIAGE";
-	
+
 	public static final String SQL_DELETE_ROUTE = "SQL_DELETE_ROUTE";
-	
+
 	public static final String SQL_GET_ALL_ROUTES_BY_DATES = "SQL_GET_ALL_ROUTES_BY_DATES";
-	
+
 	public static final String SQL_GET_TRAIN_BY_ID = "SQL_GET_TRAIN_BY_ID";
-	
+
 	public static final String SQL_GET_ALL_CAR_TYPES = "SQL_GET_ALL_CAR_TYPES";
-	
+
 	public static final String SQL_GET_ALL_TICKETS_BY_USER_ID = "SQL_GET_ALL_TICKETS_BY_USER";
-	
+
+	public static final String SQL_GET_ALL_TOMORROW_TICKETS = "SQL_GET_ALL_TOMORROW_TICKETS";
+
 	public static final String SQL_GET_ROUTE_ITEM_BY_TRAIN_AND_STATION = "SQL_GET_ROUTE_ITEM_BY_TRAIN_AND_STATION";
-	
+
+	public static final String SQL_SET_TICKET_NOTIFIED = "SQL_SET_TICKET_NOTIFIED";
 
 	// regex
-	public static final String REGEX_EMAIL = "^[\\w\\.]+@\\w+\\.\\w+$";
+	public static final String REGEX_EMAIL = "^[\\w\\.]{1,40}@(\\w+\\.?)+$";
 
 	public static final String REGEX_PASSWORD = "^\\w{4,}$";
 

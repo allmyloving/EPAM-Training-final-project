@@ -31,4 +31,14 @@ public class TicketServiceImpl implements TicketService {
 		return ticketDao.exists(bean);
 	}
 
+	@Override
+	public List<TicketOrderBean> getAllForTomorrow() {
+		return ticketDao.getAllForTomorrow();
+	}
+
+	@Override
+	public boolean setNotified(long id) {
+		return ticketDao.setNotified(id);
+	}
+
 }

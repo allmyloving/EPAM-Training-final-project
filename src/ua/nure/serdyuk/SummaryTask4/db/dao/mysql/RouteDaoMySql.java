@@ -5,12 +5,11 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-
-import com.mysql.jdbc.Statement;
 
 import ua.nure.serdyuk.SummaryTask4.constants.Const;
 import ua.nure.serdyuk.SummaryTask4.db.DbUtils;
@@ -38,7 +37,7 @@ public class RouteDaoMySql implements RouteDao {
 			ps.setLong(k++, stationFromId);
 			ps.setLong(k++, stationToId);
 			ps.setDate(k++, date);
-			
+
 			LOG.debug("executing ==> " + ps);
 
 			rs = ps.executeQuery();
@@ -152,6 +151,7 @@ public class RouteDaoMySql implements RouteDao {
 			ps.setDate(k++, to);
 
 			rs = ps.executeQuery();
+			LOG.debug(String.format("Executing %s ", ps));
 
 			routes = new ArrayList<>();
 			while (rs.next()) {
@@ -160,7 +160,7 @@ public class RouteDaoMySql implements RouteDao {
 		} catch (SQLException e) {
 			LOG.error(e.getMessage());
 			throw new DbException(e.getMessage(), e);
-		}finally {
+		} finally {
 			DbUtils.close(conn, ps, rs);
 		}
 		return routes;
